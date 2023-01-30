@@ -1,0 +1,12 @@
+/* import only the Bootstrap files needed for customizations */
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+
+/* make the customizations */
+$theme-colors: (
+  "primary": #990000,
+  "danger": #ff4136
+);
+
+/* import bootstrap to set changes */
+@import "node_modules/bootstrap/scss";
