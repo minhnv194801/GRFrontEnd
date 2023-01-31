@@ -1,11 +1,11 @@
-function About() {
+function Read() {
   return (
   <div className='outer'>
     <div className='inner'>
-      <h1>About</h1>
+      <h1>Reading</h1>
     </div>
   </div>
   );
 }
 
-export default About;
+export default Read;

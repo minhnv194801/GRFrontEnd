@@ -29,6 +29,7 @@ code {
 .inner {
   background-color: #d9d9d9;
   width: 80vw;
+  min-height: 90vh;
   height: 100%;
   margin-left: 10vw;
   margin-right: 10vw;

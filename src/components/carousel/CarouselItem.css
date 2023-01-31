@@ -3,13 +3,13 @@
 }
 
 .image {
-    width: 95%;
+    width: 80%;
     height: 20vh;
 }
 
 .text-on-image {
     background-color: black;
-    width: 95%;
+    width: 80%;
     color: white;
     text-align: center;
     bottom: 0%;

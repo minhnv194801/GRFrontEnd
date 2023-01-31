@@ -7,7 +7,10 @@ import {
 import Navbar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer'
 import Home from './pages/Home';
-import About from './pages/About'
+import Read from './pages/Read'
+import Manga from './pages/Manga'
+import User from './pages/User'
+import Search from './pages/Search'
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -18,9 +21,21 @@ const router = createBrowserRouter([
     element: <Home/>,
   },
   {
-    path: "/about",
-    element: <About/>,
-  }
+    path: "/manga",
+    element: <Manga/>,
+  },
+  {
+    path: "/read",
+    element: <Read/>,
+  },
+  {
+    path: "/user",
+    element: <User/>,
+  },
+  {
+    path: "/search",
+    element: <Search/>,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

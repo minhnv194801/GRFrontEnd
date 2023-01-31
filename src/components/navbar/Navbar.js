@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 import logo from '../../logo/magna-logo.png'
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
@@ -7,13 +7,17 @@ import Button from '@mui/material/Button';
 import './Navbar.css'
 import { InputBase } from '@mui/material';
 
-
 const Navbar = () => {
+    const [searchValue, setSearchValue] = useState("")
+
     function handleKeyPress(e) {
         if(e.keyCode === 13){
-            console.log('value', e.target.value);
-            // put the login here
+            window.location.href = "/search?" + e.target.value;
          }
+    }
+
+    function handleSearchClicked(e) {
+        window.location.href = "/search?" + searchValue;
     }
 
     return (
@@ -28,6 +32,7 @@ const Navbar = () => {
                     <FormControl variant="standard">
                         <InputBase className='text-input' 
                             placeholder="Tìm kiếm" 
+                            onChange={(e) => {setSearchValue(e.target.value)}}
                             onKeyDown={handleKeyPress}
                             startAdornment={
                                 <InputAdornment position="start">
@@ -37,13 +42,13 @@ const Navbar = () => {
                     </FormControl>
                 </div>
                 <div className='search-btn'>
-                    <Button variant="contained">Tìm kiếm</Button>
+                    <Button variant="contained" onClick={handleSearchClicked}>Tìm kiếm</Button>
                 </div>
             </div>
             <div className='userbox'>
-                <a href='/about' rel='nofollow'>Đăng nhập</a>
+                <a className='loginBtn' href='/user' rel='nofollow'>Đăng nhập</a>
                 /
-                <a href='/about' rel='nofollow'>Đăng ký</a>
+                <a className='registerBtn' href='/user' rel='nofollow'>Đăng ký</a>
             </div>
         </div>
     );

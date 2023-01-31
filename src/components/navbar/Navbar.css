@@ -6,7 +6,7 @@
     height: 5vh;
     position: sticky !important;
     top: 0;
-    z-index: 1000;
+    z-index: 10000;
     flex-wrap: nowrap !important;
 }
 
@@ -33,19 +33,36 @@
     background-color: #990000;
 }
 
-a:link { 
+a.loginBtn:link { 
     color: #ffffff;
     text-decoration: none; 
 }
-a:visited { 
+a.loginBtn:visited { 
     color: #ffffff;
     text-decoration: none; 
 }
-a:active { 
+a.loginBtn:active { 
     color: #ffffff;
     text-decoration: none; 
 }
-a:hover { 
+a.loginBtn:hover { 
     color: #ffffff; 
+    text-decoration: underline; 
+}
+
+a.registerBtn:link { 
+    color: #ffffff;
     text-decoration: none; 
+}
+a.registerBtn:visited { 
+    color: #ffffff;
+    text-decoration: none; 
+}
+a.registerBtn:active { 
+    color: #ffffff;
+    text-decoration: none; 
+}
+a.registerBtn:hover { 
+    color: #ffffff; 
+    text-decoration: underline; 
 }

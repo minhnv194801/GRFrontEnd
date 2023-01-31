@@ -1,0 +1,42 @@
+.homepage-item-wrapper {
+    display: grid;
+    place-items: center;
+}
+
+.cover {
+    height: 300px;
+    width: 200px;
+}
+
+.item-chapter-list {
+    padding: 0;
+    margin: 0;
+    width: 200px;
+    list-style: none;
+}
+
+.chapter-item {
+    list-style: none;
+    align-self: left;
+}
+
+.time {
+    float: right;
+}
+
+a.chapter-title:link { 
+    color: #000000;
+    text-decoration: none; 
+}
+a.chapter-title:visited { 
+    color: #000000;
+    text-decoration: none; 
+}
+a.chapter-title:active { 
+    color: #000000;
+    text-decoration: none; 
+}
+a.chapter-title:hover { 
+    color: #000000; 
+    text-decoration: underline; 
+}

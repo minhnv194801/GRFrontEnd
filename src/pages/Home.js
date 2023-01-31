@@ -1,19 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import ReactPaginate from 'react-paginate';
 import ImageCarousel from "../components/carousel/ImageCarousel";
 import './Home.css'
+import HomepageItemList from "../components/homepageitem/HomepageItemList";
 
 function Home() {
-  var [recommendedItems, setRecommendedItems] = useState([{
-    "title": "",
-    "image": "",
+  const pageRef = useRef(null)
+  const itemsPerPage = 9
+
+  const [newItemOffset, setNewItemOffset] = useState(0)
+
+  const [recommendedItems, setRecommendedItems] = useState([{
+    "title": "Loading...",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
     "href": "",
   }])
 
-  var [hotItems, setHotItems] = useState([{
-    "title": "",
-    "image": "",
+  const [hotItems, setHotItems] = useState([{
+    "title": "Loading...",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
     "href": "",
   }])
+
+  const [forUserItems, setForUserItems] = useState([{
+    "title": "Loading...",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
+    "href": "",
+  }])
+
+  const [newestItems, setNewestItems] = useState([{
+    "cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
+    "name": "Loading...",
+    "href": "",
+    "chapters": [
+    ]
+  }])
+  
+  const handlePageClick = (event) => {
+    setNewItemOffset(event.selected * itemsPerPage);
+  }
   
   useEffect(() => {
     // TODO: Fetching recommend manga from server
@@ -21,83 +46,173 @@ function Home() {
       {
         "title": "Item 1",
         "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
+        "href": "/manga",
       },
       {
         "title": "Item 2",
         "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
+        "href": "/manga",
       },
       {
         "title": "Item 3",
         "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
+        "href": "/manga",
       },
       {
         "title": "Item 4",
         "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
+        "href": "/manga",
       },
       {
         "title": "Item 5",
         "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
+        "href": "/manga",
       },
       {
         "title": "Item 6",
         "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
+        "href": "/manga",
       },
     ]
     setRecommendedItems(respond)
   
-    var respond = [
+    respond = [
       {
         "title": "Item 4",
         "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
+        "href": "/manga",
       },
       {
         "title": "Item 2",
         "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
+        "href": "/manga",
       },
       {
         "title": "Item 3",
         "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
+        "href": "/manga",
       },
       {
         "title": "Item 1",
         "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
+        "href": "/manga",
       },
       {
         "title": "Item 6",
         "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
+        "href": "/manga",
       },
       {
         "title": "Item 5",
         "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-        "href": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
+        "href": "/manga",
       },
     ]
     setHotItems(respond)
+
+    respond = [
+      {
+        "title": "Item 2",
+        "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
+        "href": "/manga",
+      },
+      {
+        "title": "Item 6",
+        "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
+        "href": "/manga",
+      },
+      {
+        "title": "Item 3",
+        "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
+        "href": "/manga",
+      },
+      {
+        "title": "Item 4",
+        "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
+        "href": "/manga",
+      },
+      {
+        "title": "Item 5",
+        "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
+        "href": "/manga",
+      },
+      {
+        "title": "Item 1",
+        "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
+        "href": "/manga",
+      },
+    ]
+    setForUserItems(respond)
   }, [])
+
+  useEffect(() => {
+    //TODO: fetch newest items from backend
+    var respond = []
+    for (var i = newItemOffset; i < newItemOffset + itemsPerPage; i++) {
+      var item = {
+        "cover": "https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg",
+        "href": "/manga",
+        "name": "Item " + i,
+        "chapters": [
+          {
+            "name": "Chapter 1",
+            "href": "/read",
+            "updateTime": "1 ngày trước",
+          },
+          {
+            "name": "Chapter 2",
+            "href": "/read",
+            "updateTime": "7 ngày trước",
+          },
+          {
+            "name": "Chapter 3",
+            "href": "/read",
+            "updateTime": "14 ngày trước",
+          },
+        ]
+      }
+
+      respond.push(item)
+    }
+    console.log(respond)
+    setNewestItems(respond)
+    pageRef.current.scrollIntoView()
+  }, [newItemOffset])
 
   //TODO: css for the header (h1)
   return (
     <div className='outer'>
         <div className='inner'>
-          <h1>Đề xuất</h1>
-          <ImageCarousel items={recommendedItems}/>
           <h1>Nổi bật</h1>
-          <ImageCarousel items={hotItems}/>
+            <ImageCarousel items={hotItems}/>
+          <h1>Đề xuất</h1>
+            <ImageCarousel items={recommendedItems}/>
           <h1>Gợi ý cho bạn</h1>
-          <ImageCarousel items={hotItems}/>
-          <h1>Mới cập nhật</h1>
-
+            <ImageCarousel items={forUserItems}/>
+          <h1 ref={pageRef}>Mới cập nhật</h1>
+            <HomepageItemList items={newestItems}/>
+          <div className="page-paginate">
+            <ReactPaginate
+              nextLabel=">"
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={2}
+              pageCount={20}
+              onPageChange={handlePageClick}
+              previousLabel="<"
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              previousClassName="page-item"
+              previousLinkClassName="page-link"
+              nextClassName="page-item"
+              nextLinkClassName="page-link"
+              breakLabel="..."
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              containerClassName="pagination"
+              activeClassName="active"
+              renderOnZeroPageCount={null}
+            />
+          </div>
         </div>
     </div>
   );
