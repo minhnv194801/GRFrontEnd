@@ -22,13 +22,10 @@ function Read() {
   const [nextChapterHref, setNextChapterHref] = useState("")
   const [prevChapterHref, setPrevChapterHref] = useState("")
   const [openReportModal, setOpenReportModal] = useState(false);
+  const [reportContent, setReportContent] = useState("");
 
   const handleOpenReportModal = () => setOpenReportModal(true);
   const handleCloseReportModal = () => setOpenReportModal(false);
-
-  function changeChapter(e) {
-    window.location.href = "/read/" + e.target.value;
-  }
 
   const modalStyle = {
     position: 'absolute',
@@ -41,6 +38,15 @@ function Read() {
     boxShadow: 24,
     p: 4,
   };
+
+  function changeChapter(e) {
+    window.location.href = "/read/" + e.target.value;
+  }
+
+  function sendReport(e) {
+    // TODO: send report to backend
+    console.log(reportContent)
+  }
 
   useEffect(() => {
     // TODO: fetch manga title and chapter title from backend
@@ -129,8 +135,9 @@ function Read() {
           multiline
           rows={4}
           variant="outlined"
+          onChange={(e) => setReportContent(e.targer.value)}
         />
-      <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginTop:1}} variant="outlined">
+      <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginTop:1}} variant="outlined" onClick={sendReport}>
         Gửi lỗi
       </Button>
       </Box>
