@@ -1,9 +1,9 @@
 import React from 'react';
-import './HomepageItem.css'
+import './PaginateItem.css'
 
-const HomepageItem = (props) => {
+const PaginateItem = (props) => {
     return (
-        <div className='homepage-item-wrapper'>
+        <div className='paginate-item-wrapper'>
             <a href={props.item.href}>
                 <img className='cover' src={props.item.cover} alt='chapterCover'/>
             </a>
@@ -26,4 +26,4 @@ const HomepageItem = (props) => {
     );
 };
 
-export default HomepageItem;
+export default PaginateItem;

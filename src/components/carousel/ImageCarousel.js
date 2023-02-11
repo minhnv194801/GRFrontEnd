@@ -10,7 +10,7 @@ function ImageCarousel(props) {
         max: 3000,
         min: 1024
       },
-      items: 5,
+      items: 4,
       partialVisibilityGutter: 40
     },
     mobile: {

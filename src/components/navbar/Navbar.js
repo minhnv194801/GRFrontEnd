@@ -17,7 +17,7 @@ const Navbar = () => {
     }
 
     function handleSearchClicked(e) {
-        window.location.href = "/search?" + searchValue;
+        window.location.href = "/search?value=" + searchValue;
     }
 
     return (

@@ -1,0 +1,47 @@
+h1.title-header {
+    text-align: center;
+}
+
+a.title-link { 
+    color: #288ad6;
+    text-decoration: none; 
+}
+
+a.title-link:hover { 
+    text-decoration: underline; 
+}
+
+.inner-read {
+    padding-top: 1px;
+    background-color: #d9d9d9;
+    justify-content: center;
+    margin-bottom: -0.5vh;
+}
+
+.report-wrapper {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+}
+
+.chapter-selector-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+.chapter-selector {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 30vw;
+}
+
+.reading-box {
+    width: 80vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    display: grid;
+    justify-content: center;
+}

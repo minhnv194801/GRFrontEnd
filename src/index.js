@@ -18,23 +18,23 @@ import 'bootstrap/dist/css/bootstrap.css';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home/>,
+    element: <Home />,
   },
   {
     path: "/manga",
-    element: <Manga/>,
+    element: <Manga />,
   },
   {
-    path: "/read",
-    element: <Read/>,
+    path: "/read/:id",
+    element: <Read />,
   },
   {
     path: "/user",
-    element: <User/>,
+    element: <User />,
   },
   {
     path: "/search",
-    element: <Search/>,
+    element: <Search />,
   },
 ]);
 
@@ -42,9 +42,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <div className='page-wrapper'>
-      <Navbar/>
-      <RouterProvider router={router}/>
-      <Footer/>
+      <Navbar />
+      <RouterProvider router={router} />
+      <Footer />
     </div>
   </React.StrictMode>
 );

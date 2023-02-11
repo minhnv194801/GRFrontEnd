@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import ReactPaginate from 'react-paginate';
 import ImageCarousel from "../components/carousel/ImageCarousel";
 import './Home.css'
-import HomepageItemList from "../components/homepageitem/HomepageItemList";
+import PaginateItemList from "../components/paginateitem/PaginateItemList";
 
 function Home() {
   const pageRef = useRef(null)
@@ -156,17 +156,17 @@ function Home() {
         "chapters": [
           {
             "name": "Chapter 1",
-            "href": "/read",
+            "href": "/read/Chapter 1",
             "updateTime": "1 ngày trước",
           },
           {
             "name": "Chapter 2",
-            "href": "/read",
+            "href": "/read/Chapter 2",
             "updateTime": "7 ngày trước",
           },
           {
             "name": "Chapter 3",
-            "href": "/read",
+            "href": "/read/Chapter 3",
             "updateTime": "14 ngày trước",
           },
         ]
@@ -179,18 +179,23 @@ function Home() {
     pageRef.current.scrollIntoView()
   }, [newItemOffset])
 
-  //TODO: css for the header (h1)
   return (
     <div className='outer'>
         <div className='inner'>
           <h1>Nổi bật</h1>
-            <ImageCarousel items={hotItems}/>
+            <div className='image-carousel-wrapper'>
+              <ImageCarousel items={hotItems}/>
+            </div>
           <h1>Đề xuất</h1>
-            <ImageCarousel items={recommendedItems}/>
+            <div className='image-carousel-wrapper'>
+              <ImageCarousel items={recommendedItems}/>
+            </div>
           <h1>Gợi ý cho bạn</h1>
-            <ImageCarousel items={forUserItems}/>
+            <div className='image-carousel-wrapper'>
+              <ImageCarousel items={forUserItems}/>
+            </div>
           <h1 ref={pageRef}>Mới cập nhật</h1>
-            <HomepageItemList items={newestItems}/>
+            <PaginateItemList items={newestItems}/>
           <div className="page-paginate">
             <ReactPaginate
               nextLabel=">"

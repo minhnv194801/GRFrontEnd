@@ -1,0 +1,29 @@
+.search-text-input {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60vw;
+    background-color: white;
+}
+
+h1.search-header {
+    text-align: center;
+}
+
+h2 {
+    margin-left: 10px;
+    margin-bottom: 10px !important;
+}
+
+.checkbox-grid {
+    margin-left: 10px !important;
+}
+
+.button-div {
+    width: 100%;
+    display: grid;
+    justify-content: end;
+}
+
+.search-button {
+    margin-right: 50px !important;
+}

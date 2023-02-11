@@ -1,17 +1,17 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import HomepageItem from './HomepageItem';
+import PaginateItem from './PaginateItem';
 
-const HomepageItemList = (props) => {
+const PaginateItemLít = (props) => {
     return (
         <Grid container spacing={2}>
             {props.items.map((item) => 
                 <Grid item xs={12} md={4}>
-                    <HomepageItem item={item}/>
+                    <PaginateItem item={item}/>
                 </Grid>
             )}
-      </Grid>
+        </Grid>
     );
 };
 
-export default HomepageItemList;
+export default PaginateItemLít;
