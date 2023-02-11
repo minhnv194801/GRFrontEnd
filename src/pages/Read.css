@@ -45,3 +45,12 @@ a.title-link:hover {
     display: grid;
     justify-content: center;
 }
+
+.alert-wrapper {
+    position: fixed;
+    width: 30vw;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+}

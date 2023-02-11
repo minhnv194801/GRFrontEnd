@@ -4,10 +4,13 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Fade from "@mui/material/Fade";
 import ReportIcon from '@mui/icons-material/Report';
-import "./Read.css"
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import "./Read.css"
 
 function Read() {
   const params = useParams();
@@ -23,6 +26,7 @@ function Read() {
   const [prevChapterHref, setPrevChapterHref] = useState("")
   const [openReportModal, setOpenReportModal] = useState(false);
   const [reportContent, setReportContent] = useState("");
+  const [alertVisibility, setAlertVisibility] = useState(false);
 
   const handleOpenReportModal = () => setOpenReportModal(true);
   const handleCloseReportModal = () => setOpenReportModal(false);
@@ -46,6 +50,9 @@ function Read() {
   function sendReport(e) {
     // TODO: send report to backend
     console.log(reportContent)
+
+    setOpenReportModal(false)
+    setAlertVisibility(true)
   }
 
   useEffect(() => {
@@ -86,6 +93,22 @@ function Read() {
 
   return (
   <div className='outer'>
+    <div className='alert-wrapper'>
+      <Fade
+        in={alertVisibility}
+        timeout={{ enter: 1000, exit: 1000 }}
+        addEndListener={() => {
+          setTimeout(() => {
+            setAlertVisibility(false)
+          }, 2000);
+        }}
+        >
+        <Alert severity="success" variant="standard" className="alert">
+            <AlertTitle>Thành công</AlertTitle>
+              Báo lỗi đã được gửi thành công
+            </Alert>
+      </Fade>
+    </div>
     <div className='inner-read'>
       <h1 className='title-header'>
         <a className='title-link' href={mangaHref}>{mangaTitle}</a> - {chapterTitle}
@@ -135,7 +158,7 @@ function Read() {
           multiline
           rows={4}
           variant="outlined"
-          onChange={(e) => setReportContent(e.targer.value)}
+          onChange={(e) => setReportContent(e.target.value)}
         />
       <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginTop:1}} variant="outlined" onClick={sendReport}>
         Gửi lỗi
