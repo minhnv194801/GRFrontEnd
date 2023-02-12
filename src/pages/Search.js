@@ -24,6 +24,7 @@ function Search() {
   const [searchResultOffset, setSearchResultOffset] = useState(0)
   const [searchResults, setSearchResults] = useState([])
   const [selectedTags, setSelectedTags] = useState([])
+  const [numberOfPages, setNumberOfPages] = useState(1)
 
   const handlePageClick = (event) => {
     setSearchResultOffset(event.selected * itemsPerPage);
@@ -65,12 +66,15 @@ function Search() {
     if (searchParams.get('value') != null) {
       setSearchValue(searchParams.get('value'))
     }
+
+    //TODO: fetch number of results from server then calculate number of page
+    setNumberOfPages(5)
     //TODO: fetch search results from backend
     var respond = []
     for (var i = searchResultOffset; i < searchResultOffset + itemsPerPage; i++) {
       var item = {
         "cover": "https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
         "name": "Item " + i,
         "chapters": [
           {
@@ -117,7 +121,7 @@ function Search() {
         </div>
         <Grid className="checkbox-grid" container spacing={2}>
           {searchTags.map((tag) => 
-            <Grid item xs={4} md={2}>
+            <Grid item xs={6} md={2}>
               <FormGroup>
                 <FormControlLabel control={<Checkbox checked={selectedTags.includes(tag)} value={tag} onChange={handleCheckBox}/>} label={tag} />
               </FormGroup>
@@ -125,7 +129,7 @@ function Search() {
           )}
         </Grid>
         <div className='button-div'>
-          <Button sx={{backgroundColor:"#990000"}} className='search-button' variant="contained" onClick={handleSearchClicked}>Tìm kiếm</Button>
+          <Button sx={{backgroundColor:"#990000", "&:hover": {backgroundColor: "#C00000"}}} className='search-button' variant="contained" onClick={handleSearchClicked}>Tìm kiếm</Button>
         </div>
         <h2 ref={pageRef}>Kết quả tìm kiếm</h2>
         <PaginateItemList items={searchResults}/>
@@ -134,7 +138,7 @@ function Search() {
             nextLabel=">"
             marginPagesDisplayed={2}
             pageRangeDisplayed={2}
-            pageCount={20}
+            pageCount={numberOfPages}
             onPageChange={handlePageClick}
             previousLabel="<"
             pageClassName="page-item"

@@ -22,7 +22,7 @@ code {
 }
 
 .outer {
-  background-color: black;
+  background-color: #202124;
   min-height: 90vh;
 }
 
@@ -33,5 +33,5 @@ code {
   height: 100%;
   margin-left: 10vw;
   margin-right: 10vw;
-  margin-bottom: -0.5vh;
+  padding-bottom: 0.5vh;
 }

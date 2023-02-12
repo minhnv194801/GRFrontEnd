@@ -14,6 +14,9 @@ import Search from './pages/Search'
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import store from './store/store';
+import { Provider } from "react-redux";
+import TopAlert from './components/topalert/TopAlert';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +24,7 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/manga",
+    path: "/manga/:id",
     element: <Manga />,
   },
   {
@@ -41,11 +44,14 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div className='page-wrapper'>
-      <Navbar />
-      <RouterProvider router={router} />
-      <Footer />
-    </div>
+    <Provider store={store}>
+      <div className='page-wrapper'>
+        <Navbar />
+        <TopAlert />
+        <RouterProvider router={router} />
+        <Footer />
+      </div>
+    </Provider>
   </React.StrictMode>
 );
 

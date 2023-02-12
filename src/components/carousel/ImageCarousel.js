@@ -10,7 +10,7 @@ function ImageCarousel(props) {
         max: 3000,
         min: 1024
       },
-      items: 4,
+      items: 6,
       partialVisibilityGutter: 40
     },
     mobile: {
@@ -27,7 +27,7 @@ function ImageCarousel(props) {
         min: 464
       },
       items: 2,
-      partialVisibilityGutter: 30
+      partialVisibilityGutter: 20
     }
   };
 
@@ -36,7 +36,7 @@ function ImageCarousel(props) {
         swipeable={true}
         draggable={true}
         responsive={responsive}
-        centerMode
+        partialVisible={false}
         ssr={true}
         infinite={true}
         autoPlay={true}

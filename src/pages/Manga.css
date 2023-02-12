@@ -1,0 +1,87 @@
+.manga-title-header {
+    text-align: center;
+}
+
+.cover-wrapper {
+    display: grid;
+    justify-content: center;
+}
+
+.favorite-btn-wrapper {
+    display: grid;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.info-grid {
+    padding: 0;
+    margin: 0;
+    width: 60vw;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-left: 20vw;
+}
+
+.section-header {
+    width: 95%;
+    border-bottom: 3px solid #000;
+}
+
+.desc-paragraph {
+    margin-left: 10px;
+    width: 95%;
+    white-space: pre-wrap
+}
+
+.single-chapter-wrapper {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.chapter-cover {
+    height: 240px;
+    width: 180px;
+}
+
+.chapter-updatetime {
+    margin-bottom: 120px;
+}
+
+.comment-box-wrapper {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.comment-list-wrapper {
+    margin-left: 10px;
+    width: 95%;
+}
+
+.comment-avatar {
+    height: 100px;
+    width: 100px;
+}
+
+.comment-content-wrapper {
+    background-color: white;
+    width: 100%;
+    min-height: 100px;
+}
+
+.comment-username {
+    width: 95%;
+    margin-left: 10px;
+    border-bottom: 1px solid #000;
+}
+
+.comment-content {
+    margin-left: 10px;
+    white-space: pre-wrap;
+}
+
+.comment-updatetime {
+    margin-left: 10px;
+    color: #3f00ff;
+}

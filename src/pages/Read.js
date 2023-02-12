@@ -4,16 +4,16 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Fade from "@mui/material/Fade";
 import ReportIcon from '@mui/icons-material/Report';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { useDispatch } from 'react-redux'
+import { displaySuccess } from '../components/topalert/TopAlertSlice'
 import "./Read.css"
 
 function Read() {
-  const params = useParams();
+  const params = useParams()
+  const dispatch = useDispatch()
   
   // eslint-disable-next-line
   const [chapterId, setChapterId] = useState(params.id)
@@ -26,7 +26,6 @@ function Read() {
   const [prevChapterHref, setPrevChapterHref] = useState("")
   const [openReportModal, setOpenReportModal] = useState(false);
   const [reportContent, setReportContent] = useState("");
-  const [alertVisibility, setAlertVisibility] = useState(false);
 
   const handleOpenReportModal = () => setOpenReportModal(true);
   const handleCloseReportModal = () => setOpenReportModal(false);
@@ -52,13 +51,18 @@ function Read() {
     console.log(reportContent)
 
     setOpenReportModal(false)
-    setAlertVisibility(true)
+
+    // TODO: Receive respond and display result correctly
+    dispatch(displaySuccess({
+      "title": "Thành công",
+      "content": "Báo lỗi đã được gửi thành công",
+    }))
   }
 
   useEffect(() => {
     // TODO: fetch manga title and chapter title from backend
-    setMangaTitle("Item 1")
-    setMangaHref("/manga")
+    setMangaTitle("Item")
+    setMangaHref("/manga/Item")
     setChapterTitle("Chapter 1")
 
     // TODO: fetch list chapter of the manga from backend
@@ -93,22 +97,6 @@ function Read() {
 
   return (
   <div className='outer'>
-    <div className='alert-wrapper'>
-      <Fade
-        in={alertVisibility}
-        timeout={{ enter: 1000, exit: 1000 }}
-        addEndListener={() => {
-          setTimeout(() => {
-            setAlertVisibility(false)
-          }, 2000);
-        }}
-        >
-        <Alert severity="success" variant="standard" className="alert">
-            <AlertTitle>Thành công</AlertTitle>
-              Báo lỗi đã được gửi thành công
-            </Alert>
-      </Fade>
-    </div>
     <div className='inner-read'>
       <h1 className='title-header'>
         <a className='title-link' href={mangaHref}>{mangaTitle}</a> - {chapterTitle}
@@ -131,14 +119,14 @@ function Read() {
       </div>
     </div>
     <div className='reading-box'>
-      {chapterImages.map((image, index) => <img src={image} alt={"page " + index}/>)}
+      {chapterImages.map((image, index) => <img className='page-image' src={image} alt={"page " + index}/>)}
     </div>
     <div className='inner-read'>
     <div className='chapter-selector-wrapper'>
-        <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginRight:30}} disabled={prevChapterHref === ""} variant="outlined" href={prevChapterHref} startIcon={<NavigateBeforeIcon/>}>
+        <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginRight:"30px"}} disabled={prevChapterHref === ""} variant="outlined" href={prevChapterHref} startIcon={<NavigateBeforeIcon/>}>
           Chương trước
         </Button>
-        <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginLeft:30}} disabled={nextChapterHref === ""} variant="outlined" href={nextChapterHref} startIcon={<NavigateNextIcon/>}>
+        <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginLeft:"30px"}} disabled={nextChapterHref === ""} variant="outlined" href={nextChapterHref} startIcon={<NavigateNextIcon/>}>
           Chương sau
         </Button>
       </div>

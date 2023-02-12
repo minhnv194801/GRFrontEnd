@@ -46,11 +46,7 @@ a.title-link:hover {
     justify-content: center;
 }
 
-.alert-wrapper {
-    position: fixed;
-    width: 30vw;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10000;
+.page-image {
+    width: 80vw;
+    height: fit-content;
 }

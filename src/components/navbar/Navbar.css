@@ -13,56 +13,64 @@
 .logo {
     padding-left: 5vw;
     mix-blend-mode: luminosity;
-    height: 3vh;
+    height: 5vh;
 }
 
 .center {
     display: flex;
+    height: 80%;
     background-color: #D9D9D9;
 }
 
 .userbox {
     padding-right: 5vw;
+    float: right;
 }
 
 .text-input {
-    width: 50vw;
+    /* width: 50vw; */
 }
 
 .search-btn {
     background-color: #990000;
 }
 
-a.loginBtn:link { 
+a.loginBtn:link {
     color: #ffffff;
-    text-decoration: none; 
-}
-a.loginBtn:visited { 
-    color: #ffffff;
-    text-decoration: none; 
-}
-a.loginBtn:active { 
-    color: #ffffff;
-    text-decoration: none; 
-}
-a.loginBtn:hover { 
-    color: #ffffff; 
-    text-decoration: underline; 
+    text-decoration: none;
 }
 
-a.registerBtn:link { 
+a.loginBtn:visited {
     color: #ffffff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a.registerBtn:visited { 
+
+a.loginBtn:active {
     color: #ffffff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a.registerBtn:active { 
+
+a.loginBtn:hover {
     color: #ffffff;
-    text-decoration: none; 
+    text-decoration: underline;
 }
-a.registerBtn:hover { 
-    color: #ffffff; 
-    text-decoration: underline; 
+
+a.registerBtn:link {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a.registerBtn:visited {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a.registerBtn:active {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a.registerBtn:hover {
+    color: #ffffff;
+    text-decoration: underline;
 }

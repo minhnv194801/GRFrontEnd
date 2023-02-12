@@ -35,6 +35,8 @@ function Home() {
     "chapters": [
     ]
   }])
+
+  const [numberOfPages, setNumberOfPages] = useState(1)
   
   const handlePageClick = (event) => {
     setNewItemOffset(event.selected * itemsPerPage);
@@ -46,32 +48,32 @@ function Home() {
       {
         "title": "Item 1",
         "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 2",
         "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 3",
         "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 4",
         "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 5",
         "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 6",
         "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
     ]
     setRecommendedItems(respond)
@@ -80,32 +82,32 @@ function Home() {
       {
         "title": "Item 4",
         "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 2",
         "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 3",
         "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 1",
         "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 6",
         "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 5",
         "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
     ]
     setHotItems(respond)
@@ -114,44 +116,48 @@ function Home() {
       {
         "title": "Item 2",
         "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 6",
         "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 3",
         "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 4",
         "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 5",
         "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
       {
         "title": "Item 1",
         "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
       },
     ]
     setForUserItems(respond)
+
+    //TODO: fetch number of items from server then calculate number of page
+    setNumberOfPages(20)
   }, [])
 
   useEffect(() => {
     //TODO: fetch newest items from backend
+    //TODO: convert unix update time to string relative time
     var respond = []
     for (var i = newItemOffset; i < newItemOffset + itemsPerPage; i++) {
       var item = {
         "cover": "https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg",
-        "href": "/manga",
+        "href": "/manga/Item",
         "name": "Item " + i,
         "chapters": [
           {
@@ -201,7 +207,7 @@ function Home() {
               nextLabel=">"
               marginPagesDisplayed={2}
               pageRangeDisplayed={2}
-              pageCount={20}
+              pageCount={numberOfPages}
               onPageChange={handlePageClick}
               previousLabel="<"
               pageClassName="page-item"
