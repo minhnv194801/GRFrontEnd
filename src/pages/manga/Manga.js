@@ -11,8 +11,6 @@ import { useDispatch } from 'react-redux'
 import { displaySuccess } from '../../components/topalert/TopAlertSlice'
 import './Manga.css'
 
-// TODO: handle favorite button event
-// TODO: Alert for rating event
 function Manga() {
   const chaptersPerPage = 5
   const commentsPerPage = 6
