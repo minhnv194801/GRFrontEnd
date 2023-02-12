@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
-import PaginateItemList from "../components/paginateitem/PaginateItemList";
+import PaginateItemList from "../../components/paginateitem/PaginateItemList";
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';

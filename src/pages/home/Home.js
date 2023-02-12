@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import ReactPaginate from 'react-paginate';
-import ImageCarousel from "../components/carousel/ImageCarousel";
+import ImageCarousel from "../../components/carousel/ImageCarousel";
+import PaginateItemList from "../../components/paginateitem/PaginateItemList";
 import './Home.css'
-import PaginateItemList from "../components/paginateitem/PaginateItemList";
 
 function Home() {
   const pageRef = useRef(null)

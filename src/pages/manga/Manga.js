@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { Rating } from 'react-simple-star-rating'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useDispatch } from 'react-redux'
-import { displaySuccess } from '../components/topalert/TopAlertSlice'
+import { displaySuccess } from '../../components/topalert/TopAlertSlice'
 import './Manga.css'
 
 // TODO: handle favorite button event

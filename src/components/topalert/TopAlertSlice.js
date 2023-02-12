@@ -7,7 +7,7 @@ export const TopAlertSlice = createSlice({
         alertSeverity: "success",
         alertTitle: "",
         alertContent: "",
-
+        closeTime: 0,
     },
     reducers: {
         displaySuccess: (state, action) => {
@@ -24,12 +24,16 @@ export const TopAlertSlice = createSlice({
             state.alertVisibility = true
         },
 
+        setCloseTime: (state, action) => {
+            state.closeTime = action.payload
+        },
+
         closeTopAlert: state => {
             state.alertVisibility = false
-        }
+        },
     }
 })
 
-export const { displaySuccess, displayFailure, closeTopAlert } = TopAlertSlice.actions
+export const { displaySuccess, displayFailure, setCloseTime, closeTopAlert } = TopAlertSlice.actions
 
 export default TopAlertSlice.reducer

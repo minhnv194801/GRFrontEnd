@@ -8,7 +8,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useDispatch } from 'react-redux'
-import { displaySuccess } from '../components/topalert/TopAlertSlice'
+import { displaySuccess } from '../../components/topalert/TopAlertSlice'
 import "./Read.css"
 
 function Read() {

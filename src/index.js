@@ -6,11 +6,11 @@ import {
 } from "react-router-dom";
 import Navbar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer'
-import Home from './pages/Home';
-import Read from './pages/Read'
-import Manga from './pages/Manga'
-import User from './pages/User'
-import Search from './pages/Search'
+import Home from './pages/home/Home';
+import Read from './pages/read/Read'
+import Manga from './pages/manga/Manga'
+import User from './pages/user/User'
+import Search from './pages/search/Search'
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
