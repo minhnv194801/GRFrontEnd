@@ -11,6 +11,9 @@
 .owned-chapter-title-wrapper {
     display: flex;
     height: 25%;
+    width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .scroll-wrapper {
@@ -26,6 +29,8 @@
     width: 95%;
     margin-left: auto;
     margin-right: auto;
+    white-space: nowrap;
+    overflow: hidden;
     cursor: pointer;
 }
 
@@ -37,5 +42,7 @@
     width: 95%;
     margin-left: auto;
     margin-right: auto;
+    white-space: nowrap;
+    overflow: hidden;
     cursor: pointer;
 }

@@ -12,11 +12,17 @@
     display: flex;
     text-align: center;
     height: 25%;
+    width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .favorite-chapter {
     display: flex;
     height: 25%;
+    width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .favorite-chapter-updatetime {

@@ -145,6 +145,7 @@ function Owned() {
                             </a>
                             <div></div>
                         </div>
+                        <h3>Danh sách chương sở hữu:</h3>
                         <div className='scroll-wrapper'>
                             <InfiniteScroll
                                 dataLength={3}
