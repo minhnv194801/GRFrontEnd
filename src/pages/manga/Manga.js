@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import Grid from '@mui/material/Grid';
@@ -15,6 +15,8 @@ function Manga() {
   const chaptersPerPage = 5
   const commentsPerPage = 6
   const params = useParams()
+  const chapterListRef = useRef(null)
+  const commentListRef = useRef(null)
   const dispatch = useDispatch()
 
   // enlist-disable-next-line
@@ -41,10 +43,12 @@ function Manga() {
 
   const handleChapterPageClick = (event) => {
     setChapterOffset(event.selected * chaptersPerPage);
+    chapterListRef.current.scrollIntoView()
   }
 
   const handleCommentPageClick = (event) => {
     setCommentOffset(event.selected * commentsPerPage);
+    commentListRef.current.scrollIntoView()
   }
 
   const handleFavorite = (e) => {
@@ -254,7 +258,7 @@ function Manga() {
           </p>
         </div>
         <div className='chapter-list-wrapper'>
-          <h2 className='section-header'>Chương truyện</h2>
+          <h2 className='section-header' ref={chapterListRef}>Chương truyện</h2>
           {chapterList.map((chapter) =>
             <div className='single-chapter-wrapper'>
               <Grid container>
@@ -326,7 +330,7 @@ function Manga() {
             />
           </Box>
           <Button sx={{ backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" }, marginLeft:"80%", marginTop:"10px"}} onClick={handleCommentSubmition} variant="contained">Bình luận</Button>
-          <h2 className='section-header'>Bình luận</h2>
+          <h2 className='section-header' ref={commentListRef}>Bình luận</h2>
           <div className="comment-list-wrapper">
             {commentList.map((comment) => 
               <Grid container>
