@@ -22,12 +22,12 @@ const Navbar = () => {
 
     return (
         <Grid className='navbar' container>
-            <Grid item md={3}>
+            <Grid item xs={3}>
                 <a href='/'>
                     <img className='logo' src={logo} alt='logo'/>
                 </a>
             </Grid>
-            <Grid item md={5}>
+            <Grid item xs={5}>
                 <InputBase className='text-input' 
                     sx={{background:"#D9D9D9",}}
                     placeholder="Tìm kiếm" 
@@ -40,12 +40,12 @@ const Navbar = () => {
                         </InputAdornment>
                 }/>
             </Grid>
-            <Grid item md={1}>
+            <Grid item xs={1}>
             <div className='search-btn'>
                 <Button variant="contained" onClick={handleSearchClicked}>Tìm kiếm</Button>
             </div>
             </Grid>
-            <Grid item md={3}>
+            <Grid item xs={3}>
                 <div className='userbox'>
                     <a className='loginBtn' href='/user' rel='nofollow'>Đăng nhập</a>
                     /

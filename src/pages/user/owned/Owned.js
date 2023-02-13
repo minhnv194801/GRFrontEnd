@@ -133,12 +133,12 @@ function Owned() {
             {ownedMangaList.map((owned) =>
             <div className='owned-list-wrapper'>
                 <Grid container sx={{ marginTop: '30px' }}>
-                    <Grid item md={4} sx={{ textAlign: 'center' }}>
+                    <Grid item xs={4} sx={{ textAlign: 'center' }}>
                         <a href={'/manga/' + owned.id}>
                             <img className='owned-manga-cover' src={owned.cover} alt='owned-cover' />
                         </a>
                     </Grid>
-                    <Grid item md={8}>
+                    <Grid item xs={8}>
                         <div className='owned-chapter-title-wrapper'>
                             <a href={'/manga/' + owned.id}>
                                 <h3 className='owned-chapter-title'>{owned.title}</h3>

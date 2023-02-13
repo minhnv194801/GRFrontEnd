@@ -101,12 +101,12 @@ function Favorite() {
             {favoriteMangaList.map((favoriteManga) => 
                 <div className='favorite-wrapper'>
                     <Grid container sx={{marginTop:'30px'}}>
-                        <Grid item md={4} sx={{textAlign:'center'}}>
+                        <Grid item xs={4} sx={{textAlign:'center'}}>
                             <a href={'/manga/'+favoriteManga.id}>
                                 <img className='favorite-manga-cover' src={favoriteManga.cover} alt='manga-cover'/>
                             </a>
                         </Grid>
-                        <Grid item md={8} columnSpacing={3}>
+                        <Grid item xs={8} columnSpacing={3}>
                             <div className='favorite-title-wrapper'>    
                                 <a href={'/manga/'+favoriteManga.id}>
                                     <h3 className='favorite-title'>{favoriteManga.title}</h3>
