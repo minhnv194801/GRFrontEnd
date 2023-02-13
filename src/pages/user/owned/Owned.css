@@ -1,0 +1,41 @@
+.owned-list-wrapper {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #000;
+}
+
+.owned-manga-cover {
+    height: 300px;
+    box-shadow: 1px 1px 1px 1px #000;
+}
+
+.owned-chapter-title-wrapper {
+    display: flex;
+    height: 25%;
+}
+
+.scroll-wrapper {
+    width: 95%;
+    box-shadow: 1px 1px 1px 1px #000;
+}
+
+.owned-chapter-wrapper {
+    background-color: #fff;
+    color: #000;
+    border-bottom: 1px solid #000;
+    text-indent: 10px;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.selected-owned-chapter-wrapper {
+    background-color: #257AFD;
+    color: #000;
+    border-bottom: 1px solid #000;
+    text-indent: 10px;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}

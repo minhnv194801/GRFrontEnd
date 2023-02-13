@@ -1,0 +1,41 @@
+.report-list-wrapper {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #000;
+}
+
+.report-chapter-cover {
+    height: 300px;
+    box-shadow: 1px 1px 1px 1px #000;
+}
+
+.report-chapter-title-wrapper {
+    display: flex;
+}
+
+.report-content {
+    width: 80%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+}
+
+.report-status {
+    display: flex;
+}
+
+.finished-report {
+    margin-left: 5px;
+    color: #00FF00;
+}
+
+.unfinished-report {
+    margin-left: 5px;
+    color: red;
+}
+
+.report-response {
+    width: 80%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+}

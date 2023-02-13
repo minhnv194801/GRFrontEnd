@@ -10,8 +10,8 @@ function ImageCarousel(props) {
         max: 3000,
         min: 1024
       },
-      items: 6,
-      partialVisibilityGutter: 40
+      items: 5,
+      partialVisibilityGutter: -10
     },
     mobile: {
       breakpoint: {
@@ -19,7 +19,7 @@ function ImageCarousel(props) {
         min: 0
       },
       items: 1,
-      partialVisibilityGutter: 30
+      partialVisibilityGutter: -10
     },
     tablet: {
       breakpoint: {
@@ -27,7 +27,7 @@ function ImageCarousel(props) {
         min: 464
       },
       items: 2,
-      partialVisibilityGutter: 20
+      partialVisibilityGutter: -10
     }
   };
 
@@ -36,7 +36,7 @@ function ImageCarousel(props) {
         swipeable={true}
         draggable={true}
         responsive={responsive}
-        partialVisible={false}
+        partialVisible={true}
         ssr={true}
         infinite={true}
         autoPlay={true}

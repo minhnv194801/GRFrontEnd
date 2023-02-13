@@ -1,0 +1,24 @@
+.favorite-wrapper {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #000;
+}
+
+.favorite-manga-cover {
+    height: 300px;
+    box-shadow: 1px 1px 1px 1px #000;
+}
+
+.favorite-title-wrapper {
+    display: flex;
+    text-align: center;
+    height: 25%;
+}
+
+.favorite-chapter {
+    display: flex;
+    height: 25%;
+}
+
+.favorite-chapter-updatetime {
+    margin-left: 5px;
+}

@@ -5,12 +5,163 @@ import Grid from '@mui/material/Grid';
 import { useDispatch, useSelector } from 'react-redux'
 import { displaySuccess } from '../../../components/topalert/TopAlertSlice'
 import { setUserAvatar, setUsername } from '../UserSlice';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import './Owned.css'
 
 function Owned() {
+    const [ownedMangaList, setOwnedMangaList] = useState([{
+        'id': '',
+        'cover': '',
+        'title': '',
+        'chapters': []
+    }])
+    const [selectedChapterId, setSelectedChapterId] = useState("")
+
+    const handleSelectChapter = (e) => {
+        switch (e.detail) {
+            case 1:
+                setSelectedChapterId(e.target.id)
+                break;
+            case 2:
+                window.location.href = "/read/" + e.target.id;
+                break;
+        }
+    }
+
+    useEffect(() => {
+        //TODO: fetch owned manga and chapters from backend
+        let fetchedOwnedMangaList = [
+            {
+                'id': 'manga',
+                'cover': 'https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg',
+                'title': 'Item',
+                'chapters': [
+                    {
+                        'id': 'Chapter 1',
+                        'title': 'Chapter 1'
+                    },
+                    {
+                        'id': 'Chapter 2',
+                        'title': 'Chapter 2'
+                    },
+                    {
+                        'id': 'Chapter 3',
+                        'title': 'Chapter 3'
+                    },
+                    {
+                        'id': 'Chapter 4',
+                        'title': 'Chapter 4'
+                    },
+                    {
+                        'id': 'Chapter 5',
+                        'title': 'Chapter 5'
+                    },
+                    {
+                        'id': 'Chapter 6',
+                        'title': 'Chapter 6'
+                    },
+                    {
+                        'id': 'Chapter 7',
+                        'title': 'Chapter 7'
+                    },
+                    {
+                        'id': 'Chapter 8',
+                        'title': 'Chapter 8'
+                    },
+                    {
+                        'id': 'Chapter 9',
+                        'title': 'Chapter 9'
+                    },
+                    {
+                        'id': 'Chapter 10',
+                        'title': 'Chapter 10'
+                    }
+                ]
+            },
+            {
+                'id': 'manga',
+                'cover': 'https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg',
+                'title': 'Item 2',
+                'chapters': [
+                    {
+                        'id': 'Chapter x',
+                        'title': 'Chapter 1'
+                    },
+                    {
+                        'id': 'Chapter xx',
+                        'title': 'Chapter 2'
+                    },
+                    {
+                        'id': 'Chapter xxx',
+                        'title': 'Chapter 3'
+                    },
+                ]
+            },
+            {
+                'id': 'manga',
+                'cover': 'https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg',
+                'title': 'Item 3',
+                'chapters': [
+                    {
+                        'id': 'Chapter y',
+                        'title': 'Chapter 1'
+                    },
+                    {
+                        'id': 'Chapter yy',
+                        'title': 'Chapter 2'
+                    },
+                    {
+                        'id': 'Chapter yyy',
+                        'title': 'Chapter 3'
+                    },
+                    {
+                        'id': 'Chapter yyyy',
+                        'title': 'Chapter 4'
+                    },
+                ]
+            }
+        ]
+
+        setOwnedMangaList(fetchedOwnedMangaList)
+    }, [])
+
     return (
-        <div>
-            Owned list
-        </div>
+        <InfiniteScroll
+            dataLength={1}
+            height={660}
+        >
+            {ownedMangaList.map((owned) =>
+            <div className='owned-list-wrapper'>
+                <Grid container sx={{ marginTop: '30px' }}>
+                    <Grid item md={4} sx={{ textAlign: 'center' }}>
+                        <a href={'/manga/' + owned.id}>
+                            <img className='owned-manga-cover' src={owned.cover} alt='owned-cover' />
+                        </a>
+                    </Grid>
+                    <Grid item md={8}>
+                        <div className='owned-chapter-title-wrapper'>
+                            <a href={'/manga/' + owned.id}>
+                                <h3 className='owned-chapter-title'>{owned.title}</h3>
+                            </a>
+                            <div></div>
+                        </div>
+                        <div className='scroll-wrapper'>
+                            <InfiniteScroll
+                                dataLength={3}
+                                height={200}
+                            >
+                                {owned.chapters.map((chapter) =>
+                                    <div className={selectedChapterId === chapter.id ? 'selected-owned-chapter-wrapper' : 'owned-chapter-wrapper'} id={chapter.id} onClick={handleSelectChapter}>
+                                        {chapter.title}
+                                    </div>
+                                )}
+                            </InfiniteScroll>
+                        </div>
+                    </Grid>
+                </Grid>
+            </div>
+            )}
+        </InfiniteScroll>
     )
 }
 

@@ -11,24 +11,28 @@ function Home() {
   const [newItemOffset, setNewItemOffset] = useState(0)
 
   const [recommendedItems, setRecommendedItems] = useState([{
+    "id": "",
     "title": "Loading...",
     "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
     "href": "",
   }])
 
   const [hotItems, setHotItems] = useState([{
+    "id": "",
     "title": "Loading...",
     "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
     "href": "",
   }])
 
   const [forUserItems, setForUserItems] = useState([{
+    "id": "",
     "title": "Loading...",
     "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
     "href": "",
   }])
 
   const [newestItems, setNewestItems] = useState([{
+    "id": "",
     "cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
     "name": "Loading...",
     "href": "",
@@ -46,104 +50,113 @@ function Home() {
     // TODO: Fetching recommend manga from server
     var respond = [
       {
+        "id": "Item",
         "title": "Item 1",
         "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 2",
         "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 3",
         "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 4",
         "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 5",
         "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 6",
         "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-        "href": "/manga/Item",
       },
     ]
+    respond.forEach((respond) => {
+      respond.href = '/manga/' + respond.id
+    })
     setRecommendedItems(respond)
   
     respond = [
       {
+        "id": "Item",
         "title": "Item 4",
         "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 2",
         "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 3",
         "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 1",
         "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 6",
         "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 5",
         "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-        "href": "/manga/Item",
       },
     ]
+    respond.forEach((respond) => {
+      respond.href = '/manga/' + respond.id
+    })
     setHotItems(respond)
 
     respond = [
       {
+        "id": "Item",
         "title": "Item 2",
         "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 6",
         "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 3",
         "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 4",
         "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 5",
         "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-        "href": "/manga/Item",
       },
       {
+        "id": "Item",
         "title": "Item 1",
         "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-        "href": "/manga/Item",
       },
     ]
+    respond.forEach((respond) => {
+      respond.href = '/manga/' + respond.id
+    })
     setForUserItems(respond)
 
     //TODO: fetch number of items from server then calculate number of page
@@ -156,23 +169,23 @@ function Home() {
     var respond = []
     for (var i = newItemOffset; i < newItemOffset + itemsPerPage; i++) {
       var item = {
+        "id": "Item",
         "cover": "https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg",
-        "href": "/manga/Item",
-        "name": "Item " + i,
+        "title": "Item " + i,
         "chapters": [
           {
+            "id": "Chapter 1",
             "name": "Chapter 1",
-            "href": "/read/Chapter 1",
             "updateTime": "1 ngày trước",
           },
           {
+            "id": "Chapter 2",
             "name": "Chapter 2",
-            "href": "/read/Chapter 2",
             "updateTime": "7 ngày trước",
           },
           {
+            "id": "Chapter 3",
             "name": "Chapter 3",
-            "href": "/read/Chapter 3",
             "updateTime": "14 ngày trước",
           },
         ]
@@ -180,7 +193,12 @@ function Home() {
 
       respond.push(item)
     }
-    console.log(respond)
+    respond.forEach((respond) => {
+      respond.href = '/manga/' + respond.id
+      respond.chapters.forEach((chapter) => {
+        chapter.href = '/read/' + chapter.id
+      })
+    })
     setNewestItems(respond)
     pageRef.current.scrollIntoView()
   }, [newItemOffset])

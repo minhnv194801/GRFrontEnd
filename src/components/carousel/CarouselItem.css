@@ -5,10 +5,12 @@
 .image {
     width: 180px;
     max-height: 240px;
+    box-shadow: 1px 1px 1px 1px #000;
 }
 
 .text-on-image {
     background-color: black;
+    box-shadow: 1px 1px 1px 1px #000;
     width: 180px;
     color: white;
     text-align: center;
@@ -16,19 +18,22 @@
     overflow: hidden;
 }
 
-a:link { 
+a:link {
     color: #ffffff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a:visited { 
+
+a:visited {
     color: #ffffff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a:active { 
+
+a:active {
     color: #ffffff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a:hover { 
-    color: #ffffff; 
-    text-decoration: none; 
+
+a:hover {
+    color: #ffffff;
+    text-decoration: none;
 }

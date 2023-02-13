@@ -8,7 +8,7 @@ const PaginateItem = (props) => {
                 <img className='cover' src={props.item.cover} alt='chapterCover'/>
             </a>
             <a className='chapter-title' href={props.item.href}>
-                <h2>{props.item.name}</h2>
+                <h2>{props.item.title}</h2>
             </a>
             <ul className='item-chapter-list'>
                 {props.item.chapters.map((chapter) => 

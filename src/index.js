@@ -39,6 +39,10 @@ const router = createBrowserRouter([
     path: "/search",
     element: <Search />,
   },
+  {
+    path: "*",
+    element: <Home />,
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

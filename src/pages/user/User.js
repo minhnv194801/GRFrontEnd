@@ -54,17 +54,17 @@ function User() {
         <div className='content-wrapper'>
           <Grid container>
             <Grid item md="3">
-              <div className={currentPage==='info'?'selected-button-div':'button-div'} id='info' onClick={handlePageChange}>
+              <div className={currentPage==='info'?'selected-page-button-div':'page-button-div'} id='info' onClick={handlePageChange}>
                 <h3 className='button-header' id='info'>Thông tin cá nhân</h3>
               </div>
             </Grid>
             <Grid item md="3">
-              <div className={currentPage==='favorite'?'selected-button-div':'button-div'} id='favorite' onClick={handlePageChange}>
+              <div className={currentPage==='favorite'?'selected-page-button-div':'page-button-div'} id='favorite' onClick={handlePageChange}>
                 <h3 className='button-header' id='favorite'>Truyện theo dõi</h3>
               </div>
             </Grid>
             <Grid item md="3">
-              <div className={currentPage==='owned'?'selected-button-div':'button-div'} id='owned' onClick={handlePageChange}>
+              <div className={currentPage==='owned'?'selected-page-button-div':'page-button-div'} id='owned' onClick={handlePageChange}>
                 <h3 className='button-header' id='owned'>Chương sở hữu</h3>
               </div>
             </Grid>
