@@ -69,7 +69,7 @@ function User() {
               </div>
             </Grid>
             <Grid item xs="3">
-              <div className={currentPage==='report'?'selected-button-div':'button-div'} id='report' onClick={handlePageChange}>
+              <div className={currentPage==='report'?'selected-button-div':'page-button-div'} id='report' onClick={handlePageChange}>
                 <h3 className='button-header' id='report'>Thông tin báo lỗi</h3>
               </div>
             </Grid>
