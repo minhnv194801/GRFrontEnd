@@ -3,12 +3,14 @@ import './CarouselItem.css'
 
 function CarouselItem(props) {
     return (
-        <a className= 'wrapper' href={props.href}>
-            <img fetchpriority="high" className='image' src={props.image} alt=""></img>
-            <div className='text-on-image'>
-                <h3> {props.text} </h3>
-            </div>
-        </a>
+        <div className='wrapper'>
+            <a href={props.href}>
+                <img fetchpriority="high" className='image' src={props.image} alt=""></img>
+                <div className='text-on-image'>
+                    <h3 className='text-on-image'> {props.text} </h3>
+                </div>
+            </a>
+        </div>
     );
 }
   

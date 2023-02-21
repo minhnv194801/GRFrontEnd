@@ -48,44 +48,29 @@ function Home() {
   
   useEffect(() => {
     // TODO: Fetching recommend manga from server
-    var respond = [
-      {
-        "id": "Item",
-        "title": "Item 1",
-        "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 2",
-        "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 3",
-        "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 4",
-        "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 5",
-        "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 6",
-        "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-      },
-    ]
-    respond.forEach((respond) => {
-      respond.href = '/manga/' + respond.id
-    })
-    setRecommendedItems(respond)
+    const fetchRecommendData = async () => {
+      const response = await fetch('http://localhost:8080/api/v1/home/recommend', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          "count": 10,
+        })
+      });
+      // convert data to json
+      const json = await response.json();
+
+      json.forEach((respond) => {
+        respond.href = '/manga/' + respond.id
+      })
+      setRecommendedItems(json)
+    }
+
+    fetchRecommendData()
   
-    respond = [
+    let respond = [
       {
         "id": "Item",
         "title": "Item 4",
