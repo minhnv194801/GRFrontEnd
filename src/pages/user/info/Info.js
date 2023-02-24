@@ -171,7 +171,7 @@ function Info() {
                 <h3 className='info-content'>{role}</h3>
             </Grid>
             <Grid item xs={12} sx={{marginTop:'30px', marginBottom:'30px', textAlign:'right'}}>
-                <Button sx={{ color: "#000", backgroundColor: "#fff", marginRight:'5%', "&:hover": { backgroundColor: "#C0C0C0" } }} onClick={handleUpdate} variant="contained">Cập nhật</Button>
+                <Button sx={{ color: "#fff", backgroundColor: "#ed2939", marginRight:'5%', "&:hover": { backgroundColor: "#cc0023" } }} onClick={handleUpdate} variant="contained">Cập nhật</Button>
             </Grid>
         </Grid>
     )

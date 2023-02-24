@@ -28,3 +28,45 @@
 .favorite-chapter-updatetime {
     margin-left: 5px;
 }
+
+a.favorite-title-href {
+    color: #fff;
+    text-decoration: none;
+}
+a.favorite-title-href:link { 
+    color: #fff;
+    text-decoration: none; 
+}
+a.favorite-title-href:visited { 
+    color: #fff;
+    text-decoration: none; 
+}
+a.favorite-title-href:active { 
+    color: #fff;
+    text-decoration: none; 
+}
+a.favorite-title-href:hover { 
+    color: #fff; 
+    text-decoration: underline; 
+}
+
+a.favorite-chapter-href {
+    color: #fff;
+    text-decoration: none;
+}
+a.favorite-chapter-href:link { 
+    color: #fff;
+    text-decoration: none; 
+}
+a.favorite-chapter-href:visited { 
+    color: #fff;
+    text-decoration: none; 
+}
+a.favorite-chapter-href:active { 
+    color: #fff;
+    text-decoration: none; 
+}
+a.chapter-title-href:hover { 
+    color: #fff; 
+    text-decoration: underline; 
+}

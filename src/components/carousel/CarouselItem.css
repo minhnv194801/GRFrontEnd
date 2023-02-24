@@ -5,13 +5,11 @@
 
 .image {
     width: 180px;
-    max-height: 240px;
-    box-shadow: 1px 1px 1px 1px #000;
+    height: 240px;
 }
 
 .text-on-image {
     background-color: #202124;
-    box-shadow: 1px 1px 1px 1px #000;
     font-size: 24px;
     color: white;
     text-align: center;
@@ -22,22 +20,23 @@
     text-overflow: ellipsis;
 }
 
-a:link {
-    color: #ffffff;
+a.href-on-image {
+    color: #fff;
     text-decoration: none;
 }
-
-a:visited {
-    color: #ffffff;
-    text-decoration: none;
+a.href-on-image:link { 
+    color: #fff;
+    text-decoration: none; 
 }
-
-a:active {
-    color: #ffffff;
-    text-decoration: none;
+a.href-on-image:visited { 
+    color: #fff;
+    text-decoration: none; 
 }
-
-a:hover {
-    color: #ffffff;
-    text-decoration: none;
+a.href-on-image:active { 
+    color: #fff;
+    text-decoration: none; 
+}
+a.href-on-image:hover { 
+    color: #fff; 
+    text-decoration: none; 
 }

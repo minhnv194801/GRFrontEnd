@@ -4,7 +4,7 @@ import './CarouselItem.css'
 function CarouselItem(props) {
     return (
         <div className='wrapper'>
-            <a href={props.href}>
+            <a className='href-on-image' href={props.href}>
                 <img fetchpriority="high" className='image' src={props.image} alt=""></img>
                 <div className='text-on-image'>
                     <h3 className='text-on-image'> {props.text} </h3>

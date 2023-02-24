@@ -64,7 +64,7 @@ function Report() {
                         </Grid>
                         <Grid item xs={8}>
                             <div className='report-chapter-title-wrapper'>
-                                <a href={'/read/'+report.chapterId}>
+                                <a className='report-chapter-title-href' href={'/read/'+report.chapterId}>
                                     <h3 className='report-chapter-title'>{report.chapterTitle}</h3>
                                 </a>
                                 <div></div>

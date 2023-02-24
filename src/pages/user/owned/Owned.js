@@ -140,7 +140,7 @@ function Owned() {
                     </Grid>
                     <Grid item xs={8}>
                         <div className='owned-chapter-title-wrapper'>
-                            <a href={'/manga/' + owned.id}>
+                            <a className='owned-title-href' href={'/manga/' + owned.id}>
                                 <h3 className='owned-chapter-title'>{owned.title}</h3>
                             </a>
                             <div></div>

@@ -78,42 +78,41 @@ function Read() {
       setChapterTitle(json.title)
       setChapterImages(json.pages)
 
-      setChapterList(json.chapterList)
-      let index = json.chapterList.map(function(e) { return e.id; }).indexOf(chapterId);
+      // setChapterList(json.chapterList)
+      // let index = json.chapterList.map(function(e) { return e.id; }).indexOf(chapterId);
+      // if (index > 0) {
+      //   setPrevChapterHref("/read/" + json.chapterList[index-1].id)
+      // }
+      // if (index + 1 < json.chapterList.length) {
+      //   setNextChapterHref("/read/" + json.chapterList[index+1].id)
+      // }
+    }
+
+    const fetchChapterData = async () => {
+      const response = await fetch('http://localhost:8080/api/v1/read/' + chapterId + '/chapterlist', {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': "sessionid", 
+          'Content-Type': 'application/json'
+        }
+      });
+      // convert data to json
+      const json = await response.json();
+      console.log(json)
+
+      setChapterList(json)
+      let index = json.map(function(e) { return e.id; }).indexOf(chapterId);
       if (index > 0) {
-        setPrevChapterHref("/read/" + json.chapterList[index-1].id)
+        setPrevChapterHref("/read/" + json[index-1].id)
       }
-      if (index + 1 < json.chapterList.length) {
-        setNextChapterHref("/read/" + json.chapterList[index+1].id)
+      if (index + 1 < json.length) {
+        setNextChapterHref("/read/" + json[index+1].id)
       }
     }
 
+    fetchChapterData()
     fetchData()
-    // // TODO: fetch manga title and chapter title from backend
-    // setMangaTitle("Item")
-    // setMangaHref("/manga/Item")
-    // setChapterTitle("Chapter 1")
-
-    // // TODO: fetch list chapter of the manga from backend
-    // let fetchedChapterList = [
-    //   {
-    //     "title": "Chapter 1",
-    //     "id": "Chapter 1",
-    //   },
-    //   {
-    //     "title": "Chapter 2",
-    //     "id": "Chapter 2",
-    //   },
-    //   {
-    //     "title": "Chapter 3",
-    //     "id": "Chapter 3",
-    //   }
-    // ]
-    // setChapterList(fetchedChapterList)
-
-    // // TODO: fetch chapter pages
-    // let fetchedChapterPages = ["/Manga/page1.jpg", "/Manga/page2.jpg", "/Manga/page3.jpg"]
-    // setChapterImages(fetchedChapterPages)
     // eslint-disable-next-line
   }, [])
 

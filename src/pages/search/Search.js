@@ -129,7 +129,7 @@ function Search() {
           )}
         </Grid>
         <div className='button-div'>
-          <Button sx={{backgroundColor:"#990000", "&:hover": {backgroundColor: "#C00000"}}} className='search-button' variant="contained" onClick={handleSearchClicked}>Tìm kiếm</Button>
+          <Button sx={{backgroundColor:"#990000", "&:hover": {backgroundColor: "#c00000"}}} className='search-button' variant="contained" onClick={handleSearchClicked}>Tìm kiếm</Button>
         </div>
         <h2 ref={pageRef}>Kết quả tìm kiếm</h2>
         <PaginateItemList items={searchResults}/>

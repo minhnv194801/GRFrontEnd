@@ -46,3 +46,24 @@
     overflow: hidden;
     cursor: pointer;
 }
+
+a.owned-title-href {
+    color: #fff;
+    text-decoration: none;
+}
+a.owned-title-href:link { 
+    color: #fff;
+    text-decoration: none; 
+}
+a.owned-title-href:visited { 
+    color: #fff;
+    text-decoration: none; 
+}
+a.owned-title-href:active { 
+    color: #fff;
+    text-decoration: none; 
+}
+a.owned-title-href:hover { 
+    color: #fff; 
+    text-decoration: underline; 
+}

@@ -2,43 +2,30 @@ import { useEffect, useState, useRef } from "react";
 import ReactPaginate from 'react-paginate';
 import ImageCarousel from "../../components/carousel/ImageCarousel";
 import PaginateItemList from "../../components/paginateitem/PaginateItemList";
+import {timeDifference} from '../../utils/Date'
 import './Home.css'
 
 function Home() {
-  const pageRef = useRef(null)
-  const itemsPerPage = 9
-
-  const [newItemOffset, setNewItemOffset] = useState(0)
-
-  const [recommendedItems, setRecommendedItems] = useState([{
-    "id": "",
-    "title": "Loading...",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
-    "href": "",
-  }])
-
-  const [hotItems, setHotItems] = useState([{
-    "id": "",
-    "title": "Loading...",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
-    "href": "",
-  }])
-
-  const [forUserItems, setForUserItems] = useState([{
-    "id": "",
-    "title": "Loading...",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
-    "href": "",
-  }])
-
-  const [newestItems, setNewestItems] = useState([{
+  const itemsPerPage = 12
+  const loadingItem = [{
     "id": "",
     "cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
     "name": "Loading...",
     "href": "",
-    "chapters": [
-    ]
-  }])
+    "chapters": []
+  }]
+
+  const pageRef = useRef(null)
+
+  const [newItemOffset, setNewItemOffset] = useState(0)
+
+  const [recommendedItems, setRecommendedItems] = useState([loadingItem])
+
+  const [hotItems, setHotItems] = useState(loadingItem)
+
+  const [forUserItems, setForUserItems] = useState([])
+
+  const [newestItems, setNewestItems] = useState(loadingItem)
 
   const [numberOfPages, setNumberOfPages] = useState(1)
   
@@ -62,148 +49,125 @@ function Home() {
       // convert data to json
       const json = await response.json();
 
+      if (json === null) {
+        setRecommendedItems([])
+      }
       json.forEach((respond) => {
         respond.href = '/manga/' + respond.id
       })
       setRecommendedItems(json)
     }
 
+    const fetchHotItemsData = async () => {
+      const response = await fetch('http://localhost:8080/api/v1/home/hot', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          "count": 10,
+        })
+      });
+      // convert data to json
+      const json = await response.json();
+
+      if (json === null) {
+        setHotItems([])
+      }
+      json.forEach((respond) => {
+        respond.href = '/manga/' + respond.id
+      })
+      setHotItems(json)
+    }
+
+    const fetchTotalCount = async () => {
+      const response = await fetch('http://localhost:8080/api/v1/home/count', {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      // convert data to json
+      const json = await response.json();
+
+      setNumberOfPages(Math.ceil(json/itemsPerPage))
+    }
+
+    fetchHotItemsData()
     fetchRecommendData()
-  
-    let respond = [
-      {
-        "id": "Item",
-        "title": "Item 4",
-        "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 2",
-        "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 3",
-        "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 1",
-        "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 6",
-        "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 5",
-        "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-      },
-    ]
-    respond.forEach((respond) => {
-      respond.href = '/manga/' + respond.id
-    })
-    setHotItems(respond)
-
-    respond = [
-      {
-        "id": "Item",
-        "title": "Item 2",
-        "image": "https://st.ntcdntempv3.com/data/comics/41/chainsaw-man-tho-san-quy.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 6",
-        "image": "https://st.ntcdntempv3.com/data/comics/42/chu-thuat-hoi-chien.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 3",
-        "image": "https://st.ntcdntempv3.com/data/comics/182/truong-hoc-sieu-anh-hung.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 4",
-        "image": "https://st.ntcdntempv3.com/data/comics/209/dao-hai-tac.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 5",
-        "image": "https://st.ntcdntempv3.com/data/comics/235/thanh-guom-diet-quy.jpg",
-      },
-      {
-        "id": "Item",
-        "title": "Item 1",
-        "image": "https://st.ntcdntempv3.com/data/comics/189/tien-dao-so-1.jpg",
-      },
-    ]
-    respond.forEach((respond) => {
-      respond.href = '/manga/' + respond.id
-    })
-    setForUserItems(respond)
-
-    //TODO: fetch number of items from server then calculate number of page
-    setNumberOfPages(20)
+    fetchTotalCount()
   }, [])
-
+  
   useEffect(() => {
     //TODO: fetch newest items from backend
     //TODO: convert unix update time to string relative time
-    var respond = []
-    for (var i = newItemOffset; i < newItemOffset + itemsPerPage; i++) {
-      var item = {
-        "id": "Item",
-        "cover": "https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg",
-        "title": "Item " + i,
-        "chapters": [
-          {
-            "id": "Chapter 1",
-            "name": "Chapter 1",
-            "updateTime": "1 ngày trước",
-          },
-          {
-            "id": "Chapter 2",
-            "name": "Chapter 2",
-            "updateTime": "7 ngày trước",
-          },
-          {
-            "id": "Chapter 3",
-            "name": "Chapter 3",
-            "updateTime": "14 ngày trước",
-          },
-        ]
+    const fetchNewestData = async () => {
+      const response = await fetch('http://localhost:8080/api/v1/home/new', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          'count': itemsPerPage,
+          'position': newItemOffset,
+        })
+      });
+      // convert data to json
+      const json = await response.json();
+      
+      if (json === null) {
+        setNewestItems([])
       }
-
-      respond.push(item)
-    }
-    respond.forEach((respond) => {
-      respond.href = '/manga/' + respond.id
-      respond.chapters.forEach((chapter) => {
-        chapter.href = '/read/' + chapter.id
+      json.forEach((respond) => {
+        respond.href = '/manga/' + respond.id
+        var currentTime = Date.now()
+        respond.chapters.forEach((chapter) => {
+          chapter.href = '/read/' + chapter.id
+          chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+        })
       })
-    })
-    setNewestItems(respond)
+      
+      setNewestItems(json)
+    }
+    
+    setNewestItems(loadingItem)
+    fetchNewestData()
     pageRef.current.scrollIntoView()
   }, [newItemOffset])
 
   return (
     <div className='outer'>
         <div className='inner'>
-          <h1>Nổi bật</h1>
+          <h1 className='page-title'>Nổi bật</h1>
             <div className='image-carousel-wrapper'>
               <ImageCarousel items={hotItems}/>
             </div>
-          <h1>Đề xuất</h1>
-            <div className='image-carousel-wrapper'>
-              <ImageCarousel items={recommendedItems}/>
-            </div>
-          <h1>Gợi ý cho bạn</h1>
-            <div className='image-carousel-wrapper'>
-              <ImageCarousel items={forUserItems}/>
-            </div>
-          <h1 ref={pageRef}>Mới cập nhật</h1>
+          {
+            recommendedItems.length === 0?
+              <div></div>
+            :
+              <div>
+                <h1 className='page-title'>Đề xuất</h1>
+                <div className='image-carousel-wrapper'>
+                  <ImageCarousel items={recommendedItems}/>
+                </div>  
+              </div>
+          }
+          {
+            forUserItems.length === 0?
+              <div></div>
+            :
+              <div>
+                <h1 className='page-title'>Gợi ý cho bạn</h1>
+                <div className='image-carousel-wrapper'>
+                  <ImageCarousel items={forUserItems}/>
+                </div>
+              </div>
+          }
+          <h1 className='page-title' ref={pageRef}>Mới cập nhật</h1>
             <PaginateItemList items={newestItems}/>
           <div className="page-paginate">
             <ReactPaginate

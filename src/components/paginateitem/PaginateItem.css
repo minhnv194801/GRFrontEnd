@@ -1,6 +1,7 @@
 .paginate-item-wrapper {
-    display: grid;
-    place-items: center;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
 }
 
 .cover {
@@ -9,35 +10,44 @@
     box-shadow: 1px 1px 1px 1px #000;
 }
 
-.item-chapter-list {
-    padding: 0;
-    margin: 0;
-    width: 200px;
-    list-style: none;
+.item-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.chapter-item {
-    list-style: none;
-    align-self: left;
+.chapter-title-href {
+    width: 50%;
+}
+
+.chapter-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .time {
     float: right;
 }
 
-a.chapter-title:link { 
+a.chapter-title-href {
+    color: #000000;
+    text-decoration: none;
+}
+a.chapter-title-href:link { 
     color: #000000;
     text-decoration: none; 
 }
-a.chapter-title:visited { 
+a.chapter-title-href:visited { 
     color: #000000;
     text-decoration: none; 
 }
-a.chapter-title:active { 
+a.chapter-title-href:active { 
     color: #000000;
     text-decoration: none; 
 }
-a.chapter-title:hover { 
+a.chapter-title-href:hover { 
     color: #000000; 
     text-decoration: underline; 
 }

@@ -8,11 +8,11 @@ import Favorite from './favorite/Favorite';
 import Owned from './owned/Owned';
 import Report from './report/Report';
 
-function User() {
+function User(props) {
   const dispatch = useDispatch()
   const username = useSelector((state) => state.user.username)
   const userAvatar = useSelector((state) => state.user.avatar)
-  const [currentPage, setCurrentPage] = useState("info")
+  const [currentPage, setCurrentPage] = useState(props.page)
 
   const handlePageChange = (e) => {
     setCurrentPage(e.target.id)

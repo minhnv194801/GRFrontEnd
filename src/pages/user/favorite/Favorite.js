@@ -108,13 +108,13 @@ function Favorite() {
                         </Grid>
                         <Grid item xs={8} columnSpacing={3}>
                             <div className='favorite-title-wrapper'>    
-                                <a href={'/manga/'+favoriteManga.id}>
+                                <a className='favorite-title-href' href={'/manga/'+favoriteManga.id}>
                                     <h3 className='favorite-title'>{favoriteManga.title}</h3>
                                 </a>
                             </div>
                             {favoriteManga.chapters.map((chapter) =>
                                 <div className='favorite-chapter'>
-                                    <a href={'/read/'+chapter.id}>
+                                    <a className='favorite-chapter-href' href={'/read/'+chapter.id}>
                                         <h4>{chapter.title}</h4>
                                     </a>
                                     <h7 className='favorite-chapter-updatetime'>{'(Cập nhật: '+chapter.updateTime+')'}</h7>

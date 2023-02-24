@@ -2,11 +2,11 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import PaginateItem from './PaginateItem';
 
-const PaginateItemLít = (props) => {
+const PaginateItemList = (props) => {
     return (
         <Grid container spacing={2}>
             {props.items.map((item) => 
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={3}>
                     <PaginateItem item={item}/>
                 </Grid>
             )}
@@ -14,4 +14,4 @@ const PaginateItemLít = (props) => {
     );
 };
 
-export default PaginateItemLít;
+export default PaginateItemList;

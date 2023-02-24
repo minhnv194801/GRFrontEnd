@@ -1,5 +1,6 @@
 .manga-title-header {
     text-align: center;
+    font-weight: bold;
 }
 
 .cover-wrapper {
@@ -23,6 +24,7 @@
 }
 
 .section-header {
+    font-weight: bold;
     width: 95%;
     border-bottom: 3px solid #000;
 }

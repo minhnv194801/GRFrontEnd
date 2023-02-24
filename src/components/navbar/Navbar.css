@@ -11,7 +11,6 @@
 }
 
 .logo {
-    padding-left: 5vw;
     height: 5vh;
 }
 
@@ -21,51 +20,105 @@
     background-color: #D9D9D9;
 }
 
-.userbox {
-    padding-right: 5vw;
-    float: right;
+.search-btn {
+    height: 100%;
+    text-align: center;
+    background-color: #990000;
 }
 
-.search-btn {
-    background-color: #990000;
+a.loginBtn {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 a.loginBtn:link {
     color: #ffffff;
     text-decoration: none;
+    cursor: pointer;
 }
 
 a.loginBtn:visited {
     color: #ffffff;
     text-decoration: none;
+    cursor: pointer;
 }
 
 a.loginBtn:active {
     color: #ffffff;
     text-decoration: none;
+    cursor: pointer;
 }
 
 a.loginBtn:hover {
     color: #ffffff;
     text-decoration: underline;
+    cursor: pointer;
+}
+
+a.registerBtn {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 a.registerBtn:link {
     color: #ffffff;
     text-decoration: none;
+    cursor: pointer;
 }
 
 a.registerBtn:visited {
     color: #ffffff;
     text-decoration: none;
+    cursor: pointer;
 }
 
 a.registerBtn:active {
     color: #ffffff;
     text-decoration: none;
+    cursor: pointer;
 }
 
 a.registerBtn:hover {
     color: #ffffff;
     text-decoration: underline;
+    cursor: pointer;
+}
+
+.avatar-dropdown {
+    background-color: #990000 !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    width: 100% !important;
+    height: 100% !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.username-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 50%;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 5px;
+
+}
+
+.dropdown-toggle::after {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.navbar-avatar {
+    height: 3vh;
+    width: 3vh;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
