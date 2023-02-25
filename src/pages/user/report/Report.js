@@ -57,12 +57,12 @@ function Report() {
             {reportList.map((report) => 
                 <div className='report-list-wrapper'>
                     <Grid container sx={{marginTop:'30px'}}>
-                        <Grid item xs={4} sx={{textAlign:'center'}}>
+                        <Grid item xs={12} md={4} sx={{textAlign:'center'}}>
                             <a href={'/read/'+report.chapterId}>
                                 <img className='report-chapter-cover' src={report.chapterCover} alt='report-cover'/>
                             </a>
                         </Grid>
-                        <Grid item xs={8}>
+                        <Grid item xs={12} md={8}>
                             <div className='report-chapter-title-wrapper'>
                                 <a className='report-chapter-title-href' href={'/read/'+report.chapterId}>
                                     <h3 className='report-chapter-title'>{report.chapterTitle}</h3>

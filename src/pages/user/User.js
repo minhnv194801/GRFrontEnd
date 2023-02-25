@@ -49,22 +49,22 @@ function User(props) {
         </div>
         <div className='content-wrapper'>
           <Grid container>
-            <Grid item xs="3">
+            <Grid item xs="12" md="3">
               <div className={currentPage==='info'?'first-selected-page-button-div':'first-page-button-div'} id='info' onClick={handlePageChange}>
                 <h3 className='button-header' id='info'>Thông tin cá nhân</h3>
               </div>
             </Grid>
-            <Grid item xs="3">
+            <Grid item xs="12" md="3">
               <div className={currentPage==='favorite'?'selected-page-button-div':'page-button-div'} id='favorite' onClick={handlePageChange}>
                 <h3 className='button-header' id='favorite'>Truyện theo dõi</h3>
               </div>
             </Grid>
-            <Grid item xs="3">
+            <Grid item xs="12" md="3">
               <div className={currentPage==='owned'?'selected-page-button-div':'page-button-div'} id='owned' onClick={handlePageChange}>
                 <h3 className='button-header' id='owned'>Chương sở hữu</h3>
               </div>
             </Grid>
-            <Grid item xs="3">
+            <Grid item xs="12" md="3">
               <div className={currentPage==='report'?'last-selected-button-div':'last-page-button-div'} id='report' onClick={handlePageChange}>
                 <h3 className='button-header' id='report'>Thông tin báo lỗi</h3>
               </div>

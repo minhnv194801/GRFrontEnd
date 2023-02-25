@@ -147,10 +147,10 @@ function Info() {
     
     return (
         <Grid container sx={{marginTop:'30px'}}>
-            <Grid item xs={2} sx={{textAlign:"left"}}>
+            <Grid item xs={12} md={2} sx={{textAlign:"left"}}>
                 <h3 className='info-header'>Họ:</h3>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 <TextField
                 sx={{
                     background: "#ffff",
@@ -165,10 +165,10 @@ function Info() {
                 InputProps={{ disableUnderline: true }}
                 />
             </Grid>
-            <Grid item xs={1} sx={{textAlign:"left"}}>
+            <Grid item xs={12} md={1} sx={{textAlign:"left"}}>
                 <h3 className='info-header'>Tên:</h3>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={12} md={5}>
                 <TextField
                 sx={{
                     background: "#ffff",
@@ -184,16 +184,16 @@ function Info() {
                 InputProps={{ disableUnderline: true }}
                 />
             </Grid>
-            <Grid item xs={2} sx={{marginTop:'30px'}}>
+            <Grid item xs={12} md={2} sx={{marginTop:'30px'}}>
                 <h3 className='info-header'>Email:</h3>
             </Grid>
-            <Grid item xs={10} sx={{marginTop:'30px'}}>
+            <Grid item xs={12} md={10} sx={{marginTop:'30px'}}>
                 <h3 className='info-content'>{email}</h3>
             </Grid>
-            <Grid item xs={2} sx={{marginTop:'30px'}}>
+            <Grid item xs={12} md={2} sx={{marginTop:'30px'}}>
                 <h3 className='info-header'>Tên hiển thị:</h3>
             </Grid>
-            <Grid item xs={10} sx={{marginTop:'30px'}}>
+            <Grid item xs={12} md={10} sx={{marginTop:'30px'}}>
                 <TextField
                     sx={{
                         background: "#ffff",
@@ -209,33 +209,33 @@ function Info() {
                     InputProps={{ disableUnderline: true }}
                 />
             </Grid>
-            <Grid item xs={2} sx={{marginTop:'30px'}}>
+            <Grid item xs={12} md={2} sx={{marginTop:'30px'}}>
                 <h3 className='info-header'>Ảnh đại diện:</h3>
             </Grid>
-            <Grid item xs={10} sx={{marginTop:'30px'}}>
+            <Grid item xs={12} md={10} sx={{marginTop:'30px'}}>
                 <input
                     onChange={onFileInputChange}
                     type="file"
                     accept="image/png,image/jpeg,image/gif"
                 />  
             </Grid>
-            <Grid item xs={2} sx={{marginTop:'30px'}}>
+            <Grid item xs={12} md={2} sx={{marginTop:'30px'}}>
                 <h3 className='info-header'>Giới tính:</h3>
             </Grid>
-            <Grid item xs={10} sx={{marginTop:'30px'}}>
+            <Grid item xs={12} md={10} sx={{marginTop:'30px'}}>
                 <select className='gender-selector' value={gender} onChange={handleGenderChange}>
                     <option value={0}>Nam</option>
                     <option value={1}>Nữ</option>
                     <option value={2}>Không xác đinh</option>
                 </select>
             </Grid>
-            <Grid item xs={2} sx={{marginTop:'30px'}}>
+            <Grid item xs={12} md={2} sx={{marginTop:'30px'}}>
                 <h3 className='info-header'>Vai trò:</h3>
             </Grid>
-            <Grid item xs={10} sx={{marginTop:'30px'}}>
+            <Grid item xs={12} md={10} sx={{marginTop:'30px'}}>
                 <h3 className='info-content'>{role}</h3>
             </Grid>
-            <Grid item xs={12} sx={{marginTop:'30px', marginBottom:'30px', textAlign:'right'}}>
+            <Grid item xs={12} md={12} sx={{marginTop:'30px', marginBottom:'30px', textAlign:'right'}}>
                 <Button sx={{ color: "#fff", backgroundColor: "#ed2939", marginRight:'5%', "&:hover": { backgroundColor: "#cc0023" } }} onClick={handleUpdate} variant="contained">Cập nhật</Button>
             </Grid>
         </Grid>
