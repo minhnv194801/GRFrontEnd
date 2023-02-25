@@ -35,6 +35,8 @@ a.title-link:hover {
     margin-left: 5px;
     margin-right: 5px;
     width: 30vw;
+    border-radius: 25px;
+    background-color: white;
 }
 
 .reading-box {

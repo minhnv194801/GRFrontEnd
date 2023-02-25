@@ -1,8 +1,8 @@
 .search-text-input {
     margin-left: auto;
     margin-right: auto;
-    width: 60vw;
-    background-color: white;
+    width: 40vw;
+    background-color: #d9d9d9;
 }
 
 h1.search-header {
@@ -11,7 +11,10 @@ h1.search-header {
 
 h2 {
     margin-left: 10px;
-    margin-bottom: 10px !important;
+}
+
+h4 {
+    margin-left: 10px
 }
 
 .checkbox-grid {

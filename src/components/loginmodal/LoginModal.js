@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
 import './LoginModal.css'
-import { setAvatar, setIsLogin, setRefreshkey, setSessionkey, setUserId, setUsername } from '../navbar/NavbarSlice';
+import { login } from '../../AppSlice';
 import { displaySuccess } from '../topalert/TopAlertSlice';
 
 const modalStyle = {
@@ -16,6 +16,7 @@ const modalStyle = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
+    borderRadius: '25px',
     bgcolor: 'white',
     boxShadow: 24,
     p: 4,
@@ -33,10 +34,8 @@ const LoginModal = () => {
 
     const handleLogin = (e) => {
         e.preventDefault()
-        console.log(emailContent)
-        console.log(passwordContent)
         const postLogin = async () => {
-            const response = await fetch('http://localhost:8080/api/v1/user/login', {
+            const response = await fetch('http://localhost:8080/api/v1/auth/login', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {
@@ -50,12 +49,7 @@ const LoginModal = () => {
             // convert data to json
             const json = await response.json();
             if (response.ok) {
-                dispatch(setSessionkey(json.sessionkey))
-                dispatch(setRefreshkey(json.refreshkey))
-                dispatch(setUserId(json.id))
-                dispatch(setIsLogin(json.isLogin))
-                dispatch(setUsername(json.username))
-                dispatch(setAvatar(json.avatar))
+                dispatch(login(json))
                 dispatch(closeLoginModal())
                 setErrorMessage("")
                 dispatch(displaySuccess({
@@ -72,12 +66,9 @@ const LoginModal = () => {
 
     const handleSignup = (e) => {
         e.preventDefault()
-        console.log(emailContent)
-        console.log(passwordContent)
-        console.log(rePasswordContent)
         
         const postRegister = async () => {
-            const response = await fetch('http://localhost:8080/api/v1/user/register', {
+            const response = await fetch('http://localhost:8080/api/v1/auth/register', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {
@@ -92,12 +83,7 @@ const LoginModal = () => {
             // convert data to json
             const json = await response.json();
             if (response.ok) {
-                dispatch(setSessionkey(json.sessionkey))
-                dispatch(setRefreshkey(json.refreshkey))
-                dispatch(setUserId(json.id))
-                dispatch(setIsLogin(json.isLogin))
-                dispatch(setUsername(json.username))
-                dispatch(setAvatar(json.avatar))
+                dispatch(login(json))
                 dispatch(closeLoginModal())
                 setErrorMessage("")
                 dispatch(displaySuccess({
@@ -123,12 +109,12 @@ const LoginModal = () => {
                 <form onSubmit={isLogin?handleLogin:handleSignup}>
                     <Grid container>
                         <Grid item xs={6}>
-                            <div className={isLogin?'active-modal-button':'modal-button'} onClick={() => dispatch(openLoginModal())}>
+                            <div className={isLogin?'active-login-button':'login-button'} onClick={() => dispatch(openLoginModal())}>
                                 <h5 className='login-modal-button-title'>Đăng nhập</h5>
                             </div>
                         </Grid>
                         <Grid item xs={6}>
-                            <div className={!isLogin?'active-modal-button':'modal-button'} onClick={() => dispatch(openSignupModal())}>
+                            <div className={!isLogin?'active-signup-button':'signup-button'} onClick={() => dispatch(openSignupModal())}>
                                 <h5 className='login-modal-button-title'>Đăng ký</h5>
                             </div>
                         </Grid>
@@ -176,7 +162,7 @@ const LoginModal = () => {
                         {isLogin?
                             <Button 
                                 type='submit'
-                                sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginRight:'5%', placeSelf:'right'}}
+                                sx={{borderRadius: '25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginRight:'5%', placeSelf:'right'}}
                                 variant="outlined"
                             >
                                 Đăng nhập
@@ -184,7 +170,7 @@ const LoginModal = () => {
                             :
                             <Button 
                                 type='submit'
-                                sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginRight:'5%', placeSelf:'right'}}
+                                sx={{borderRadius: '25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginRight:'5%', placeSelf:'right'}}
                                 variant="outlined"
                             >
                                 Đăng ký

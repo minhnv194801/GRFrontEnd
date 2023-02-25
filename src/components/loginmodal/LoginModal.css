@@ -1,15 +1,34 @@
-.active-modal-button {
+.active-login-button {
     background-color: #990000;
     color: #ffffff;
     text-align: center;
     border-bottom: 1px solid #000;
     height: 50px;
+    border-top-left-radius: 25px;
 }
 
-.modal-button {
+.login-button {
     text-align: center;
     border-bottom: 1px solid #000;
     height: 50px;
+    border-top-left-radius: 25px;
+    cursor: pointer;
+}
+
+.active-signup-button {
+    background-color: #990000;
+    color: #ffffff;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    height: 50px;
+    border-top-right-radius: 25px;
+}
+
+.signup-button {
+    text-align: center;
+    border-bottom: 1px solid #000;
+    height: 50px;
+    border-top-right-radius: 25px;
     cursor: pointer;
 }
 

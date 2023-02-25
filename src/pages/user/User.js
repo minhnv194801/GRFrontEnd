@@ -1,33 +1,24 @@
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { setUsername, setUserAvatar } from './UserSlice'
 import Info from './info/Info';
 import './User.css'
 import Favorite from './favorite/Favorite';
 import Owned from './owned/Owned';
 import Report from './report/Report';
+import { setUserAvatar, setUsername } from './UserSlice';
 
 function User(props) {
   const dispatch = useDispatch()
   const username = useSelector((state) => state.user.username)
   const userAvatar = useSelector((state) => state.user.avatar)
+  const appUsername = useSelector((state) => state.app.username)
+  const appUserAvatar = useSelector((state) => state.app.avatar)
   const [currentPage, setCurrentPage] = useState(props.page)
 
   const handlePageChange = (e) => {
     setCurrentPage(e.target.id)
   }
-
-  useEffect(() => {
-    //TODO: fetch user basic info (username, avatar) from server
-    let fetchedUserInfo = {
-      "username": "User",
-      "avatar": "https://st3.depositphotos.com/1767687/16607/v/450/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg",
-    }
-
-    dispatch(setUsername(fetchedUserInfo.username))
-    dispatch(setUserAvatar(fetchedUserInfo.avatar))
-  }, [])
 
   const userPage = () => {
     switch (currentPage) {
@@ -44,6 +35,11 @@ function User(props) {
     }
   }
 
+  useEffect(() => {
+    dispatch(setUsername(appUsername))
+    dispatch(setUserAvatar(appUserAvatar))
+  }, [])
+
   return (
     <div className='outer'>
       <div className='inner'>
@@ -54,7 +50,7 @@ function User(props) {
         <div className='content-wrapper'>
           <Grid container>
             <Grid item xs="3">
-              <div className={currentPage==='info'?'selected-page-button-div':'page-button-div'} id='info' onClick={handlePageChange}>
+              <div className={currentPage==='info'?'first-selected-page-button-div':'first-page-button-div'} id='info' onClick={handlePageChange}>
                 <h3 className='button-header' id='info'>Thông tin cá nhân</h3>
               </div>
             </Grid>
@@ -69,7 +65,7 @@ function User(props) {
               </div>
             </Grid>
             <Grid item xs="3">
-              <div className={currentPage==='report'?'selected-button-div':'page-button-div'} id='report' onClick={handlePageChange}>
+              <div className={currentPage==='report'?'last-selected-button-div':'last-page-button-div'} id='report' onClick={handlePageChange}>
                 <h3 className='button-header' id='report'>Thông tin báo lỗi</h3>
               </div>
             </Grid>

@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from 'react';
+import {React, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import logo from '../../logo/magna-logo.png'
 import InputAdornment from '@mui/material/InputAdornment';
@@ -10,16 +10,14 @@ import { InputBase } from '@mui/material';
 import Dropdown from 'react-bootstrap/Dropdown';
 import LoginModal from '../loginmodal/LoginModal';
 import { openLoginModal, openSignupModal } from '../loginmodal/LoginModalSlice';
-import { setAvatar, setIsLogin, setRefreshkey, setSessionkey, setUserId, setUsername } from './NavbarSlice';
+import { setSessionkey, setRefreshkey, setIsLogin, logout } from '../../AppSlice';
 import { displaySuccess } from '../topalert/TopAlertSlice';
 
 const Navbar = () => {
     const [searchValue, setSearchValue] = useState("")
-    const sessionkey = useSelector((state) => state.navbar.sessionkey)
-    const refreshkey = useSelector((state) => state.navbar.refreshkey)
-    const isLogin = useSelector((state) => state.navbar.isLogin)
-    const username = useSelector((state) => state.navbar.username)
-    const avatar = useSelector((state) => state.navbar.avatar)
+    const isLogin = useSelector((state) => state.app.isLogin)
+    const username = useSelector((state) => state.app.username)
+    const avatar = useSelector((state) => state.app.avatar)
     const dispatch = useDispatch()
     
     const handleKeyPress = (e) => {
@@ -33,50 +31,12 @@ const Navbar = () => {
     }
 
     const handleLogout = (e) => {
-        dispatch(setSessionkey(""))
-        dispatch(setRefreshkey(""))
-        dispatch(setUserId(""))
-        dispatch(setIsLogin(false))
-        dispatch(setUsername(""))
-        dispatch(setAvatar(""))
+        dispatch(logout())
         dispatch(displaySuccess({
             "title": "Thành công",
             "content": "Đăng xuất thành công",
         }))
     }
-    
-    useEffect(() => {
-        const refreshLogin = async () => {
-            const response = await fetch('http://localhost:8080/api/v1/user/refresh', {
-                method: 'GET',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': refreshkey,
-                },
-            });
-            if (response.ok) {
-                // convert data to json
-                const json = await response.json();
-                
-                dispatch(setSessionkey(json.sessionkey))
-                dispatch(setRefreshkey(json.refreshkey))
-                dispatch(setUserId(json.id))
-                dispatch(setIsLogin(json.isLogin))
-                dispatch(setUsername(json.username))
-                dispatch(setAvatar(json.avatar))
-            } else {
-                dispatch(setSessionkey(""))
-                dispatch(setRefreshkey(""))
-                dispatch(setUserId(""))
-                dispatch(setIsLogin(false))
-                dispatch(setUsername(""))
-                dispatch(setAvatar(""))
-            }
-        }
-
-        refreshLogin()
-    }, [])
     
     return (
         <Grid className='navbar' container>
@@ -87,7 +47,7 @@ const Navbar = () => {
             </Grid>
             <Grid item xs={5}>
                 <InputBase className='text-input' 
-                    sx={{background:"#D9D9D9",}}
+                    sx={{background:"#D9D9D9", borderRadius:'25px'}}
                     placeholder="Tìm kiếm" 
                     fullWidth
                     onChange={(e) => {setSearchValue(e.target.value)}}
@@ -105,6 +65,7 @@ const Navbar = () => {
                     "&:hover": { backgroundColor: "#cc0023" },
                     marginTop:'auto',
                     marginBottom:'auto',
+                    borderRadius: '25px',
                     maxHeight:'3vh'}}
                     variant="contained" 
                     onClick={handleSearchClicked}>

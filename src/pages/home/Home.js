@@ -97,7 +97,7 @@ function Home() {
 
     fetchHotItemsData()
     fetchRecommendData()
-    fetchTotalCount()
+    // fetchTotalCount()
   }, [])
   
   useEffect(() => {
@@ -118,10 +118,11 @@ function Home() {
       // convert data to json
       const json = await response.json();
       
-      if (json === null) {
+      if (json.data === null || json.data?.length === 0) {
         setNewestItems([])
+        setNumberOfPages(1)
       }
-      json.forEach((respond) => {
+      json.data.forEach((respond) => {
         respond.href = '/manga/' + respond.id
         var currentTime = Date.now()
         respond.chapters.forEach((chapter) => {
@@ -130,7 +131,8 @@ function Home() {
         })
       })
       
-      setNewestItems(json)
+      setNewestItems(json.data)
+      setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
     }
     
     setNewestItems(loadingItem)
@@ -167,30 +169,37 @@ function Home() {
                 </div>
               </div>
           }
-          <h1 className='page-title' ref={pageRef}>Mới cập nhật</h1>
-            <PaginateItemList items={newestItems}/>
-          <div className="page-paginate">
-            <ReactPaginate
-              nextLabel=">"
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={2}
-              pageCount={numberOfPages}
-              onPageChange={handlePageClick}
-              previousLabel="<"
-              pageClassName="page-item"
-              pageLinkClassName="page-link"
-              previousClassName="page-item"
-              previousLinkClassName="page-link"
-              nextClassName="page-item"
-              nextLinkClassName="page-link"
-              breakLabel="..."
-              breakClassName="page-item"
-              breakLinkClassName="page-link"
-              containerClassName="pagination"
-              activeClassName="active"
-              renderOnZeroPageCount={null}
-            />
-          </div>
+          {
+            newestItems.length === 0?
+              <div></div>
+            :
+              <div>
+                <h1 className='page-title' ref={pageRef}>Mới cập nhật</h1>
+                  <PaginateItemList items={newestItems}/>
+                <div className="page-paginate">
+                  <ReactPaginate
+                    nextLabel=">"
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={2}
+                    pageCount={numberOfPages}
+                    onPageChange={handlePageClick}
+                    previousLabel="<"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                  />
+                </div>
+              </div>  
+          }
         </div>
     </div>
   );

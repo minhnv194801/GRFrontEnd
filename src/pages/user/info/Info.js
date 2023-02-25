@@ -3,9 +3,13 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { useDispatch, useSelector } from 'react-redux'
-import { displaySuccess } from '../../../components/topalert/TopAlertSlice'
+import { displayFailure, displaySuccess } from '../../../components/topalert/TopAlertSlice'
 import { setUserAvatar, setUsername } from '../UserSlice';
+import { setAvatar as setNavbarAvatar, setUsername as setNavbarUsername } from '../../../AppSlice';
 import './Info.css'
+import { useNavigate } from 'react-router-dom';
+import { login, logout } from '../../../AppSlice';
+import refreshTokenIfNeeded from '../../../common/JWT';
 
 const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -22,9 +26,13 @@ const getBase64 = (file) => {
 
 function Info() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    const username = useSelector((state) => state.user.username)
-    const userAvatar = useSelector((state) => state.user.avatar)
+    const username = useSelector((state) => state.app.username)
+    const sessionkey = useSelector((state) => state.app.sessionkey)
+    const refreshkey = useSelector((state) => state.app.refreshkey)
+    const currentUsername = useSelector((state) => state.user.username)
+    const currentAvatar = useSelector((state) => state.user.avatar)
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
@@ -41,15 +49,13 @@ function Info() {
         dispatch(setUsername(e.target.value))
     }
     const handleGenderChange = (e) => {
-        console.log(e.target.value)
-        setGender(e.target.value)
+        setGender(parseInt(e.target.value))
     }
 
     const onFileInputChange = (e) => {
         const file = e.target?.files?.[0];
         if (file) {
           getBase64(file).then((base64) => {
-            console.log(base64)
             dispatch(setUserAvatar(base64))
           });
         }
@@ -57,27 +63,86 @@ function Info() {
 
     const handleUpdate = (e) => {
         //TODO: Send user info update to server
-        dispatch(displaySuccess({
-            "title": "Thành công",
-            "content": "Thông tin cá nhân của bạn đã được cập nhật thành công"
-        }))    
+        const refresh = async() => {
+            var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
+            if (res.isRefresh) {
+              if (res.sessionkey) {
+                dispatch(login(res))
+              } else {
+                dispatch(logout())
+                navigate('/')
+                dispatch(displayFailure({
+                  "title": "Đăng xuất",
+                  "content": "Phiên đăng nhập của bạn đã hết hạn. Xin hãy đăng nhập lại",
+                }))
+              }
+            }
+        }
+
+        const postUserInfo = async() => {
+            console.log(gender)
+            const response = await fetch('http://localhost:8080/api/v1/user/info', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': sessionkey,
+                },
+                body: JSON.stringify({ 
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "gender": gender,
+                    "username": currentUsername,
+                    "avatar": currentAvatar,
+                })
+            })
+
+            if (response.ok) {
+                dispatch(setNavbarUsername(currentUsername))
+                dispatch(setNavbarAvatar(currentAvatar))
+                dispatch(displaySuccess({
+                    "title": "Thành công",
+                    "content": "Thông tin cá nhân của bạn đã được cập nhật thành công"
+                }))    
+            } else {
+                if (response.status === 401) {
+                    navigate("/")
+                    dispatch(displayFailure({
+                        "title": "Đăng xuất",
+                        "content": "Phiên đăng nhập của bạn đã hết hạn",
+                    }))    
+                }
+                var json = await response.json()
+                dispatch(displayFailure({
+                    "title": "Thất bại",
+                    "content": json.message,
+                }))
+            }
+        }
+        postUserInfo()
     }
 
     useEffect(() => {
-        //TODO: fetch user personal information from server
-        let fetchedUserInfo = {
-            'lastName': 'Last Name',
-            'firstName': 'First Name',
-            'email': 'placeholderemail@somemailservice.com',
-            'gender': 0,
-            'role': 'Người dùng'
+        const fetchUserInfo = async () => {
+            const response = await fetch('http://localhost:8080/api/v1/user/info', {
+              method: 'GET',
+              credentials: 'same-origin',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': sessionkey,
+              },
+            });
+            // convert data to json
+            const json = await response.json();
+            console.log(json)
+            setEmail(json.email)
+            setFirstName(json.firstName)
+            setLastName(json.lastName)
+            setGender(json.gender)
+            setRole(json.role)
         }
-        setLastName(fetchedUserInfo.lastName)
-        setFirstName(fetchedUserInfo.firstName)
-        setEmail(fetchedUserInfo.email)
-        setGender(fetchedUserInfo.gender)
-        setRole(fetchedUserInfo.role)
-    
+
+        fetchUserInfo()
     }, [])
     
     return (

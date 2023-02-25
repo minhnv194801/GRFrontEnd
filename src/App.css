@@ -1,4 +1,19 @@
-.navbar,
-.navbar-default {
-    background-image: #990000 !important;
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+  
+.outer {
+background-color: #202124;
+min-height: 90vh;
+}
+
+.inner {
+background-color: #d9d9d9;
+width: 60vw;
+min-height: 90vh;
+height: 100%;
+margin-left: 20vw;
+margin-right: 20vw;
+padding-bottom: 0.5vh;
 }

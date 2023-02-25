@@ -12,7 +12,7 @@ const PaginateItem = (props) => {
                 <h2 className='item-title'>{props.item.title}</h2>
             </a>
             {props.item.chapters.map((chapter) => 
-                <Grid container>
+                <Grid container key={chapter.id}>
                     <Grid item xs={2}></Grid>
                     <Grid item xs={4} sx={{
                         textAlign: 'left',

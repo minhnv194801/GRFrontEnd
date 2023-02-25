@@ -26,6 +26,7 @@
     width: 90%;
     margin: 30px;
     text-align: left;
+    border-radius: 25px;
 }
 
 .page-button-div {
@@ -42,6 +43,42 @@
     height: 100%;
     justify-content: left !important;
     border: 1px solid #000;
+}
+
+.first-page-button-div {
+    background-color: #fff;
+    color: #000;
+    height: 100%;
+    justify-content: left !important;
+    border: 1px solid #000;
+    cursor: pointer;
+    border-top-left-radius: 25px;
+}
+
+.first-selected-page-button-div {
+    background-color: #990000;
+    height: 100%;
+    justify-content: left !important;
+    border: 1px solid #000;
+    border-top-left-radius: 25px;
+}
+
+.last-page-button-div {
+    background-color: #fff;
+    color: #000;
+    height: 100%;
+    justify-content: left !important;
+    border: 1px solid #000;
+    cursor: pointer;
+    border-top-right-radius: 25px;
+}
+
+.last-selected-page-button-div {
+    background-color: #990000;
+    height: 100%;
+    justify-content: left !important;
+    border: 1px solid #000;
+    border-top-right-radius: 25px;
 }
 
 .button-header {

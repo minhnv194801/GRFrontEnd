@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -20,6 +20,7 @@ function Manga() {
   const chapterListRef = useRef(null)
   const commentListRef = useRef(null)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   // enlist-disable-next-line
   const [mangaId, setMangaId] = useState(params.id)
@@ -110,7 +111,7 @@ function Manga() {
   }
 
   const handleReadChapter = (e) => {
-    window.location.href = '/read/' + e.target.value;
+    navigate('/read/' + e.target.value)
   }
 
   useEffect(() => {
@@ -131,12 +132,6 @@ function Manga() {
     }
 
     fetchMangaInfo()
-
-    // TODO: fetch comment list of the manga
-    // TODO: fetch number of comment then calculate number of pages
-    setNumberOfCommentPages(1)
-    let fetchedCommentList = [{}]
-    setCommentList(fetchedCommentList)
   }, [])
 
   useEffect(() => {
@@ -215,32 +210,18 @@ function Manga() {
       // convert data to json
       const json = await response.json();
 
-      console.log(json)
-      if (json === null) {
+      if (json.data === null || json.data?.length === 0) {
         setCommentList([])
       }
-      json.forEach((chapter) => {
+      console.log(json.data)
+      json.data.forEach((chapter) => {
         var currentTime = Date.now()
         chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
       })
-      setCommentList(json)
+      setCommentList(json.data)
+      setNumberOfCommentPages(Math.ceil(json.totalCount/commentsPerPage))
     }
 
-    const fetchCommentListCount = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId + '/comment/count', {
-        method: 'GET',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-      // convert data to json
-      const json = await response.json();
-
-      setNumberOfCommentPages(Math.ceil(json/commentsPerPage))
-    }
-
-    fetchCommentListCount()
     fetchCommentListData()
 
     // setNumberOfCommentPages(2)
@@ -275,11 +256,13 @@ function Manga() {
           <img className="manga-cover" src={manga.cover} alt='bìa truyện' />
         </div>
         <div className='favorite-btn-wrapper'>
-          <Button sx={{ backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" } }} variant="contained" onClick={handleFavorite} startIcon={<FavoriteIcon />}>{manga.isFavorite ? "Bỏ theo dõi" : "Theo dõi"}</Button>
+          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" } }} variant="contained" onClick={handleFavorite} startIcon={<FavoriteIcon />}>{manga.isFavorite ? "Bỏ theo dõi" : "Theo dõi"}</Button>
         </div>
         <div className="info-grid">
           <Grid container>
-            <Grid item md={6}>
+          <Grid item md={2}>
+            </Grid>
+            <Grid item md={4}>
               <b>
                 Tác giả:
               </b>
@@ -289,7 +272,9 @@ function Manga() {
                 {manga.author===""?"Đang cập nhật":manga.author}
               </p>
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={2}>
+            </Grid>
+            <Grid item md={4}>
               <b>
                 Tình trạng:
               </b>
@@ -299,7 +284,9 @@ function Manga() {
                 {manga.status===0?"Đang tiến hành":"Đã hoàn thành"}
               </p>
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={2}>
+            </Grid>
+            <Grid item md={4}>
               <b>
                 Thể loại:
               </b>
@@ -309,7 +296,9 @@ function Manga() {
                 {manga.tags.join(" - ")}
               </p>
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={2}>
+            </Grid>
+            <Grid item md={4}>
               <b>
                 Đánh giá:
               </b>
@@ -349,16 +338,16 @@ function Manga() {
                       {"(Cập nhật: " + chapter.updateTime + ")"}
                     </p>
                     {
-                      (!chapter.isOwned&&chapter.price !== 0) ?
+                      (!chapter.isOwned) ?
                         <div>
                           <h6>
                             {chapter.price + " VND"}
                           </h6>
-                          <Button sx={{ backgroundColor: "#ed2939", "&:hover": { backgroundColor: "#cc0023" } }} variant="contained">Mua</Button>
+                          <Button sx={{ borderRadius: '25px', backgroundColor: "#ed2939", "&:hover": { backgroundColor: "#cc0023" } }} variant="contained">Mua</Button>
                         </div>
                         :
                         <div>
-                          <Button sx={{ backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" } }} value={chapter.id} onClick={handleReadChapter} variant="contained">Đọc</Button>
+                          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" } }} value={chapter.id} onClick={handleReadChapter} variant="contained">Đọc</Button>
                         </div>
                     }
                   </div>
@@ -404,7 +393,7 @@ function Manga() {
               variant="standard"
             />
           </Box>
-          <Button sx={{ backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" }, marginLeft:"80%", marginTop:"10px"}} onClick={handleCommentSubmition} variant="contained">Bình luận</Button>
+          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" }, marginLeft:"80%", marginTop:"10px"}} onClick={handleCommentSubmition} variant="contained">Bình luận</Button>
           <h2 className='section-header' ref={commentListRef}>Bình luận</h2>
           <div className="comment-list-wrapper">
             {
@@ -412,49 +401,49 @@ function Manga() {
               <div>Chưa có ai bình luận. Hay bạn là người đầu tiên nhé!</div>
               :
               <div>
-              {commentList.map((comment) => 
-                <Grid container>
-                <Grid item md={2} sx={{textAlign:"center"}}>
-                  <img className="comment-avatar" src={comment.avatar} alt="user-avatar"/>
-                </Grid>
-                <Grid item md={10}>
-                  <div className="comment-content-wrapper">
-                    <h3 className="comment-username">
-                      {comment.username}
-                    </h3>
-                    <p className="comment-content">
-                      {comment.content}
-                    </p>
-                    <p className="comment-updatetime">
-                      {comment.updateTime}
-                    </p>
-                  </div>
-                </Grid>
-              </Grid>)}
+                {commentList.map((comment) => 
+                  <Grid container>
+                  <Grid item md={2} sx={{textAlign:"center"}}>
+                    <img className="comment-avatar" src={comment.avatar} alt="user-avatar"/>
+                  </Grid>
+                  <Grid item md={10}>
+                    <div className="comment-content-wrapper">
+                      <h3 className="comment-username">
+                        {comment.username}
+                      </h3>
+                      <p className="comment-content">
+                        {comment.content}
+                      </p>
+                      <p className="comment-updatetime">
+                        {comment.updateTime}
+                      </p>
+                    </div>
+                  </Grid>
+                </Grid>)}
+                <div className="page-paginate">
+                  <ReactPaginate
+                    nextLabel=">"
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={2}
+                    pageCount={numberOfCommentPages}
+                    onPageChange={handleCommentPageClick}
+                    previousLabel="<"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                  />
+                </div>
               </div>  
             }
-          </div>
-          <div className="page-paginate">
-            <ReactPaginate
-              nextLabel=">"
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={2}
-              pageCount={numberOfCommentPages}
-              onPageChange={handleCommentPageClick}
-              previousLabel="<"
-              pageClassName="page-item"
-              pageLinkClassName="page-link"
-              previousClassName="page-item"
-              previousLinkClassName="page-link"
-              nextClassName="page-item"
-              nextLinkClassName="page-link"
-              breakLabel="..."
-              breakClassName="page-item"
-              breakLinkClassName="page-link"
-              containerClassName="pagination"
-              activeClassName="active"
-              renderOnZeroPageCount={null}
-            />
           </div>
         </div>
       </div>

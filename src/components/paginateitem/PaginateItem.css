@@ -32,22 +32,22 @@
 }
 
 a.chapter-title-href {
-    color: #000000;
+    color: #000000 !important;
     text-decoration: none;
 }
 a.chapter-title-href:link { 
-    color: #000000;
+    color: #000000 !important;
     text-decoration: none; 
 }
 a.chapter-title-href:visited { 
-    color: #000000;
+    color: #000 !important;
     text-decoration: none; 
 }
 a.chapter-title-href:active { 
-    color: #000000;
+    color: #000000 !important;
     text-decoration: none; 
 }
 a.chapter-title-href:hover { 
-    color: #000000; 
+    color: #000000 !important; 
     text-decoration: underline; 
 }

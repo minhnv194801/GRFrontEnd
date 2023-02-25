@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -7,14 +7,19 @@ import Modal from '@mui/material/Modal';
 import ReportIcon from '@mui/icons-material/Report';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { useDispatch } from 'react-redux'
-import { displaySuccess } from '../../components/topalert/TopAlertSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { displayFailure, displaySuccess } from '../../components/topalert/TopAlertSlice'
 import "./Read.css"
+import { login, logout } from "../../AppSlice";
+import refreshTokenIfNeeded from "../../common/JWT";
 
 function Read() {
   const params = useParams()
   const dispatch = useDispatch()
-  
+  const navigate = useNavigate()
+  const sessionkey = useSelector((state) => state.app.sessionkey)
+  const refreshkey = useSelector((state) => state.app.refreshkey)
+
   // eslint-disable-next-line
   const [chapterId, setChapterId] = useState(params.id)
   const [mangaTitle, setMangaTitle] = useState("")
@@ -36,6 +41,7 @@ function Read() {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
+    borderRadius: '25px',
     bgcolor: 'white',
     border: '2px solid #000',
     boxShadow: 24,
@@ -43,10 +49,24 @@ function Read() {
   };
 
   function changeChapter(e) {
-    window.location.href = "/read/" + e.target.value;
+    navigate("/read/" + e.target.value)
   }
 
   function sendReport(e) {
+    const postReport = async () => {
+      var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
+      if (res.isRefresh) {
+        if (res.sessionkey) {
+          dispatch(login(res))
+        } else {
+          dispatch(logout())
+          dispatch(displayFailure({
+            "title": "Đăng xuất",
+            "content": "Phiên đăng nhập của bạn đã hết hạn. Xin hãy đăng nhập lại",
+          }))
+        }
+      }
+    }
     // TODO: send report to backend
     console.log(reportContent)
 
@@ -65,14 +85,20 @@ function Read() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
-          'Authorization': "sessionid", 
+          'Authorization': sessionkey, 
           'Content-Type': 'application/json'
         }
       });
+      if (response.status === 401) {
+        navigate("/")
+        dispatch(displayFailure({
+          "title": "Không có quyền sở hữu",
+          "content": "Vui lòng mua truyện để bắt đầu đọc",
+        }))
+      }
       // convert data to json
       const json = await response.json();
 
-      console.log(json)
       setMangaTitle(json.mangaTitle)
       setMangaHref("/manga/"+json.mangaId)
       setChapterTitle(json.title)
@@ -93,7 +119,7 @@ function Read() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
-          'Authorization': "sessionid", 
+          'Authorization': sessionkey, 
           'Content-Type': 'application/json'
         }
       });
@@ -123,18 +149,18 @@ function Read() {
         <a className='title-link' href={mangaHref}>{mangaTitle}</a> - {chapterTitle}
       </h1>
       <div className='report-wrapper'>
-        <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}}} variant="outlined" onClick={handleOpenReportModal} startIcon={<ReportIcon />}>
+        <Button sx={{borderRadius:'25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}}} variant="outlined" onClick={handleOpenReportModal} startIcon={<ReportIcon />}>
           Báo lỗi
         </Button>
       </div>
       <div className='chapter-selector-wrapper'>
-        <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}}} disabled={prevChapterHref === ""} variant="outlined" href={prevChapterHref}>
+        <Button sx={{borderRadius: '50%', height: '30px', minWidth: '30px', maxWidth:'30px', marginTop: 'auto', marginBottom: 'auto', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}}} disabled={prevChapterHref === ""} variant="outlined" href={prevChapterHref}>
           <NavigateBeforeIcon />
         </Button>
         <select className='chapter-selector' onChange={changeChapter} value={chapterId}>
           {chapterList.map((chapter) => <option value={chapter.id}>{chapter.title}</option>)}
         </select>
-        <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}}} disabled={nextChapterHref === ""} variant="outlined" href={nextChapterHref}>
+        <Button sx={{borderRadius: '50%', height: '30px', minWidth: '30px', maxWidth:'30px', marginTop: 'auto', marginBottom: 'auto', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}}} disabled={nextChapterHref === ""} variant="outlined" href={nextChapterHref}>
           <NavigateNextIcon />
         </Button>
       </div>
@@ -144,11 +170,11 @@ function Read() {
     </div>
     <div className='inner-read'>
     <div className='chapter-selector-wrapper'>
-        <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginRight:"30px"}} disabled={prevChapterHref === ""} variant="outlined" href={prevChapterHref} startIcon={<NavigateBeforeIcon/>}>
-          Chương trước
+        <Button sx={{borderRadius: '25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginRight:"30px"}} disabled={prevChapterHref === ""} variant="outlined" href={prevChapterHref}>
+          <NavigateBeforeIcon/> Chương trước
         </Button>
-        <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginLeft:"30px"}} disabled={nextChapterHref === ""} variant="outlined" href={nextChapterHref} startIcon={<NavigateNextIcon/>}>
-          Chương sau
+        <Button sx={{borderRadius: '25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginLeft:"30px"}} disabled={nextChapterHref === ""} variant="outlined" href={nextChapterHref}>
+          Chương sau <NavigateNextIcon/>
         </Button>
       </div>
     </div>
@@ -169,7 +195,7 @@ function Read() {
           variant="outlined"
           onChange={(e) => setReportContent(e.target.value)}
         />
-      <Button sx={{backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginTop:1}} variant="outlined" onClick={sendReport}>
+      <Button sx={{borderRadius:'25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginTop:1}} variant="outlined" onClick={sendReport}>
         Gửi lỗi
       </Button>
       </Box>
