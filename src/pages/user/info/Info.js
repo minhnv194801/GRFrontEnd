@@ -81,21 +81,28 @@ function Info() {
 
         const postUserInfo = async() => {
             await refresh()
-            const response = await fetch('http://localhost:8080/api/v1/user/info', {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': sessionkey,
-                },
-                body: JSON.stringify({ 
-                    "firstName": firstName,
-                    "lastName": lastName,
-                    "gender": gender,
-                    "username": currentUsername,
-                    "avatar": currentAvatar,
+            try {
+                const response = await fetch('http://localhost:8080/api/v1/user/info', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': sessionkey,
+                    },
+                    body: JSON.stringify({ 
+                        "firstName": firstName,
+                        "lastName": lastName,
+                        "gender": gender,
+                        "username": currentUsername,
+                        "avatar": currentAvatar,
+                    })
                 })
-            })
+            } catch (error) {
+                dispatch(displaySuccess({
+                    "title": "Lỗi kết nối",
+                    "content": "Kết nối với server thất bại",
+                }))
+            }
 
             if (response.ok) {
                 dispatch(setNavbarUsername(currentUsername))
@@ -124,14 +131,21 @@ function Info() {
 
     useEffect(() => {
         const fetchUserInfo = async () => {
-            const response = await fetch('http://localhost:8080/api/v1/user/info', {
-              method: 'GET',
-              credentials: 'same-origin',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': sessionkey,
-              },
-            });
+            try {
+                const response = await fetch('http://localhost:8080/api/v1/user/info', {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': sessionkey,
+                },
+                });
+            } catch (error) {
+                dispatch(displaySuccess({
+                    "title": "Lỗi kết nối",
+                    "content": "Kết nối với server thất bại",
+                }))
+            }
 
             if (response.ok) {
                 // convert data to json

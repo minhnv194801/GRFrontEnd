@@ -35,17 +35,24 @@ const LoginModal = () => {
     const handleLogin = (e) => {
         e.preventDefault()
         const postLogin = async () => {
-            const response = await fetch('http://localhost:8080/api/v1/auth/login', {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ 
-                    'email': emailContent,
-                    'password': passwordContent
+            try {
+                const response = await fetch('http://localhost:8080/api/v1/auth/login', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        'email': emailContent,
+                        'password': passwordContent
+                    })
                 })
-            });
+            } catch(error) {
+                dispatch(displaySuccess({
+                    "title": "Lỗi kết nối",
+                    "content": "Kết nối với server thất bại",
+                }))
+            }
             // convert data to json
             const json = await response.json();
             if (response.ok) {
@@ -68,18 +75,25 @@ const LoginModal = () => {
         e.preventDefault()
         
         const postRegister = async () => {
-            const response = await fetch('http://localhost:8080/api/v1/auth/register', {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ 
-                    'email': emailContent,
-                    'password': passwordContent,
-                    'repassword': rePasswordContent,
-                })
-            });
+            try {
+                const response = await fetch('http://localhost:8080/api/v1/auth/register', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        'email': emailContent,
+                        'password': passwordContent,
+                        'repassword': rePasswordContent,
+                    })
+                });
+            } catch (error) {
+                dispatch(displaySuccess({
+                    "title": "Lỗi kết nối",
+                    "content": "Kết nối với server thất bại",
+                }))
+            }
             // convert data to json
             const json = await response.json();
             if (response.ok) {

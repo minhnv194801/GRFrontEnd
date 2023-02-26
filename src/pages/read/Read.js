@@ -80,15 +80,26 @@ function Read() {
   }
 
   useEffect(() => {
+    setChapterId(params.id)
+  })
+
+  useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/read/' + chapterId, {
-        method: 'GET',
-        credentials: 'same-origin',
-        headers: {
-          'Authorization': sessionkey, 
-          'Content-Type': 'application/json'
-        }
-      });
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/read/' + chapterId, {
+          method: 'GET',
+          credentials: 'same-origin',
+          headers: {
+            'Authorization': sessionkey, 
+            'Content-Type': 'application/json'
+          }
+        })
+      } catch (error) {
+        dispatch(displaySuccess({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
       if (response.ok) {
         // convert data to json
         const json = await response.json();
@@ -123,15 +134,22 @@ function Read() {
     }
 
     const fetchChapterData = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/read/' + chapterId + '/chapterlist', {
-        method: 'GET',
-        credentials: 'same-origin',
-        headers: {
-          'Authorization': sessionkey, 
-          'Content-Type': 'application/json'
-        }
-      });
-
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/read/' + chapterId + '/chapterlist', {
+          method: 'GET',
+          credentials: 'same-origin',
+          headers: {
+            'Authorization': sessionkey, 
+            'Content-Type': 'application/json'
+          }
+        });
+      } catch (error) {
+        dispatch(displaySuccess({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
+      
       if (response.ok) {
         // convert data to json
         const json = await response.json();
@@ -156,7 +174,7 @@ function Read() {
     fetchChapterData()
     fetchData()
     // eslint-disable-next-line
-  }, [])
+  }, [chapterId])
 
   return (
   <div className='outer'>

@@ -37,18 +37,24 @@ function Home() {
   }
   
   useEffect(() => {
-    // TODO: Fetching recommend manga from server
     const fetchRecommendData = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/home/recommend', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          "count": 10,
-        })
-      });
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/home/recommend', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            "count": 10,
+          })
+        });
+      } catch (error) {
+        dispatch(displaySuccess({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
       if (response.ok) {
         // convert data to json
         const json = await response.json();
@@ -70,16 +76,23 @@ function Home() {
     }
 
     const fetchHotItemsData = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/home/hot', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          "count": 10,
-        })
-      });
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/home/hot', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            "count": 10,
+          })
+        });
+      } catch (error) {
+        dispatch(displaySuccess({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
 
       if (response.ok) {
         // convert data to json
@@ -107,20 +120,25 @@ function Home() {
   }, [])
   
   useEffect(() => {
-    //TODO: fetch newest items from backend
-    //TODO: convert unix update time to string relative time
     const fetchNewestData = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/home/new', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          'count': itemsPerPage,
-          'position': newItemOffset,
-        })
-      });
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/home/new', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            'count': itemsPerPage,
+            'position': newItemOffset,
+          })
+        });
+      } catch (error) {
+        dispatch(displaySuccess({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
       if (response.ok) {
         // convert data to json
         const json = await response.json();

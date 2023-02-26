@@ -115,15 +115,21 @@ function Manga() {
   }
 
   useEffect(() => {
-    // TODO: fetch manga data from backend
     const fetchMangaInfo = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId, {
-        method: 'GET',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId, {
+          method: 'GET',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
+      } catch (error) {
+        dispatch(displaySuccess({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
 
       if (response.ok) {
         // convert data to json
@@ -143,21 +149,25 @@ function Manga() {
   }, [])
 
   useEffect(() => {
-    // TODO: fetch chapter list of the manga
-    // TODO: fetch number of chapter then calculate number of pages
-    // TODO: updateTime from unix time to relative time in string
     const fetchChapterListInfo = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId + '/chapterlist', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          'count': chaptersPerPage,
-          'position': chapterOffset,
-        })
-      });
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId + '/chapterlist', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            'count': chaptersPerPage,
+            'position': chapterOffset,
+          })
+        });
+      } catch (error) {
+        dispatch(displaySuccess({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
       if (response.ok) {
         // convert data to json
         const json = await response.json();
@@ -207,22 +217,26 @@ function Manga() {
   }, [chapterOffset])
 
   useEffect(() => {
-    // TODO: fetch comment list of the manga
-    // TODO: fetch number of comment then calculate number of pages
-    // TODO: updateTime from unix time to relative time in string
     const fetchCommentListData = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId + '/commentlist', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          'count': commentsPerPage,
-          'position': commentOffset,
-        })
-      });
-
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId + '/commentlist', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            'count': commentsPerPage,
+            'position': commentOffset,
+          })
+        });
+      } catch (error) {
+        dispatch(displaySuccess({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
+      
       if (response.ok) {
         // convert data to json
         const json = await response.json();

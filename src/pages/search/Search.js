@@ -43,20 +43,27 @@ function Search() {
   const [numberOfPages, setNumberOfPages] = useState(1)
   
   const fetchSearchResult = async (searchValue, selectedTags) => {
-    const response = await fetch('http://localhost:8080/api/v1/search', {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 
-        'query': searchValue,
-        'tags': selectedTags,
-        'count': itemsPerPage,
-        'position': searchResultOffset,
-      })
-    });
-
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/search', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          'query': searchValue,
+          'tags': selectedTags,
+          'count': itemsPerPage,
+          'position': searchResultOffset,
+        })
+      });
+    } catch (error) {
+      dispatch(displaySuccess({
+        "title": "Lỗi kết nối",
+        "content": "Kết nối với server thất bại",
+      }))
+    }
+    
     if (response.ok) {
       // convert data to json
       const json = await response.json();
@@ -113,7 +120,6 @@ function Search() {
       url += tag + ","
     })
     url = url.slice(0, -1); 
-    navigate(url)
     window.location.href = url
   }
 

@@ -45,14 +45,22 @@ async function refreshTokenIfNeeded(sessionkey, refreshkey) {
             // }))
         }
 
-        const response = await fetch('http://localhost:8080/api/v1/auth/refresh', {
-            method: 'GET',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': refreshkey,
-            },
-        });
+        try {
+            const response = await fetch('http://localhost:8080/api/v1/auth/refresh', {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': refreshkey,
+                },
+            })
+        } catch(error) {
+            return {
+                "isRefresh": false,
+                "refreshkey": null,
+                "sessionkey": null,
+            }
+        }
         if (response.ok) {
             // convert data to json
             const json = await response.json();
