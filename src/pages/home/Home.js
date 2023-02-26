@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import ReactPaginate from 'react-paginate';
+import { useDispatch } from "react-redux";
 import ImageCarousel from "../../components/carousel/ImageCarousel";
 import PaginateItemList from "../../components/paginateitem/PaginateItemList";
 import {timeDifference} from '../../utils/Date'
+import { displayFailure } from '../../components/topalert/TopAlertSlice';
 import './Home.css'
 
 function Home() {
@@ -16,6 +18,7 @@ function Home() {
   }]
 
   const pageRef = useRef(null)
+  const dispatch = useDispatch()
 
   const [newItemOffset, setNewItemOffset] = useState(0)
 
@@ -46,16 +49,24 @@ function Home() {
           "count": 10,
         })
       });
-      // convert data to json
-      const json = await response.json();
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
 
-      if (json === null) {
+        if (json === null) {
+          setRecommendedItems([])
+        }
+        json.forEach((respond) => {
+          respond.href = '/manga/' + respond.id
+        })
+        setRecommendedItems(json)
+      } else {
         setRecommendedItems([])
+        dispatch(displayFailure({
+          "title": "Lỗi hệ thống",
+          "content": "Gặp sự cố hệ thống khi tải thông tin danh sách truyện đề cử, xin vui lòng thử tải lại trang",
+        }))
       }
-      json.forEach((respond) => {
-        respond.href = '/manga/' + respond.id
-      })
-      setRecommendedItems(json)
     }
 
     const fetchHotItemsData = async () => {
@@ -69,30 +80,25 @@ function Home() {
           "count": 10,
         })
       });
-      // convert data to json
-      const json = await response.json();
 
-      if (json === null) {
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+
+        if (json === null) {
+          setHotItems([])
+        }
+        json.forEach((respond) => {
+          respond.href = '/manga/' + respond.id
+        })
+        setHotItems(json)
+      } else {
         setHotItems([])
+        dispatch(displayFailure({
+          "title": "Lỗi hệ thống",
+          "content": "Gặp sự cố hệ thống khi tải thông tin truyện nổi bật, xin vui lòng thử tải lại trang",
+        }))
       }
-      json.forEach((respond) => {
-        respond.href = '/manga/' + respond.id
-      })
-      setHotItems(json)
-    }
-
-    const fetchTotalCount = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/home/count', {
-        method: 'GET',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-      // convert data to json
-      const json = await response.json();
-
-      setNumberOfPages(Math.ceil(json/itemsPerPage))
     }
 
     fetchHotItemsData()
@@ -115,24 +121,33 @@ function Home() {
           'position': newItemOffset,
         })
       });
-      // convert data to json
-      const json = await response.json();
-      
-      if (json.data === null || json.data?.length === 0) {
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+        
+        if (json.data === null || json.data?.length === 0) {
+          setNewestItems([])
+          setNumberOfPages(1)
+        }
+        json.data.forEach((respond) => {
+          respond.href = '/manga/' + respond.id
+          var currentTime = Date.now()
+          respond.chapters.forEach((chapter) => {
+            chapter.href = '/read/' + chapter.id
+            chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+          })
+        })
+        
+        setNewestItems(json.data)
+        setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
+      } else {
         setNewestItems([])
         setNumberOfPages(1)
+        dispatch(displayFailure({
+          "title": "Lỗi hệ thống",
+          "content": "Gặp sự cố hệ thống khi tải danh sách truyện mới cập nhật, xin vui lòng thử tải lại trang",
+        }))
       }
-      json.data.forEach((respond) => {
-        respond.href = '/manga/' + respond.id
-        var currentTime = Date.now()
-        respond.chapters.forEach((chapter) => {
-          chapter.href = '/read/' + chapter.id
-          chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
-        })
-      })
-      
-      setNewestItems(json.data)
-      setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
     }
     
     setNewestItems(loadingItem)

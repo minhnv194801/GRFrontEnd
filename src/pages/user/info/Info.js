@@ -132,14 +132,22 @@ function Info() {
                 'Authorization': sessionkey,
               },
             });
-            // convert data to json
-            const json = await response.json();
-            console.log(json)
-            setEmail(json.email)
-            setFirstName(json.firstName)
-            setLastName(json.lastName)
-            setGender(json.gender)
-            setRole(json.role)
+
+            if (response.ok) {
+                // convert data to json
+                const json = await response.json();
+                console.log(json)
+                setEmail(json.email)
+                setFirstName(json.firstName)
+                setLastName(json.lastName)
+                setGender(json.gender)
+                setRole(json.role)
+            } else {
+                dispatch(displayFailure({
+                    "title": "Lỗi hệ thống",
+                    "content": "Gặp lỗi hệ thống khi tải thông tin người dùng, xin vui lòng thử tải lại trang",
+                }))
+            }
         }
 
         fetchUserInfo()

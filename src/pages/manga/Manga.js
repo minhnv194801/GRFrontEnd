@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { Rating } from 'react-simple-star-rating'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useDispatch } from 'react-redux'
-import { displaySuccess } from '../../components/topalert/TopAlertSlice'
+import { displayFailure, displaySuccess } from '../../components/topalert/TopAlertSlice'
 import { timeDifference } from "../../utils/Date";
 import './Manga.css'
 
@@ -124,11 +124,19 @@ function Manga() {
           'Content-Type': 'application/json'
         },
       });
-      // convert data to json
-      const json = await response.json();
 
-      setManga(json)
-      setNumberOfChapterPages(Math.ceil(json.chapterCount / chaptersPerPage))
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+
+        setManga(json)
+        setNumberOfChapterPages(Math.ceil(json.chapterCount / chaptersPerPage))
+      } else {
+        dispatch(displayFailure({
+          "title": "Lỗi hệ thống",
+          "content": "Gặp sự cố hệ thống khi tải thông tin truyện, xin vui lòng thử tải lại trang",
+        }))
+      }
     }
 
     fetchMangaInfo()
@@ -150,15 +158,22 @@ function Manga() {
           'position': chapterOffset,
         })
       });
-      // convert data to json
-      const json = await response.json();
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
 
-      console.log(json)
-      json.forEach((chapter) => {
-        var currentTime = Date.now()
-        chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
-      })
-      setChapterList(json)
+        console.log(json)
+        json.forEach((chapter) => {
+          var currentTime = Date.now()
+          chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+        })
+        setChapterList(json)
+      } else {
+        dispatch(displayFailure({
+          "title": "Lỗi hệ thống",
+          "content": "Gặp sự cố hệ thống khi tải danh sách chương, xin vui lòng thử tải lại trang",
+        }))
+      }
     }
     fetchChapterListInfo()
     // setNumberOfChapterPages(3)
@@ -207,19 +222,28 @@ function Manga() {
           'position': commentOffset,
         })
       });
-      // convert data to json
-      const json = await response.json();
 
-      if (json.data === null || json.data?.length === 0) {
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+
+        if (json.data === null || json.data?.length === 0) {
+          setCommentList([])
+        }
+        console.log(json.data)
+        json.data.forEach((chapter) => {
+          var currentTime = Date.now()
+          chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+        })
+        setCommentList(json.data)
+        setNumberOfCommentPages(Math.ceil(json.totalCount/commentsPerPage))
+      } else {
         setCommentList([])
+        dispatch(displayFailure({
+          "title": "Lỗi hệ thống",
+          "content": "Gặp sự cố hệ thống khi tải thông tin bình luận, xin vui lòng thử tải lại trang",
+        }))
       }
-      console.log(json.data)
-      json.data.forEach((chapter) => {
-        var currentTime = Date.now()
-        chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
-      })
-      setCommentList(json.data)
-      setNumberOfCommentPages(Math.ceil(json.totalCount/commentsPerPage))
     }
 
     fetchCommentListData()
