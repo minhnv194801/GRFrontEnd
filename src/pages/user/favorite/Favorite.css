@@ -15,6 +15,7 @@
     width: 95%;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .favorite-chapter {
@@ -23,50 +24,62 @@
     width: 95%;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .favorite-chapter-updatetime {
     margin-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 a.favorite-title-href {
     color: #fff;
     text-decoration: none;
 }
-a.favorite-title-href:link { 
+
+a.favorite-title-href:link {
     color: #fff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a.favorite-title-href:visited { 
+
+a.favorite-title-href:visited {
     color: #fff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a.favorite-title-href:active { 
+
+a.favorite-title-href:active {
     color: #fff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a.favorite-title-href:hover { 
-    color: #fff; 
-    text-decoration: underline; 
+
+a.favorite-title-href:hover {
+    color: #fff;
+    text-decoration: underline;
 }
 
 a.favorite-chapter-href {
     color: #fff;
     text-decoration: none;
 }
-a.favorite-chapter-href:link { 
+
+a.favorite-chapter-href:link {
     color: #fff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a.favorite-chapter-href:visited { 
+
+a.favorite-chapter-href:visited {
     color: #fff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a.favorite-chapter-href:active { 
+
+a.favorite-chapter-href:active {
     color: #fff;
-    text-decoration: none; 
+    text-decoration: none;
 }
-a.chapter-title-href:hover { 
-    color: #fff; 
-    text-decoration: underline; 
+
+a.chapter-title-href:hover {
+    color: #fff;
+    text-decoration: underline;
 }
