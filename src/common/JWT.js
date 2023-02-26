@@ -54,21 +54,21 @@ async function refreshTokenIfNeeded(sessionkey, refreshkey) {
                     'Authorization': refreshkey,
                 },
             })
+            if (response.ok) {
+                // convert data to json
+                const json = await response.json();
+                json.isRefresh = true
+                return json
+            } else {
+                return {
+                    "isRefresh": true,
+                    "refreshkey": null,
+                    "sessionkey": null,
+                }
+            }
         } catch(error) {
             return {
                 "isRefresh": false,
-                "refreshkey": null,
-                "sessionkey": null,
-            }
-        }
-        if (response.ok) {
-            // convert data to json
-            const json = await response.json();
-            json.isRefresh = true
-            return json
-        } else {
-            return {
-                "isRefresh": true,
                 "refreshkey": null,
                 "sessionkey": null,
             }

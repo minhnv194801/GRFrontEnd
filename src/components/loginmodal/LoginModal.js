@@ -47,6 +47,18 @@ const LoginModal = () => {
                         'password': passwordContent
                     })
                 })
+                const json = await response.json();
+                if (response.ok) {
+                    dispatch(login(json))
+                    dispatch(closeLoginModal())
+                    setErrorMessage("")
+                    dispatch(displaySuccess({
+                        "title": "Thành công",
+                        "content": "Chúc mừng bạn đã đăng nhập thành công",
+                    }))
+                } else {
+                    setErrorMessage(json.message)
+                }
             } catch(error) {
                 dispatch(displaySuccess({
                     "title": "Lỗi kết nối",
@@ -54,18 +66,6 @@ const LoginModal = () => {
                 }))
             }
             // convert data to json
-            const json = await response.json();
-            if (response.ok) {
-                dispatch(login(json))
-                dispatch(closeLoginModal())
-                setErrorMessage("")
-                dispatch(displaySuccess({
-                    "title": "Thành công",
-                    "content": "Chúc mừng bạn đã đăng nhập thành công",
-                }))
-            } else {
-                setErrorMessage(json.message)
-            }
         }
 
         postLogin()
@@ -88,24 +88,24 @@ const LoginModal = () => {
                         'repassword': rePasswordContent,
                     })
                 });
+                // convert data to json
+                const json = await response.json();
+                if (response.ok) {
+                    dispatch(login(json))
+                    dispatch(closeLoginModal())
+                    setErrorMessage("")
+                    dispatch(displaySuccess({
+                        "title": "Thành công",
+                        "content": "Chúc mừng bạn đã đăng ký thành công",
+                    }))
+                } else {
+                    setErrorMessage(json.message)
+                }
             } catch (error) {
                 dispatch(displaySuccess({
                     "title": "Lỗi kết nối",
                     "content": "Kết nối với server thất bại",
                 }))
-            }
-            // convert data to json
-            const json = await response.json();
-            if (response.ok) {
-                dispatch(login(json))
-                dispatch(closeLoginModal())
-                setErrorMessage("")
-                dispatch(displaySuccess({
-                    "title": "Thành công",
-                    "content": "Chúc mừng bạn đã đăng ký thành công",
-                }))
-            } else {
-                setErrorMessage(json.message)
             }
         }
 

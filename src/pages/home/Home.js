@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import ImageCarousel from "../../components/carousel/ImageCarousel";
 import PaginateItemList from "../../components/paginateitem/PaginateItemList";
 import {timeDifference} from '../../common/Date'
-import { displayFailure } from '../../components/topalert/TopAlertSlice';
+import { displayFailure, displaySuccess } from '../../components/topalert/TopAlertSlice';
 import './Home.css'
 
 function Home() {
@@ -49,28 +49,28 @@ function Home() {
             "count": 10,
           })
         });
+        if (response.ok) {
+          // convert data to json
+          const json = await response.json();
+  
+          if (json === null) {
+            setRecommendedItems([])
+          }
+          json.forEach((respond) => {
+            respond.href = '/manga/' + respond.id
+          })
+          setRecommendedItems(json)
+        } else {
+          setRecommendedItems([])
+          dispatch(displayFailure({
+            "title": "Lỗi hệ thống",
+            "content": "Gặp sự cố hệ thống khi tải thông tin danh sách truyện đề cử, xin vui lòng thử tải lại trang",
+          }))
+        }
       } catch (error) {
         dispatch(displaySuccess({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
-        }))
-      }
-      if (response.ok) {
-        // convert data to json
-        const json = await response.json();
-
-        if (json === null) {
-          setRecommendedItems([])
-        }
-        json.forEach((respond) => {
-          respond.href = '/manga/' + respond.id
-        })
-        setRecommendedItems(json)
-      } else {
-        setRecommendedItems([])
-        dispatch(displayFailure({
-          "title": "Lỗi hệ thống",
-          "content": "Gặp sự cố hệ thống khi tải thông tin danh sách truyện đề cử, xin vui lòng thử tải lại trang",
         }))
       }
     }
@@ -87,6 +87,24 @@ function Home() {
             "count": 10,
           })
         });
+        if (response.ok) {
+          // convert data to json
+          const json = await response.json();
+  
+          if (json === null) {
+            setHotItems([])
+          }
+          json.forEach((respond) => {
+            respond.href = '/manga/' + respond.id
+          })
+          setHotItems(json)
+        } else {
+          setHotItems([])
+          dispatch(displayFailure({
+            "title": "Lỗi hệ thống",
+            "content": "Gặp sự cố hệ thống khi tải thông tin truyện nổi bật, xin vui lòng thử tải lại trang",
+          }))
+        }
       } catch (error) {
         dispatch(displaySuccess({
           "title": "Lỗi kết nối",
@@ -94,24 +112,6 @@ function Home() {
         }))
       }
 
-      if (response.ok) {
-        // convert data to json
-        const json = await response.json();
-
-        if (json === null) {
-          setHotItems([])
-        }
-        json.forEach((respond) => {
-          respond.href = '/manga/' + respond.id
-        })
-        setHotItems(json)
-      } else {
-        setHotItems([])
-        dispatch(displayFailure({
-          "title": "Lỗi hệ thống",
-          "content": "Gặp sự cố hệ thống khi tải thông tin truyện nổi bật, xin vui lòng thử tải lại trang",
-        }))
-      }
     }
 
     fetchHotItemsData()
@@ -133,37 +133,37 @@ function Home() {
             'position': newItemOffset,
           })
         });
+        if (response.ok) {
+          // convert data to json
+          const json = await response.json();
+          
+          if (json.data === null || json.data?.length === 0) {
+            setNewestItems([])
+            setNumberOfPages(1)
+          }
+          json.data.forEach((respond) => {
+            respond.href = '/manga/' + respond.id
+            var currentTime = Date.now()
+            respond.chapters.forEach((chapter) => {
+              chapter.href = '/read/' + chapter.id
+              chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+            })
+          })
+          
+          setNewestItems(json.data)
+          setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
+        } else {
+          setNewestItems([])
+          setNumberOfPages(1)
+          dispatch(displayFailure({
+            "title": "Lỗi hệ thống",
+            "content": "Gặp sự cố hệ thống khi tải danh sách truyện mới cập nhật, xin vui lòng thử tải lại trang",
+          }))
+        }
       } catch (error) {
         dispatch(displaySuccess({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
-        }))
-      }
-      if (response.ok) {
-        // convert data to json
-        const json = await response.json();
-        
-        if (json.data === null || json.data?.length === 0) {
-          setNewestItems([])
-          setNumberOfPages(1)
-        }
-        json.data.forEach((respond) => {
-          respond.href = '/manga/' + respond.id
-          var currentTime = Date.now()
-          respond.chapters.forEach((chapter) => {
-            chapter.href = '/read/' + chapter.id
-            chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
-          })
-        })
-        
-        setNewestItems(json.data)
-        setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
-      } else {
-        setNewestItems([])
-        setNumberOfPages(1)
-        dispatch(displayFailure({
-          "title": "Lỗi hệ thống",
-          "content": "Gặp sự cố hệ thống khi tải danh sách truyện mới cập nhật, xin vui lòng thử tải lại trang",
         }))
       }
     }

@@ -124,6 +124,18 @@ function Manga() {
             'Content-Type': 'application/json'
           },
         });
+        if (response.ok) {
+          // convert data to json
+          const json = await response.json();
+  
+          setManga(json)
+          setNumberOfChapterPages(Math.ceil(json.chapterCount / chaptersPerPage))
+        } else {
+          dispatch(displayFailure({
+            "title": "Lỗi hệ thống",
+            "content": "Gặp sự cố hệ thống khi tải thông tin truyện, xin vui lòng thử tải lại trang",
+          }))
+        }
       } catch (error) {
         dispatch(displaySuccess({
           "title": "Lỗi kết nối",
@@ -131,18 +143,6 @@ function Manga() {
         }))
       }
 
-      if (response.ok) {
-        // convert data to json
-        const json = await response.json();
-
-        setManga(json)
-        setNumberOfChapterPages(Math.ceil(json.chapterCount / chaptersPerPage))
-      } else {
-        dispatch(displayFailure({
-          "title": "Lỗi hệ thống",
-          "content": "Gặp sự cố hệ thống khi tải thông tin truyện, xin vui lòng thử tải lại trang",
-        }))
-      }
     }
 
     fetchMangaInfo()
@@ -162,26 +162,26 @@ function Manga() {
             'position': chapterOffset,
           })
         });
+        if (response.ok) {
+          // convert data to json
+          const json = await response.json();
+  
+          console.log(json)
+          json.forEach((chapter) => {
+            var currentTime = Date.now()
+            chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+          })
+          setChapterList(json)
+        } else {
+          dispatch(displayFailure({
+            "title": "Lỗi hệ thống",
+            "content": "Gặp sự cố hệ thống khi tải danh sách chương, xin vui lòng thử tải lại trang",
+          }))
+        }
       } catch (error) {
         dispatch(displaySuccess({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
-        }))
-      }
-      if (response.ok) {
-        // convert data to json
-        const json = await response.json();
-
-        console.log(json)
-        json.forEach((chapter) => {
-          var currentTime = Date.now()
-          chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
-        })
-        setChapterList(json)
-      } else {
-        dispatch(displayFailure({
-          "title": "Lỗi hệ thống",
-          "content": "Gặp sự cố hệ thống khi tải danh sách chương, xin vui lòng thử tải lại trang",
         }))
       }
     }
@@ -230,34 +230,34 @@ function Manga() {
             'position': commentOffset,
           })
         });
+        if (response.ok) {
+          // convert data to json
+          const json = await response.json();
+  
+          if (json.data === null || json.data?.length === 0) {
+            setCommentList([])
+          }
+          console.log(json.data)
+          json.data.forEach((chapter) => {
+            var currentTime = Date.now()
+            chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+          })
+          setCommentList(json.data)
+          setNumberOfCommentPages(Math.ceil(json.totalCount/commentsPerPage))
+        } else {
+          setCommentList([])
+          dispatch(displayFailure({
+            "title": "Lỗi hệ thống",
+            "content": "Gặp sự cố hệ thống khi tải thông tin bình luận, xin vui lòng thử tải lại trang",
+          }))
+        }
       } catch (error) {
         dispatch(displaySuccess({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
         }))
       }
-      
-      if (response.ok) {
-        // convert data to json
-        const json = await response.json();
 
-        if (json.data === null || json.data?.length === 0) {
-          setCommentList([])
-        }
-        console.log(json.data)
-        json.data.forEach((chapter) => {
-          var currentTime = Date.now()
-          chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
-        })
-        setCommentList(json.data)
-        setNumberOfCommentPages(Math.ceil(json.totalCount/commentsPerPage))
-      } else {
-        setCommentList([])
-        dispatch(displayFailure({
-          "title": "Lỗi hệ thống",
-          "content": "Gặp sự cố hệ thống khi tải thông tin bình luận, xin vui lòng thử tải lại trang",
-        }))
-      }
     }
 
     fetchCommentListData()

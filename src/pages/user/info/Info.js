@@ -97,6 +97,27 @@ function Info() {
                         "avatar": currentAvatar,
                     })
                 })
+                if (response.ok) {
+                    dispatch(setNavbarUsername(currentUsername))
+                    dispatch(setNavbarAvatar(currentAvatar))
+                    dispatch(displaySuccess({
+                        "title": "Thành công",
+                        "content": "Thông tin cá nhân của bạn đã được cập nhật thành công"
+                    }))    
+                } else {
+                    if (response.status === 401) {
+                        navigate("/")
+                        dispatch(displayFailure({
+                            "title": "Đăng xuất",
+                            "content": "Phiên đăng nhập của bạn đã hết hạn",
+                        }))    
+                    }
+                    var json = await response.json()
+                    dispatch(displayFailure({
+                        "title": "Thất bại",
+                        "content": json.message,
+                    }))
+                }
             } catch (error) {
                 dispatch(displaySuccess({
                     "title": "Lỗi kết nối",
@@ -104,27 +125,6 @@ function Info() {
                 }))
             }
 
-            if (response.ok) {
-                dispatch(setNavbarUsername(currentUsername))
-                dispatch(setNavbarAvatar(currentAvatar))
-                dispatch(displaySuccess({
-                    "title": "Thành công",
-                    "content": "Thông tin cá nhân của bạn đã được cập nhật thành công"
-                }))    
-            } else {
-                if (response.status === 401) {
-                    navigate("/")
-                    dispatch(displayFailure({
-                        "title": "Đăng xuất",
-                        "content": "Phiên đăng nhập của bạn đã hết hạn",
-                    }))    
-                }
-                var json = await response.json()
-                dispatch(displayFailure({
-                    "title": "Thất bại",
-                    "content": json.message,
-                }))
-            }
         }
         postUserInfo()
     }
@@ -133,33 +133,32 @@ function Info() {
         const fetchUserInfo = async () => {
             try {
                 const response = await fetch('http://localhost:8080/api/v1/user/info', {
-                method: 'GET',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': sessionkey,
-                },
+                    method: 'GET',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': sessionkey,
+                    },
                 });
+                if (response.ok) {
+                    // convert data to json
+                    const json = await response.json();
+                    console.log(json)
+                    setEmail(json.email)
+                    setFirstName(json.firstName)
+                    setLastName(json.lastName)
+                    setGender(json.gender)
+                    setRole(json.role)
+                } else {
+                    dispatch(displayFailure({
+                        "title": "Lỗi hệ thống",
+                        "content": "Gặp lỗi hệ thống khi tải thông tin người dùng, xin vui lòng thử tải lại trang",
+                    }))
+                }
             } catch (error) {
                 dispatch(displaySuccess({
                     "title": "Lỗi kết nối",
                     "content": "Kết nối với server thất bại",
-                }))
-            }
-
-            if (response.ok) {
-                // convert data to json
-                const json = await response.json();
-                console.log(json)
-                setEmail(json.email)
-                setFirstName(json.firstName)
-                setLastName(json.lastName)
-                setGender(json.gender)
-                setRole(json.role)
-            } else {
-                dispatch(displayFailure({
-                    "title": "Lỗi hệ thống",
-                    "content": "Gặp lỗi hệ thống khi tải thông tin người dùng, xin vui lòng thử tải lại trang",
                 }))
             }
         }

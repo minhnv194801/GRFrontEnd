@@ -94,33 +94,33 @@ function Read() {
             'Content-Type': 'application/json'
           }
         })
+        if (response.ok) {
+          // convert data to json
+          const json = await response.json();
+          
+          setMangaTitle(json.mangaTitle)
+          setMangaHref("/manga/"+json.mangaId)
+          setChapterTitle(json.title)
+          setChapterImages(json.pages)
+        } else {
+          if (response.status === 401) {
+            navigate("/")
+            dispatch(displayFailure({
+              "title": "Không có quyền sở hữu",
+              "content": "Vui lòng mua truyện để bắt đầu đọc",
+            }))
+          } else {
+            dispatch(displayFailure({
+              "title": "Lỗi hệ thống",
+              "content": "Gặp lỗi hệ thống khi tải chương truyện, xin vui lòng thử tải lại trang",
+            }))
+          }
+        }
       } catch (error) {
         dispatch(displaySuccess({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
         }))
-      }
-      if (response.ok) {
-        // convert data to json
-        const json = await response.json();
-        
-        setMangaTitle(json.mangaTitle)
-        setMangaHref("/manga/"+json.mangaId)
-        setChapterTitle(json.title)
-        setChapterImages(json.pages)
-      } else {
-        if (response.status === 401) {
-          navigate("/")
-          dispatch(displayFailure({
-            "title": "Không có quyền sở hữu",
-            "content": "Vui lòng mua truyện để bắt đầu đọc",
-          }))
-        } else {
-          dispatch(displayFailure({
-            "title": "Lỗi hệ thống",
-            "content": "Gặp lỗi hệ thống khi tải chương truyện, xin vui lòng thử tải lại trang",
-          }))
-        }
       }
 
       // setChapterList(json.chapterList)
@@ -143,6 +143,25 @@ function Read() {
             'Content-Type': 'application/json'
           }
         });
+        if (response.ok) {
+          // convert data to json
+          const json = await response.json();
+          console.log(json)
+  
+          setChapterList(json)
+          let index = json.map(function(e) { return e.id; }).indexOf(chapterId);
+          if (index > 0) {
+            setPrevChapterHref("/read/" + json[index-1].id)
+          }
+          if (index + 1 < json.length) {
+            setNextChapterHref("/read/" + json[index+1].id)
+          }
+        } else {
+          dispatch(displayFailure({
+            "title": "Lỗi hệ thống",
+            "content": "Gặp lỗi hệ thống khi tải danh sách chương truyện, xin vui lòng thử tải lại trang",
+          }))
+        }
       } catch (error) {
         dispatch(displaySuccess({
           "title": "Lỗi kết nối",
@@ -150,25 +169,6 @@ function Read() {
         }))
       }
       
-      if (response.ok) {
-        // convert data to json
-        const json = await response.json();
-        console.log(json)
-
-        setChapterList(json)
-        let index = json.map(function(e) { return e.id; }).indexOf(chapterId);
-        if (index > 0) {
-          setPrevChapterHref("/read/" + json[index-1].id)
-        }
-        if (index + 1 < json.length) {
-          setNextChapterHref("/read/" + json[index+1].id)
-        }
-      } else {
-        dispatch(displayFailure({
-          "title": "Lỗi hệ thống",
-          "content": "Gặp lỗi hệ thống khi tải danh sách chương truyện, xin vui lòng thử tải lại trang",
-        }))
-      }
     }
 
     fetchChapterData()

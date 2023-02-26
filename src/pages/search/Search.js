@@ -16,7 +16,7 @@ import { InputBase } from '@mui/material';
 import './Search.css'
 import { timeDifference } from "../../common/Date";
 import { useDispatch } from "react-redux";
-import { displayFailure } from "../../components/topalert/TopAlertSlice";
+import { displayFailure, displaySuccess } from "../../components/topalert/TopAlertSlice";
 
 function Search() {
   const loadingItem = [{
@@ -57,6 +57,38 @@ function Search() {
           'position': searchResultOffset,
         })
       });
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+      
+        console.log(json)
+        
+        if (json.data === null || json.data?.length === 0) {
+          setSearchResults([])
+          setResultCount(0)
+          setNumberOfPages(1)
+        }
+        json.data.forEach((respond) => {
+          respond.href = '/manga/' + respond.id
+          var currentTime = Date.now()
+          respond.chapters.forEach((chapter) => {
+            chapter.href = '/read/' + chapter.id
+            chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+          })
+        })
+        
+        setSearchResults(json.data)
+        setResultCount(json.totalCount)
+        setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
+      } else {
+        setSearchResults([])
+        setResultCount(0)
+        setNumberOfPages(1)
+        dispatch(displayFailure({
+          "title": "Lỗi hệ thống",
+          "content": "Gặp lỗi hệ thống khi tải truyện, xin vui lòng thử tải lại trang",
+        }))
+      }
     } catch (error) {
       dispatch(displaySuccess({
         "title": "Lỗi kết nối",
@@ -64,38 +96,6 @@ function Search() {
       }))
     }
     
-    if (response.ok) {
-      // convert data to json
-      const json = await response.json();
-    
-      console.log(json)
-      
-      if (json.data === null || json.data?.length === 0) {
-        setSearchResults([])
-        setResultCount(0)
-        setNumberOfPages(1)
-      }
-      json.data.forEach((respond) => {
-        respond.href = '/manga/' + respond.id
-        var currentTime = Date.now()
-        respond.chapters.forEach((chapter) => {
-          chapter.href = '/read/' + chapter.id
-          chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
-        })
-      })
-      
-      setSearchResults(json.data)
-      setResultCount(json.totalCount)
-      setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
-    } else {
-      setSearchResults([])
-      setResultCount(0)
-      setNumberOfPages(1)
-      dispatch(displayFailure({
-        "title": "Lỗi hệ thống",
-        "content": "Gặp lỗi hệ thống khi tải truyện, xin vui lòng thử tải lại trang",
-      }))
-    }
   }
 
   const handlePageClick = (event) => {
