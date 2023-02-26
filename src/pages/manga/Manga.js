@@ -9,7 +9,7 @@ import { Rating } from 'react-simple-star-rating'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useDispatch } from 'react-redux'
 import { displayFailure, displaySuccess } from '../../components/topalert/TopAlertSlice'
-import { timeDifference } from "../../utils/Date";
+import { timeDifference } from "../../common/Date";
 import './Manga.css'
 
 function Manga() {

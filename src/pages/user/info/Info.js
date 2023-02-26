@@ -80,7 +80,7 @@ function Info() {
         }
 
         const postUserInfo = async() => {
-            console.log(gender)
+            await refresh()
             const response = await fetch('http://localhost:8080/api/v1/user/info', {
                 method: 'POST',
                 credentials: 'same-origin',

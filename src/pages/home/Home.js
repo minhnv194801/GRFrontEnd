@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate';
 import { useDispatch } from "react-redux";
 import ImageCarousel from "../../components/carousel/ImageCarousel";
 import PaginateItemList from "../../components/paginateitem/PaginateItemList";
-import {timeDifference} from '../../utils/Date'
+import {timeDifference} from '../../common/Date'
 import { displayFailure } from '../../components/topalert/TopAlertSlice';
 import './Home.css'
 
