@@ -74,11 +74,14 @@
     width: 95%;
     margin-left: 10px;
     border-bottom: 1px solid #000;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .comment-content {
     margin-left: 10px;
     white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .comment-updatetime {

@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
 import './LoginModal.css'
 import { login } from '../../AppSlice';
-import { displaySuccess } from '../topalert/TopAlertSlice';
+import { displayFailure, displaySuccess } from '../topalert/TopAlertSlice';
 
 const modalStyle = {
     position: 'absolute',
@@ -60,7 +60,7 @@ const LoginModal = () => {
                     setErrorMessage(json.message)
                 }
             } catch(error) {
-                dispatch(displaySuccess({
+                dispatch(displayFailure({
                     "title": "Lỗi kết nối",
                     "content": "Kết nối với server thất bại",
                 }))
@@ -102,7 +102,7 @@ const LoginModal = () => {
                     setErrorMessage(json.message)
                 }
             } catch (error) {
-                dispatch(displaySuccess({
+                dispatch(displayFailure({
                     "title": "Lỗi kết nối",
                     "content": "Kết nối với server thất bại",
                 }))

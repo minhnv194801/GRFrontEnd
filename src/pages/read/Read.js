@@ -117,7 +117,7 @@ function Read() {
           }
         }
       } catch (error) {
-        dispatch(displaySuccess({
+        dispatch(displayFailure({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
         }))
@@ -163,7 +163,7 @@ function Read() {
           }))
         }
       } catch (error) {
-        dispatch(displaySuccess({
+        dispatch(displayFailure({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
         }))

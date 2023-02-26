@@ -5,12 +5,15 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Rating } from 'react-simple-star-rating'
+import Rating from '@mui/material/Rating';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { displayFailure, displaySuccess } from '../../components/topalert/TopAlertSlice'
 import { timeDifference } from "../../common/Date";
 import './Manga.css'
+import refreshTokenIfNeeded from "../../common/JWT";
+import { login, logout } from "../../AppSlice";
+import { openLoginModal } from "../../components/loginmodal/LoginModalSlice";
 
 function Manga() {
   const chaptersPerPage = 5
@@ -43,6 +46,27 @@ function Manga() {
   const [commentOffset, setCommentOffset] = useState(0)
   const [commentList, setCommentList] = useState([{}])
   const [currentComment, setCurrentComment] = useState("")
+  const sessionkey = useSelector((state) => state.app.sessionkey)
+  const refreshkey = useSelector((state) => state.app.refreshkey)
+  const username = useSelector((state) => state.app.username)
+  const avatar = useSelector((state) => state.app.avatar)
+  const isLogin = useSelector((state) => state.app.isLogin)
+
+  const refresh = async() => {
+    var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
+    if (res.isRefresh) {
+      if (res.sessionkey) {
+        dispatch(login(res))
+      } else {
+        dispatch(logout())
+        navigate('/')
+        dispatch(displayFailure({
+          "title": "Đăng xuất",
+          "content": "Phiên đăng nhập của bạn đã hết hạn. Xin hãy đăng nhập lại",
+        }))
+      }
+    }
+  }
 
   const handleChapterPageClick = (event) => {
     setChapterOffset(event.selected * chaptersPerPage);
@@ -53,37 +77,138 @@ function Manga() {
     setCommentOffset(event.selected * commentsPerPage);
     commentListRef.current.scrollIntoView()
   }
-
+  
   const handleFavorite = (e) => {
     // TODO: Send favorite/unfavorite to server
-    setManga({
-      ...manga,
-      isFavorite: !manga.isFavorite
-    });
-
-    // TODO: Display favorite result
-    if (manga.isFavorite) {
-      dispatch(displaySuccess({
-        "title": "Thành công",
-        "content": "Đã bỏ truyện khỏi danh sách theo dõi",
-      }))
-    } else {
-      dispatch(displaySuccess({
-        "title": "Thành công",
-        "content": "Đã thêm truyện vào danh sách theo dõi",
-      }))
+    const postFavorite = async() => {
+      await refresh()
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/favorite/' + mangaId, {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': sessionkey,
+          },
+          body: JSON.stringify({})
+        });
+        
+        if (response.ok) {
+          setManga({
+            ...manga,
+            isFavorite: !manga.isFavorite
+          });
+        
+          if (manga.isFavorite) {
+            dispatch(displaySuccess({
+              "title": "Thành công",
+              "content": "Đã bỏ truyện khỏi danh sách theo dõi",
+            }))
+          } else {
+            dispatch(displaySuccess({
+              "title": "Thành công",
+              "content": "Đã thêm truyện vào danh sách theo dõi",
+            }))
+          }
+        } else {
+            if (response.status === 401) {
+                dispatch(displayFailure({
+                    "title": "Đăng xuất",
+                    "content": "Phiên đăng nhập của bạn đã hết hạn",
+                }))    
+            }
+            var json = await response.json()
+            dispatch(displayFailure({
+                "title": "Thất bại",
+                "content": json.message,
+            }))
+        }
+      } catch (error) {
+        dispatch(displayFailure({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
     }
+    
+    if (!isLogin) {
+      dispatch(displayFailure({
+        "title": "Thất bại",
+        "content": "Hãy đăng nhập để bắt đầu theo dõi truyện nhé",
+      }))
+      dispatch(openLoginModal())
+    } else {
+      postFavorite()
+    }    
   }
 
-  const handleRating = (rate) => {
-    // TODO: Send rating to server
-    console.log(rate)
+  const handleRating = (e) => {
+    const postRating = async() => {
+      await refresh()
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId + '/rate', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': sessionkey,
+          },
+          body: JSON.stringify({ 
+            'rating': parseInt(e.target.value)
+          })
+        });
 
-    // TODO: Display rating result
-    dispatch(displaySuccess({
-      "title": "Thành công",
-      "content": "Đánh giá đã được gửi thành công",
-    }))
+        if (response.ok) {
+          setManga((prevManga) => {
+            if (prevManga.userRating === 0) {
+              return({
+                ...prevManga,
+                userRating: e.target.value,
+                avgRating: ((prevManga.avgRating*prevManga.ratingCount)+e.target.value)/(prevManga.ratingCount+1),
+                ratingCount: prevManga.ratingCount + 1,
+              })
+            }
+
+            return({
+              ...prevManga,
+              avgRating: ((prevManga.avgRating*prevManga.ratingCount)-prevManga.userRating+e.target.value)/(prevManga.ratingCount),
+              userRating: e.target.value,
+            })
+          })
+          dispatch(displaySuccess({
+            "title": "Thành công",
+            "content": "Đánh giá đã được gửi thành công",
+          }))   
+        } else {
+            if (response.status === 401) {
+                dispatch(displayFailure({
+                    "title": "Đăng xuất",
+                    "content": "Phiên đăng nhập của bạn đã hết hạn",
+                }))    
+            }
+            var json = await response.json()
+            dispatch(displayFailure({
+                "title": "Thất bại",
+                "content": json.message,
+            }))
+        }
+      } catch (error) {
+        dispatch(displayFailure({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
+    }
+
+    if (!isLogin) {
+      dispatch(displayFailure({
+        "title": "Thất bại",
+        "content": "Hãy đăng nhập để bắt đầu đánh giá truyện nhé",
+      }))
+      dispatch(openLoginModal())
+    } else {
+      postRating()
+    }
   }
 
   const handleCommentBoxChange = (e) => {
@@ -91,23 +216,67 @@ function Manga() {
   }
 
   const handleCommentSubmition = (e) => {
-    // TODO: Send comment to server
-    console.log(currentComment)
-    setCommentList([
-      {
-        "username": "User",
-        "avatar": "https://st3.depositphotos.com/1767687/16607/v/450/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg",
-        "content": currentComment,
-        "updateTime": "vừa xong",
-      },
-      ...commentList
-    ])
+    const postComment = async() => {
+      await refresh()
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/comment/' + mangaId, {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': sessionkey,
+          },
+          body: JSON.stringify({ 
+            'content': currentComment
+          })
+        });
 
-    // TODO: Display comment result
-    dispatch(displaySuccess({
-      "title": "Thành công",
-      "content": "Bình luận đã được đăng thành công",
-    }))
+        if (response.ok) {
+          setCommentList([
+            {
+              "username": username,
+              "avatar": avatar,
+              "content": currentComment,
+              "updateTime": "vừa xong",
+            },
+            ...commentList
+          ])
+      
+          dispatch(displaySuccess({
+            "title": "Thành công",
+            "content": "Bình luận đã được đăng thành công",
+          }))
+        } else {
+            if (response.status === 401) {
+                dispatch(displayFailure({
+                    "title": "Đăng xuất",
+                    "content": "Phiên đăng nhập của bạn đã hết hạn",
+                }))    
+            }
+            var json = await response.json()
+            dispatch(displayFailure({
+                "title": "Thất bại",
+                "content": json.message,
+            }))
+        }
+      } catch (error) {
+        dispatch(displayFailure({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
+    }
+
+    // TODO: Send comment to server
+    if (!isLogin) {
+      dispatch(displayFailure({
+        "title": "Thất bại",
+        "content": "Hãy đăng nhập để bắt đầu bình luận truyện nhé",
+      }))
+      dispatch(openLoginModal())
+    } else {
+      postComment()
+    }
   }
 
   const handleReadChapter = (e) => {
@@ -121,13 +290,14 @@ function Manga() {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': sessionkey,
           },
         });
         if (response.ok) {
           // convert data to json
           const json = await response.json();
-  
+          console.log(json)
           setManga(json)
           setNumberOfChapterPages(Math.ceil(json.chapterCount / chaptersPerPage))
         } else {
@@ -137,12 +307,11 @@ function Manga() {
           }))
         }
       } catch (error) {
-        dispatch(displaySuccess({
+        dispatch(displayFailure({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
         }))
       }
-
     }
 
     fetchMangaInfo()
@@ -163,7 +332,6 @@ function Manga() {
           })
         });
         if (response.ok) {
-          // convert data to json
           const json = await response.json();
   
           console.log(json)
@@ -179,41 +347,13 @@ function Manga() {
           }))
         }
       } catch (error) {
-        dispatch(displaySuccess({
+        dispatch(displayFailure({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
         }))
       }
     }
     fetchChapterListInfo()
-    // setNumberOfChapterPages(3)
-    // let fetchedChapterList = [
-    //   {
-    //     "id": "Chapter 1",
-    //     "title": "Chapter 1",
-    //     "cover": "https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg",
-    //     "price": 5000,
-    //     "isOwned": true,
-    //     "updateTime": "1 ngày trước",
-    //   },
-    //   {
-    //     "id": "Chapter 2",
-    //     "title": "Chapter 2",
-    //     "cover": "https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg",
-    //     "price": 5000,
-    //     "isOwned": true,
-    //     "updateTime": "7 ngày trước",
-    //   },
-    //   {
-    //     "id": "Chapter 3",
-    //     "title": "Chapter 3",
-    //     "cover": "https://st.ntcdntempv3.com/data/comics/220/naruto-cuu-vi-ho-ly.jpg",
-    //     "price": 5000,
-    //     "isOwned": false,
-    //     "updateTime": "14 ngày trước",
-    //   }
-    // ]
-    // setChapterList(fetchedChapterList)
   }, [chapterOffset])
 
   useEffect(() => {
@@ -233,17 +373,18 @@ function Manga() {
         if (response.ok) {
           // convert data to json
           const json = await response.json();
-  
+          
           if (json.data === null || json.data?.length === 0) {
+            console.log("Hello")
             setCommentList([])
+          } else {
+            json.data.forEach((chapter) => {
+              var currentTime = Date.now()
+              chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+            })
+            setCommentList(json.data)
+            setNumberOfCommentPages(Math.ceil(json.totalCount/commentsPerPage))
           }
-          console.log(json.data)
-          json.data.forEach((chapter) => {
-            var currentTime = Date.now()
-            chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
-          })
-          setCommentList(json.data)
-          setNumberOfCommentPages(Math.ceil(json.totalCount/commentsPerPage))
         } else {
           setCommentList([])
           dispatch(displayFailure({
@@ -252,7 +393,7 @@ function Manga() {
           }))
         }
       } catch (error) {
-        dispatch(displaySuccess({
+        dispatch(displayFailure({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
         }))
@@ -261,29 +402,6 @@ function Manga() {
     }
 
     fetchCommentListData()
-
-    // setNumberOfCommentPages(2)
-    // let fetchedCommentList = [
-    //   {
-    //     "username": "User 1",
-    //     "avatar": "https://st3.depositphotos.com/1767687/16607/v/450/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg",
-    //     "content": "Bình luận 1",
-    //     "updateTime": "1 ngày trước",
-    //   },
-    //   {
-    //     "username": "User 2",
-    //     "avatar": "https://st3.depositphotos.com/1767687/16607/v/450/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg",
-    //     "content": "Bình luận 2",
-    //     "updateTime": "2 ngày trước",
-    //   },
-    //   {
-    //     "username": "User 3",
-    //     "avatar": "https://st3.depositphotos.com/1767687/16607/v/450/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg",
-    //     "content": "Bình luận 3",
-    //     "updateTime": "3 ngày trước",
-    //   },
-    // ]
-    // setCommentList(fetchedCommentList)
   }, [commentOffset])
 
   return (
@@ -343,7 +461,8 @@ function Manga() {
             </Grid>
             <Grid item md={6}>
               <Rating
-                onClick={handleRating}
+                onChange={handleRating}
+                value={manga.userRating}
               />
             </Grid>
             <Grid item md={6}>

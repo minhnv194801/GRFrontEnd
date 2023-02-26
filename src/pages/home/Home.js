@@ -68,7 +68,7 @@ function Home() {
           }))
         }
       } catch (error) {
-        dispatch(displaySuccess({
+        dispatch(displayFailure({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
         }))
@@ -106,7 +106,7 @@ function Home() {
           }))
         }
       } catch (error) {
-        dispatch(displaySuccess({
+        dispatch(displayFailure({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
         }))
@@ -140,18 +140,19 @@ function Home() {
           if (json.data === null || json.data?.length === 0) {
             setNewestItems([])
             setNumberOfPages(1)
-          }
-          json.data.forEach((respond) => {
-            respond.href = '/manga/' + respond.id
-            var currentTime = Date.now()
-            respond.chapters.forEach((chapter) => {
-              chapter.href = '/read/' + chapter.id
-              chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+          } else {
+            json.data.forEach((respond) => {
+              respond.href = '/manga/' + respond.id
+              var currentTime = Date.now()
+              respond.chapters.forEach((chapter) => {
+                chapter.href = '/read/' + chapter.id
+                chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+              })
             })
-          })
-          
-          setNewestItems(json.data)
-          setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
+            
+            setNewestItems(json.data)
+            setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
+          }
         } else {
           setNewestItems([])
           setNumberOfPages(1)
@@ -161,7 +162,7 @@ function Home() {
           }))
         }
       } catch (error) {
-        dispatch(displaySuccess({
+        dispatch(displayFailure({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",
         }))

@@ -8,7 +8,10 @@ function timeDifference(current, previous) {
     var elapsed = current - previous;
 
     if (elapsed < sPerMinute) {
-         return Math.round(elapsed/1000) + ' giây trước';   
+        if (Math.round(elapsed/1000) === 0) {
+            return 'vừa xong'
+        }
+        return Math.round(elapsed/1000) + ' giây trước';   
     }
 
     else if (elapsed < sPerHour) {

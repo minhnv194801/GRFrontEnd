@@ -67,19 +67,20 @@ function Search() {
           setSearchResults([])
           setResultCount(0)
           setNumberOfPages(1)
-        }
-        json.data.forEach((respond) => {
-          respond.href = '/manga/' + respond.id
-          var currentTime = Date.now()
-          respond.chapters.forEach((chapter) => {
-            chapter.href = '/read/' + chapter.id
-            chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+        } else {
+          json.data.forEach((respond) => {
+            respond.href = '/manga/' + respond.id
+            var currentTime = Date.now()
+            respond.chapters.forEach((chapter) => {
+              chapter.href = '/read/' + chapter.id
+              chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+            })
           })
-        })
-        
-        setSearchResults(json.data)
-        setResultCount(json.totalCount)
-        setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
+          
+          setSearchResults(json.data)
+          setResultCount(json.totalCount)
+          setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
+        }
       } else {
         setSearchResults([])
         setResultCount(0)
@@ -90,7 +91,7 @@ function Search() {
         }))
       }
     } catch (error) {
-      dispatch(displaySuccess({
+      dispatch(displayFailure({
         "title": "Lỗi kết nối",
         "content": "Kết nối với server thất bại",
       }))

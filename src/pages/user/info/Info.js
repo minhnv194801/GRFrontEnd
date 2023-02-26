@@ -119,7 +119,7 @@ function Info() {
                     }))
                 }
             } catch (error) {
-                dispatch(displaySuccess({
+                dispatch(displayFailure({
                     "title": "Lỗi kết nối",
                     "content": "Kết nối với server thất bại",
                 }))
@@ -156,7 +156,7 @@ function Info() {
                     }))
                 }
             } catch (error) {
-                dispatch(displaySuccess({
+                dispatch(displayFailure({
                     "title": "Lỗi kết nối",
                     "content": "Kết nối với server thất bại",
                 }))
