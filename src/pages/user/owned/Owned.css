@@ -67,3 +67,7 @@ a.owned-title-href:hover {
     color: #fff; 
     text-decoration: underline; 
 }
+
+.emptyHeader {
+    margin: 10px;
+}

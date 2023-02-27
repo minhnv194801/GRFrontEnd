@@ -22,7 +22,7 @@ const Navbar = () => {
     
     const handleKeyPress = (e) => {
         if(e.keyCode === 13){
-            window.location.href = "/search?" + e.target.value;
+            window.location.href = "/search?value=" + e.target.value;
         }
     }
     

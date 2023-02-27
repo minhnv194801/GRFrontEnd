@@ -77,17 +77,19 @@ function Info() {
                 }))
               }
             }
+
+            return res.sessionkey
         }
 
         const postUserInfo = async() => {
-            await refresh()
+            let newSessionkey = await refresh()
             try {
                 const response = await fetch('http://localhost:8080/api/v1/user/info', {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': sessionkey,
+                        'Authorization': newSessionkey?newSessionkey:sessionkey,
                     },
                     body: JSON.stringify({ 
                         "firstName": firstName,
@@ -150,6 +152,14 @@ function Info() {
                     setGender(json.gender)
                     setRole(json.role)
                 } else {
+                    if (response.status === 401) {
+                        navigate("/")
+                        dispatch(displayFailure({
+                          "title": "Unauthorized",
+                          "content": "Vui lòng đăng nhập lại",
+                        }))
+                    }
+
                     dispatch(displayFailure({
                         "title": "Lỗi hệ thống",
                         "content": "Gặp lỗi hệ thống khi tải thông tin người dùng, xin vui lòng thử tải lại trang",

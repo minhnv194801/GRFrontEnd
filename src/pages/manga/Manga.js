@@ -66,6 +66,7 @@ function Manga() {
         }))
       }
     }
+    return res.sessionkey
   }
 
   const handleChapterPageClick = (event) => {
@@ -81,14 +82,14 @@ function Manga() {
   const handleFavorite = (e) => {
     // TODO: Send favorite/unfavorite to server
     const postFavorite = async() => {
-      await refresh()
+      let newSessionkey = await refresh()
       try {
         const response = await fetch('http://localhost:8080/api/v1/favorite/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': sessionkey,
+            'Authorization': newSessionkey?newSessionkey:sessionkey,
           },
           body: JSON.stringify({})
         });
@@ -144,14 +145,14 @@ function Manga() {
 
   const handleRating = (e) => {
     const postRating = async() => {
-      await refresh()
+      let newSessionkey = await refresh()
       try {
         const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId + '/rate', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': sessionkey,
+            'Authorization': newSessionkey?newSessionkey:sessionkey,
           },
           body: JSON.stringify({ 
             'rating': parseInt(e.target.value)
@@ -217,14 +218,14 @@ function Manga() {
 
   const handleCommentSubmition = (e) => {
     const postComment = async() => {
-      await refresh()
+      let newSessionkey = await refresh()
       try {
         const response = await fetch('http://localhost:8080/api/v1/comment/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': sessionkey,
+            'Authorization': newSessionkey?newSessionkey:sessionkey,
           },
           body: JSON.stringify({ 
             'content': currentComment

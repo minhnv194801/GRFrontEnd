@@ -48,35 +48,70 @@ function Read() {
     p: 4,
   };
 
+  const refresh = async() => {
+    var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
+    if (res.isRefresh) {
+      if (res.sessionkey) {
+        dispatch(login(res))
+      } else {
+        dispatch(logout())
+        navigate('/')
+        dispatch(displayFailure({
+          "title": "Đăng xuất",
+          "content": "Phiên đăng nhập của bạn đã hết hạn. Xin hãy đăng nhập lại",
+        }))
+      }
+    }
+    return res.sessionkey
+  }
+
   function changeChapter(e) {
     navigate("/read/" + e.target.value)
   }
 
-  function sendReport(e) {
+  const sendReport = (e) => {
     const postReport = async () => {
-      var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
-      if (res.isRefresh) {
-        if (res.sessionkey) {
-          dispatch(login(res))
+      let newSessionkey = await refresh()
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/report/' + chapterId, {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Authorization': newSessionkey?newSessionkey:sessionkey, 
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'content': reportContent
+          })
+        })
+        if (response.ok) {
+          setOpenReportModal(false)
+      
+          dispatch(displaySuccess({
+            "title": "Thành công",
+            "content": "Báo lỗi đã được gửi thành công",
+          }))
         } else {
-          dispatch(logout())
+          if (response.status === 401) {
+            dispatch(displayFailure({
+                "title": "Đăng xuất",
+                "content": "Phiên đăng nhập của bạn đã hết hạn",
+            }))    
+          }
+          var json = await response.json()
           dispatch(displayFailure({
-            "title": "Đăng xuất",
-            "content": "Phiên đăng nhập của bạn đã hết hạn. Xin hãy đăng nhập lại",
+              "title": "Thất bại",
+              "content": json.message,
           }))
         }
+      } catch (error) {
+        dispatch(displayFailure({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
       }
     }
-    // TODO: send report to backend
-    console.log(reportContent)
-
-    setOpenReportModal(false)
-
-    // TODO: Receive respond and display result correctly
-    dispatch(displaySuccess({
-      "title": "Thành công",
-      "content": "Báo lỗi đã được gửi thành công",
-    }))
+    postReport()
   }
 
   useEffect(() => {
@@ -86,11 +121,12 @@ function Read() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        let newSessionkey = await refresh()
         const response = await fetch('http://localhost:8080/api/v1/read/' + chapterId, {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
-            'Authorization': sessionkey, 
+            'Authorization': newSessionkey?newSessionkey:sessionkey, 
             'Content-Type': 'application/json'
           }
         })
@@ -122,29 +158,20 @@ function Read() {
           "content": "Kết nối với server thất bại",
         }))
       }
-
-      // setChapterList(json.chapterList)
-      // let index = json.chapterList.map(function(e) { return e.id; }).indexOf(chapterId);
-      // if (index > 0) {
-      //   setPrevChapterHref("/read/" + json.chapterList[index-1].id)
-      // }
-      // if (index + 1 < json.chapterList.length) {
-      //   setNextChapterHref("/read/" + json.chapterList[index+1].id)
-      // }
     }
 
     const fetchChapterData = async () => {
+      let newSessionkey = await refresh()
       try {
         const response = await fetch('http://localhost:8080/api/v1/read/' + chapterId + '/chapterlist', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
-            'Authorization': sessionkey, 
+            'Authorization': newSessionkey?newSessionkey:sessionkey, 
             'Content-Type': 'application/json'
           }
         });
         if (response.ok) {
-          // convert data to json
           const json = await response.json();
           console.log(json)
   
@@ -229,7 +256,16 @@ function Read() {
           variant="outlined"
           onChange={(e) => setReportContent(e.target.value)}
         />
-      <Button sx={{borderRadius:'25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginTop:1}} variant="outlined" onClick={sendReport}>
+      <Button 
+        sx={{
+          borderRadius:'25px',
+          backgroundColor: "#990000", 
+          color: "#ffffff",
+          "&:hover": {backgroundColor: "#C00000"},
+          marginTop:1}}
+          variant="outlined"
+          onClick={sendReport}
+        >
         Gửi lỗi
       </Button>
       </Box>

@@ -145,7 +145,7 @@ function Search() {
     fetchSearchResult(value, tags)
     
     setSearchResults(loadingItem)
-
+    
     pageRef.current.scrollIntoView()
     // eslint-disable-next-line
   }, [searchResultOffset])
