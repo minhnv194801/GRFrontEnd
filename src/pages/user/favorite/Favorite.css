@@ -8,6 +8,10 @@
     box-shadow: 1px 1px 1px 1px #000;
 }
 
+.favorite-title {
+    margin-left: 10px;
+}
+
 .favorite-title-wrapper {
     display: flex;
     text-align: center;

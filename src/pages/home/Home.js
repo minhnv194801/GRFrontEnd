@@ -39,7 +39,7 @@ function Home() {
   useEffect(() => {
     const fetchRecommendData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/v1/home/recommend', {
+        const response = await fetch('http://localhost:8081/api/v1/home/recommend', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -77,7 +77,7 @@ function Home() {
 
     const fetchHotItemsData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/v1/home/hot', {
+        const response = await fetch('http://localhost:8081/api/v1/home/hot', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -122,7 +122,7 @@ function Home() {
   useEffect(() => {
     const fetchNewestData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/v1/home/new', {
+        const response = await fetch('http://localhost:8081/api/v1/home/new', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {

@@ -84,7 +84,7 @@ function Info() {
         const postUserInfo = async() => {
             let newSessionkey = await refresh()
             try {
-                const response = await fetch('http://localhost:8080/api/v1/user/info', {
+                const response = await fetch('http://localhost:8081/api/v1/user/info', {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {
@@ -134,7 +134,7 @@ function Info() {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/v1/user/info', {
+                const response = await fetch('http://localhost:8081/api/v1/user/info', {
                     method: 'GET',
                     credentials: 'same-origin',
                     headers: {
@@ -178,15 +178,15 @@ function Info() {
     
     return (
         <Grid container sx={{marginTop:'30px'}}>
-            <Grid item xs={12} md={2} sx={{textAlign:"left"}}>
+            <Grid item xs={3} md={3} sx={{textAlign:"left"}}>
                 <h3 className='info-header'>Họ:</h3>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={9} md={4}>
                 <TextField
                 sx={{
                     background: "#ffff",
                     height: "80%",
-                    width: "95%",
+                    width: "90%",
                 }}
                 value={lastName}
                 onChange={handleLastNameChange}
@@ -196,10 +196,10 @@ function Info() {
                 InputProps={{ disableUnderline: true }}
                 />
             </Grid>
-            <Grid item xs={12} md={1} sx={{textAlign:"left"}}>
+            <Grid item xs={3} md={1} sx={{textAlign:"left"}}>
                 <h3 className='info-header'>Tên:</h3>
             </Grid>
-            <Grid item xs={12} md={5}>
+            <Grid item xs={9} md={4}>
                 <TextField
                 sx={{
                     background: "#ffff",
@@ -215,16 +215,16 @@ function Info() {
                 InputProps={{ disableUnderline: true }}
                 />
             </Grid>
-            <Grid item xs={12} md={2} sx={{marginTop:'30px'}}>
+            <Grid item xs={3} sx={{marginTop:'30px'}}>
                 <h3 className='info-header'>Email:</h3>
             </Grid>
-            <Grid item xs={12} md={10} sx={{marginTop:'30px'}}>
+            <Grid item xs={9} sx={{marginTop:'30px'}}>
                 <h3 className='info-content'>{email}</h3>
             </Grid>
-            <Grid item xs={12} md={2} sx={{marginTop:'30px'}}>
+            <Grid item xs={3} sx={{marginTop:'30px'}}>
                 <h3 className='info-header'>Tên hiển thị:</h3>
             </Grid>
-            <Grid item xs={12} md={10} sx={{marginTop:'30px'}}>
+            <Grid item xs={9} sx={{marginTop:'30px'}}>
                 <TextField
                     sx={{
                         background: "#ffff",
@@ -240,33 +240,33 @@ function Info() {
                     InputProps={{ disableUnderline: true }}
                 />
             </Grid>
-            <Grid item xs={12} md={2} sx={{marginTop:'30px'}}>
+            <Grid item xs={3} sx={{marginTop:'30px'}}>
                 <h3 className='info-header'>Ảnh đại diện:</h3>
             </Grid>
-            <Grid item xs={12} md={10} sx={{marginTop:'30px'}}>
+            <Grid item xs={9} sx={{marginTop:'30px'}}>
                 <input
                     onChange={onFileInputChange}
                     type="file"
                     accept="image/png,image/jpeg,image/gif"
                 />  
             </Grid>
-            <Grid item xs={12} md={2} sx={{marginTop:'30px'}}>
+            <Grid item xs={3} sx={{marginTop:'30px'}}>
                 <h3 className='info-header'>Giới tính:</h3>
             </Grid>
-            <Grid item xs={12} md={10} sx={{marginTop:'30px'}}>
+            <Grid item xs={9} sx={{marginTop:'30px'}}>
                 <select className='gender-selector' value={gender} onChange={handleGenderChange}>
                     <option value={0}>Nam</option>
                     <option value={1}>Nữ</option>
                     <option value={2}>Không xác đinh</option>
                 </select>
             </Grid>
-            <Grid item xs={12} md={2} sx={{marginTop:'30px'}}>
+            <Grid item xs={3} sx={{marginTop:'30px'}}>
                 <h3 className='info-header'>Vai trò:</h3>
             </Grid>
-            <Grid item xs={12} md={10} sx={{marginTop:'30px'}}>
+            <Grid item xs={9} sx={{marginTop:'30px'}}>
                 <h3 className='info-content'>{role}</h3>
             </Grid>
-            <Grid item xs={12} md={12} sx={{marginTop:'30px', marginBottom:'30px', textAlign:'right'}}>
+            <Grid item xs={12} sx={{marginTop:'30px', marginBottom:'30px', textAlign:'right'}}>
                 <Button sx={{ color: "#fff", backgroundColor: "#ed2939", marginRight:'5%', "&:hover": { backgroundColor: "#cc0023" } }} onClick={handleUpdate} variant="contained">Cập nhật</Button>
             </Grid>
         </Grid>

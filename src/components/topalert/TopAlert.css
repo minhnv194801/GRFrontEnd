@@ -8,3 +8,24 @@
     border-radius: 25px;
     opacity: 0.4;
 }
+
+.hidden-alert-wrapper {
+    position: fixed;
+    width: 100vw;
+    top: 5vh;
+    left: 0;
+    right: 0;
+    z-index: -1000;
+    border-radius: 25px;
+    opacity: 0.4;
+}
+
+@media only screen and (orientation: portrait) {
+    .alert-wrapper {
+        top: 10vh;
+    }
+
+    .hidden-alert-wrapper {
+        top: 10vh;
+    }
+}

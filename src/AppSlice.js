@@ -38,6 +38,13 @@ export const AppSlice = createSlice({
             state.userId = ""
             state.username = ""
             state.avatar = ""
+
+            localStorage.removeItem("sessionkey")
+            localStorage.removeItem("refreshkey")
+            localStorage.removeItem("isLogin")
+            localStorage.removeItem("userId")
+            localStorage.removeItem("username")
+            localStorage.removeItem("avatar")
         },
 
         setUsername: (state, action) => {

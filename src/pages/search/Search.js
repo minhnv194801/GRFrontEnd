@@ -44,7 +44,7 @@ function Search() {
   
   const fetchSearchResult = async (searchValue, selectedTags) => {
     try {
-      const response = await fetch('http://localhost:8080/api/v1/search', {
+      const response = await fetch('http://localhost:8081/api/v1/search', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {

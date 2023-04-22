@@ -84,7 +84,7 @@ function Manga() {
     const postFavorite = async() => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhost:8080/api/v1/favorite/' + mangaId, {
+        const response = await fetch('http://localhost:8081/api/v1/favorite/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -147,7 +147,7 @@ function Manga() {
     const postRating = async() => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId + '/rate', {
+        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId + '/rate', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -220,7 +220,7 @@ function Manga() {
     const postComment = async() => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhost:8080/api/v1/comment/' + mangaId, {
+        const response = await fetch('http://localhost:8081/api/v1/comment/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -287,7 +287,7 @@ function Manga() {
   useEffect(() => {
     const fetchMangaInfo = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId, {
+        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId, {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -321,7 +321,7 @@ function Manga() {
   useEffect(() => {
     const fetchChapterListInfo = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId + '/chapterlist', {
+        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId + '/chapterlist', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -360,7 +360,7 @@ function Manga() {
   useEffect(() => {
     const fetchCommentListData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/v1/manga/' + mangaId + '/commentlist', {
+        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId + '/commentlist', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -417,58 +417,66 @@ function Manga() {
         </div>
         <div className="info-grid">
           <Grid container>
-          <Grid item md={2}>
+            <Grid item xs={2}>
             </Grid>
-            <Grid item md={4}>
+            <Grid item xs={4}>
               <b>
                 Tác giả:
               </b>
             </Grid>
-            <Grid item md={6}>
+            <Grid item xs={4}>
               <p>
                 {manga.author===""?"Đang cập nhật":manga.author}
               </p>
             </Grid>
-            <Grid item md={2}>
+            <Grid item xs={2}>
             </Grid>
-            <Grid item md={4}>
+            <Grid item xs={2}>
+            </Grid>
+            <Grid item xs={4}>
               <b>
                 Tình trạng:
               </b>
             </Grid>
-            <Grid item md={6}>
+            <Grid item xs={4}>
               <p>
                 {manga.status===0?"Đang tiến hành":"Đã hoàn thành"}
               </p>
             </Grid>
-            <Grid item md={2}>
+            <Grid item xs={2}>
             </Grid>
-            <Grid item md={4}>
+            <Grid item xs={2}>
+            </Grid>
+            <Grid item xs={4}>
               <b>
                 Thể loại:
               </b>
             </Grid>
-            <Grid item md={6}>
+            <Grid item xs={4}>
               <p>
                 {manga.tags.join(" - ")}
               </p>
             </Grid>
-            <Grid item md={2}>
+            <Grid item xs={2}>
             </Grid>
-            <Grid item md={4}>
+            <Grid item xs={2}>
+            </Grid>
+            <Grid item xs={4}>
               <b>
                 Đánh giá:
               </b>
             </Grid>
-            <Grid item md={6}>
+            <Grid item xs={4}>
               <Rating
                 onChange={handleRating}
                 value={manga.userRating}
               />
             </Grid>
-            <Grid item md={6}>
+            <Grid item xs={2}>
             </Grid>
-            <Grid item md={6}>
+            <Grid item xs={6}>
+            </Grid>
+            <Grid item xs={6}>
               (Trung bình: {manga.avgRating}/5 - {manga.ratingCount} lượt đánh giá)
             </Grid>
           </Grid>
@@ -551,7 +559,7 @@ function Manga() {
               variant="standard"
             />
           </Box>
-          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" }, marginLeft:"80%", marginTop:"10px"}} onClick={handleCommentSubmition} variant="contained">Bình luận</Button>
+          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" }, marginLeft:"75%", marginTop:"10px", maxWidth:"20%"}} onClick={handleCommentSubmition} variant="contained">Bình luận</Button>
           <h2 className='section-header' ref={commentListRef}>Bình luận</h2>
           <div className="comment-list-wrapper">
             {
@@ -561,10 +569,10 @@ function Manga() {
               <div>
                 {commentList.map((comment) => 
                   <Grid container>
-                  <Grid item md={2} sx={{textAlign:"center"}}>
+                  <Grid item xs={2} sx={{textAlign:"center"}}>
                     <img className="comment-avatar" src={comment.avatar} alt="user-avatar"/>
                   </Grid>
-                  <Grid item md={10}>
+                  <Grid item xs={10}>
                     <div className="comment-content-wrapper">
                       <h3 className="comment-username">
                         {comment.username}

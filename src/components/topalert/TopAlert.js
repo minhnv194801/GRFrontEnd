@@ -28,7 +28,7 @@ function TopAlert() {
     }, [alertVisibility])
 
     return (
-        <div className='alert-wrapper'>
+        <div className={alertVisibility?'alert-wrapper':'hidden-alert-wrapper'}>
             <Fade
                 in={alertVisibility}
                 timeout={{ enter: 1000, exit: 1000 }}

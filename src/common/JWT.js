@@ -46,7 +46,7 @@ async function refreshTokenIfNeeded(sessionkey, refreshkey) {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/api/v1/auth/refresh', {
+            const response = await fetch('http://localhost:8081/api/v1/auth/refresh', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {

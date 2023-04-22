@@ -46,7 +46,7 @@ function Report() {
         const fetchData = async () => {
             let newSessionkey = await refresh()
             try {
-              const response = await fetch('http://localhost:8080/api/v1/user/report', {
+              const response = await fetch('http://localhost:8081/api/v1/user/report', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
@@ -107,12 +107,11 @@ function Report() {
                             </Grid>
                             <Grid item xs={12} md={8}>
                                 <div className='report-chapter-title-wrapper'>
-                                    <a className='report-chapter-title-href' href={'/read/'+report.chapterId}>
-                                        <h3 className='report-chapter-title'>{report.chapterTitle}</h3>
-                                    </a>
-                                    <div></div>
+                                  <a className='report-chapter-title-href' href={'/read/'+report.chapterId}>
+                                      <h3 className='report-chapter-title'>{report.chapterTitle}</h3>
+                                  </a>
+                                  <h6 className='report-timeCreated'>{'('+report.timeCreated+')'}</h6>
                                 </div>
-                                <h6 className='report-timeCreated'>{'('+report.timeCreated+')'}</h6>
                                 <h5 className='report-content'>{'Nội dung: '+report.content}</h5>
                                 {getReportStatusHTML(report.status)}
                                 <h5 className='report-response'>{'Phản hồi: '+report.response}</h5>

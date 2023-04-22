@@ -37,7 +37,7 @@ function Favorite() {
         const fetchData = async () => {
             try {
               let newSessionkey = await refresh()
-              const response = await fetch('http://localhost:8080/api/v1/user/favorite', {
+              const response = await fetch('http://localhost:8081/api/v1/user/favorite', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
@@ -109,7 +109,7 @@ function Favorite() {
                                 {favoriteManga.chapters.map((chapter) =>
                                     <div className='favorite-chapter'>
                                         <a className='favorite-chapter-href' href={'/read/'+chapter.id}>
-                                            <h4>{chapter.title}</h4>
+                                            <h4 className='favorite-chapter-title'>{chapter.title}</h4>
                                         </a>
                                         <h6 className='favorite-chapter-updatetime'>{'(Cập nhật: '+chapter.updateTime+')'}</h6>
                                     </div>

@@ -36,7 +36,7 @@ const LoginModal = () => {
         e.preventDefault()
         const postLogin = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/v1/auth/login', {
+                const response = await fetch('http://localhost:8081/api/v1/auth/login', {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {
@@ -76,7 +76,7 @@ const LoginModal = () => {
         
         const postRegister = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/v1/auth/register', {
+                const response = await fetch('http://localhost:8081/api/v1/auth/register', {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {

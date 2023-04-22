@@ -51,3 +51,18 @@ a.chapter-title-href:hover {
     color: #000000 !important; 
     text-decoration: underline; 
 }
+
+@media only screen and (orientation: portrait) {
+    .cover {
+        height: 225px;
+        width: 150px;
+    }
+
+    .time {
+        font-size: 14px;
+    }
+
+    .chapter-title {
+        font-size: 14px;
+    }
+}

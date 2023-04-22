@@ -13,20 +13,20 @@ const PaginateItem = (props) => {
             </a>
             {props.item.chapters.map((chapter) => 
                 <Grid container key={chapter.id}>
-                    <Grid item xs={2}></Grid>
-                    <Grid item xs={4} sx={{
+                    <Grid item xs={0} md={1}></Grid>
+                    <Grid item xs={6} md={5} sx={{
                         textAlign: 'left',
                     }}>
                         <a className='chapter-title-href' href={chapter.href}>
                             <p className='chapter-title'>{chapter.name}</p>
                         </a>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={6} md={5}>
                         <i className='time'>
                             {chapter.updateTime}
                         </i>
                     </Grid>
-                    <Grid item xs={2}></Grid>
+                    <Grid item xs={0} md={1}></Grid>
                 </Grid>
             )}
         </div>
