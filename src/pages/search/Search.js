@@ -155,11 +155,12 @@ function Search() {
       <div className='inner'>
         <h1 className='search-header'>Tìm Kiếm</h1>
         <div className='search-text-input'>
-          <FormControl variant="standard">
+          <FormControl variant="standard" fullWidth>
           <InputBase className='search-text-input' 
               sx={{borderRadius: '25px', backgroundColor: '#fff'}}
               placeholder="Tìm kiếm" 
               value={searchValue}
+              fullWidth
               onChange={(e) => {setSearchValue(e.target.value)}}
               onKeyDown={handleKeyPress}
               startAdornment={

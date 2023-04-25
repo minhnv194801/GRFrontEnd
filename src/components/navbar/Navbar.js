@@ -23,7 +23,7 @@ const Navbar = () => {
     const isPortrait = useMediaQuery({ orientation: 'portrait' })
     
     const handleKeyPress = (e) => {
-        if(e.keyCode === 13){
+        if (e.key === 'Enter'){
             window.location.href = "/search?value=" + e.target.value;
         }
     }
@@ -75,18 +75,21 @@ const Navbar = () => {
                     </Grid>
                     <Grid className='navbar-searchbox-container' container>
                         <Grid item xs={12}>
-                        <InputBase className='text-input' 
-                                sx={{background:"#D9D9D9", borderRadius:'25px'}}
-                                placeholder="Tìm kiếm" 
-                                fullWidth
-                                onChange={(e) => {setSearchValue(e.target.value)}}
-                                onKeyDown={handleKeyPress}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                    <SearchIcon />
-                                    </InputAdornment>
-                                }
-                            />
+                            <form>
+                                <InputBase className='text-input' 
+                                        sx={{background:"#D9D9D9", borderRadius:'25px'}}
+                                        type='text'
+                                        placeholder="Tìm kiếm" 
+                                        fullWidth
+                                        onChange={(e) => {setSearchValue(e.target.value)}}
+                                        onKeyDown={handleKeyPress}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                            <SearchIcon />
+                                            </InputAdornment>
+                                        }
+                                    />
+                            </form>
                         </Grid>
                     </Grid>
                 </div>

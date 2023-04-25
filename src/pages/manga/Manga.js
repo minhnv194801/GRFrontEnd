@@ -491,13 +491,13 @@ function Manga() {
           <h2 className='section-header' ref={chapterListRef}>Chương truyện</h2>
           {chapterList.map((chapter) =>
             <div className='single-chapter-wrapper'>
-              <Grid container>
+              <Grid container spacing={'5px'}>
                 <Grid sx={{ textAlign: "center" }} item md={3}>
                   <img className='chapter-cover' src={chapter.cover} alt="Bìa chương truyện" />
                 </Grid>
                 <Grid item md={9}>
                   <div>
-                    <h3 className='chapter-title'>
+                    <h3 className='manga-chapter-title'>
                       {chapter.title}
                     </h3>
                     <p className='chapter-updatetime'>

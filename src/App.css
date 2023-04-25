@@ -6,11 +6,12 @@
 .outer {
     background-color: #202124;
     min-height: 90vh;
+    width: 100%;
 }
 
 .inner {
     background-color: #d9d9d9;
-    width: 60vw;
+    width: 60%;
     min-height: 90vh;
     height: 100%;
     margin-left: auto;
@@ -21,11 +22,14 @@
 @media only screen and (orientation: portrait) {
     .inner {
         background-color: #d9d9d9;
-        width: 100vw;
+        width: 100%;
         min-height: 90vh;
         height: 100%;
         margin-left: auto;
         margin-right: auto;
         padding-bottom: 0.5vh;
+    }
+    .outer {
+        width: 100%;
     }
 }
