@@ -84,7 +84,7 @@ function Manga() {
     const postFavorite = async() => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhost:8081/api/v1/favorite/' + mangaId, {
+        const response = await fetch('http://localhostapi/v1/favorite/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -147,7 +147,7 @@ function Manga() {
     const postRating = async() => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId + '/rate', {
+        const response = await fetch('http://localhostapi/v1/manga/' + mangaId + '/rate', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -220,7 +220,7 @@ function Manga() {
     const postComment = async() => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhost:8081/api/v1/comment/' + mangaId, {
+        const response = await fetch('http://localhostapi/v1/comment/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -287,7 +287,7 @@ function Manga() {
   useEffect(() => {
     const fetchMangaInfo = async () => {
       try {
-        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId, {
+        const response = await fetch('http://localhostapi/v1/manga/' + mangaId, {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -321,7 +321,7 @@ function Manga() {
   useEffect(() => {
     const fetchChapterListInfo = async () => {
       try {
-        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId + '/chapterlist', {
+        const response = await fetch('http://localhostapi/v1/manga/' + mangaId + '/chapterlist', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -360,7 +360,7 @@ function Manga() {
   useEffect(() => {
     const fetchCommentListData = async () => {
       try {
-        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId + '/commentlist', {
+        const response = await fetch('http://localhostapi/v1/manga/' + mangaId + '/commentlist', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {

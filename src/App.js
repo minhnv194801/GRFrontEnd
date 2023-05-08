@@ -1,4 +1,4 @@
-import { RouterProvider , createBrowserRouter} from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import './App.css';
 import Footer from './components/footer/Footer';
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/user",
-    element: <User page='info'/>,
+    element: <User page='info' />,
   },
   {
     path: "/search",
@@ -47,7 +47,7 @@ function App() {
   const refreshkey = useSelector((state) => state.app.refreshkey)
 
   useEffect(() => {
-    const refresh = async() => {
+    const refresh = async () => {
       var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
       if (res.isRefresh) {
         if (res.sessionkey) {
@@ -61,15 +61,15 @@ function App() {
         }
       }
     }
-    refresh()  
+    refresh()
   }, [])
-  
+
   return (
     <div className='page-wrapper'>
-        <Navbar />
-        <TopAlert />
-        <RouterProvider router={router} />
-        <Footer />
+      <Navbar />
+      <TopAlert />
+      <RouterProvider router={router} />
+      <Footer />
     </div>
   );
 }

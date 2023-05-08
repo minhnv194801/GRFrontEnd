@@ -26,7 +26,7 @@ function ImageCarousel(props) {
         max: 1024,
         min: 464
       },
-      items: 2,
+      items: 5,
       partialVisibilityGutter: -10
     }
   };
