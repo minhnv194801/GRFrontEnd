@@ -14,7 +14,7 @@ module.exports = {
                             swSrc: path.resolve(__dirname, "src/service-worker.js"),
                             dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
                             exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
-                            maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+                            maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
                         }),
                 ],
             };

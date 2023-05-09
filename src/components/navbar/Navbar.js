@@ -10,7 +10,7 @@ import { InputBase } from '@mui/material';
 import Dropdown from 'react-bootstrap/Dropdown';
 import LoginModal from '../loginmodal/LoginModal';
 import { openLoginModal, openSignupModal } from '../loginmodal/LoginModalSlice';
-import { setSessionkey, setRefreshkey, setIsLogin, logout } from '../../AppSlice';
+import { logout } from '../../AppSlice';
 import { displaySuccess } from '../topalert/TopAlertSlice';
 import { useMediaQuery } from 'react-responsive'
 
@@ -60,7 +60,7 @@ const Navbar = () => {
                                 :
                                 <Dropdown align='end'>
                                     <Dropdown.Toggle className='avatar-dropdown'>
-                                        <img className='navbar-avatar' src={avatar}/>
+                                        <img className='navbar-avatar' src={avatar} alt='navbar-avatar'/>
                                         <p className='username-wrapper'>{username}</p>
                                     </Dropdown.Toggle>
 
@@ -139,7 +139,7 @@ const Navbar = () => {
                             :
                             <Dropdown>
                                 <Dropdown.Toggle className='avatar-dropdown'>
-                                    <img className='navbar-avatar' src={avatar}/>
+                                    <img className='navbar-avatar' src={avatar} alt='user-avatar'/>
                                     <p className='username-wrapper'>{username}</p>
                                 </Dropdown.Toggle>
 

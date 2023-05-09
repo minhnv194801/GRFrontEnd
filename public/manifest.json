@@ -18,9 +18,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "http://localhost:3000/",
-  "scope": "http://localhost:3000/",
-  "display": "standalone",
+  "start_url": "./",
+  "scope": ".",
+  "display": "fullscreen",
   "theme_color": "#000000",
   "background_color": "#ffffff"
 }

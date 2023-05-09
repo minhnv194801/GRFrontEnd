@@ -68,3 +68,32 @@ self.addEventListener('message', (event) => {
     self.skipWaiting();
   }
 });
+
+const cacheName = 'APICache_v1';
+
+self.addEventListener('fetch', (event) => {
+  // Check if this is a navigation request
+  if (event.request.url.includes('/api') && event.request.method === 'GET') {
+    // Open the cache
+    event.respondWith(caches.open(cacheName).then((cache) => {
+      // Go to the network first
+      return fetch(event.request.url, {
+        credentials: event.request.credentials,
+        headers: event.request.headers,
+      }).then((fetchedResponse) => {
+        if (fetchedResponse.ok) {
+          cache.put(event.request.url, fetchedResponse.clone());
+
+          return fetchedResponse;
+        } else {
+          return cache.match(event.request.url);
+        }
+      }).catch(() => {
+        // If the network is unavailable, get
+        return cache.match(event.request.url);
+      });
+    }));
+  } else {
+    return;
+  }
+});

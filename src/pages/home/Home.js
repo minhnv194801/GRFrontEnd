@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 import ImageCarousel from "../../components/carousel/ImageCarousel";
 import PaginateItemList from "../../components/paginateitem/PaginateItemList";
 import {timeDifference} from '../../common/Date'
-import { displayFailure, displaySuccess } from '../../components/topalert/TopAlertSlice';
+import { displayFailure } from '../../components/topalert/TopAlertSlice';
 import './Home.css'
 
 function Home() {
   const itemsPerPage = 12
+  const hotItemCount = 10
+  const recommendItemCount = 10
   const loadingItem = [{
     "id": "",
     "cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
@@ -26,7 +28,7 @@ function Home() {
 
   const [hotItems, setHotItems] = useState(loadingItem)
 
-  const [forUserItems, setForUserItems] = useState([])
+  const [forUserItems] = useState([])
 
   const [newestItems, setNewestItems] = useState(loadingItem)
 
@@ -39,15 +41,12 @@ function Home() {
   useEffect(() => {
     const fetchRecommendData = async () => {
       try {
-        const response = await fetch('http://localhost:8081/api/v1/home/recommend', {
-          method: 'POST',
+        const response = await fetch('http://localhost:8081/api/v1/home/recommend/'+recommendItemCount+'/', {
+          method: 'GET',
           credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ 
-            "count": 10,
-          })
+          }
         });
         if (response.ok) {
           // convert data to json
@@ -77,15 +76,12 @@ function Home() {
 
     const fetchHotItemsData = async () => {
       try {
-        const response = await fetch('http://localhost:8081/api/v1/home/hot', {
-          method: 'POST',
+        const response = await fetch('http://localhost:8081/api/v1/home/hot/'+hotItemCount+'/', {
+          method: 'GET',
           credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ 
-            "count": 10,
-          })
+          }
         });
         if (response.ok) {
           // convert data to json
@@ -122,16 +118,12 @@ function Home() {
   useEffect(() => {
     const fetchNewestData = async () => {
       try {
-        const response = await fetch('http://localhost:8081/api/v1/home/new', {
-          method: 'POST',
+        const response = await fetch('http://localhost:8081/api/v1/home/new/'+newItemOffset+'/'+itemsPerPage+'/', {
+          method: 'GET',
           credentials: 'same-origin',
           headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ 
-            'count': itemsPerPage,
-            'position': newItemOffset,
-          })
+            'Content-Type': 'application/json',
+          }
         });
         if (response.ok) {
           // convert data to json

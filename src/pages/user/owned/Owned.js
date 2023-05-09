@@ -60,7 +60,6 @@ function Owned() {
               if (response.ok) {
                 // convert data to json
                 const json = await response.json();
-                console.log(json)
 
                 if (json === null || json.length === 0) {
                     setOwnedMangaList([])

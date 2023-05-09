@@ -43,7 +43,7 @@ function ImageCarousel(props) {
         autoPlaySpeed={5000}
         transitionDuration={500}
       >
-        {props.items.map((item) => <CarouselItem text={item.title} image={item.image} href={item.href}></CarouselItem>)}
+        {props.items.map((item) => <CarouselItem key={item} text={item.title} image={item.image} href={item.href}></CarouselItem>)}
       </Carousel>
   );
 }

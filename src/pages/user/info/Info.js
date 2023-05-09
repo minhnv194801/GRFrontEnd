@@ -145,7 +145,6 @@ function Info() {
                 if (response.ok) {
                     // convert data to json
                     const json = await response.json();
-                    console.log(json)
                     setEmail(json.email)
                     setFirstName(json.firstName)
                     setLastName(json.lastName)

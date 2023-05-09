@@ -48,7 +48,6 @@ function Favorite() {
               if (response.ok) {
                 // convert data to json
                 const json = await response.json();
-                console.log(json)
 
                 if (json === null || json.length === 0) {
                     setFavoriteMangaList([])
@@ -107,7 +106,7 @@ function Favorite() {
                                     </a>
                                 </div>
                                 {favoriteManga.chapters.map((chapter) =>
-                                    <div className='favorite-chapter'>
+                                    <div className='favorite-chapter' key={chapter}>
                                         <a className='favorite-chapter-href' href={'/read/'+chapter.id}>
                                             <h4 className='favorite-chapter-title'>{chapter.title}</h4>
                                         </a>

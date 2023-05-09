@@ -18,7 +18,7 @@ import { openLoginModal } from "../../components/loginmodal/LoginModalSlice";
 function Manga() {
   const chaptersPerPage = 5
   const commentsPerPage = 6
-  
+
   const params = useParams()
   const chapterListRef = useRef(null)
   const commentListRef = useRef(null)
@@ -26,7 +26,7 @@ function Manga() {
   const navigate = useNavigate()
 
   // enlist-disable-next-line
-  const [mangaId, setMangaId] = useState(params.id)
+  const [mangaId] = useState(params.id)
   const [manga, setManga] = useState({
     "title": "Loading...",
     "cover": "",
@@ -52,7 +52,7 @@ function Manga() {
   const avatar = useSelector((state) => state.app.avatar)
   const isLogin = useSelector((state) => state.app.isLogin)
 
-  const refresh = async() => {
+  const refresh = async () => {
     var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
     if (res.isRefresh) {
       if (res.sessionkey) {
@@ -78,28 +78,28 @@ function Manga() {
     setCommentOffset(event.selected * commentsPerPage);
     commentListRef.current.scrollIntoView()
   }
-  
+
   const handleFavorite = (e) => {
     // TODO: Send favorite/unfavorite to server
-    const postFavorite = async() => {
+    const postFavorite = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhostapi/v1/favorite/' + mangaId, {
+        const response = await fetch('http://localhost:8081/api/v1/favorite/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': newSessionkey?newSessionkey:sessionkey,
+            'Authorization': newSessionkey ? newSessionkey : sessionkey,
           },
           body: JSON.stringify({})
         });
-        
+
         if (response.ok) {
           setManga({
             ...manga,
             isFavorite: !manga.isFavorite
           });
-        
+
           if (manga.isFavorite) {
             dispatch(displaySuccess({
               "title": "Thành công",
@@ -112,17 +112,17 @@ function Manga() {
             }))
           }
         } else {
-            if (response.status === 401) {
-                dispatch(displayFailure({
-                    "title": "Đăng xuất",
-                    "content": "Phiên đăng nhập của bạn đã hết hạn",
-                }))    
-            }
-            var json = await response.json()
+          if (response.status === 401) {
             dispatch(displayFailure({
-                "title": "Thất bại",
-                "content": json.message,
+              "title": "Đăng xuất",
+              "content": "Phiên đăng nhập của bạn đã hết hạn",
             }))
+          }
+          var json = await response.json()
+          dispatch(displayFailure({
+            "title": "Thất bại",
+            "content": json.message,
+          }))
         }
       } catch (error) {
         dispatch(displayFailure({
@@ -131,7 +131,7 @@ function Manga() {
         }))
       }
     }
-    
+
     if (!isLogin) {
       dispatch(displayFailure({
         "title": "Thất bại",
@@ -140,21 +140,21 @@ function Manga() {
       dispatch(openLoginModal())
     } else {
       postFavorite()
-    }    
+    }
   }
 
   const handleRating = (e) => {
-    const postRating = async() => {
+    const postRating = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhostapi/v1/manga/' + mangaId + '/rate', {
+        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId + '/rate', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': newSessionkey?newSessionkey:sessionkey,
+            'Authorization': newSessionkey ? newSessionkey : sessionkey,
           },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             'rating': parseInt(e.target.value)
           })
         });
@@ -162,36 +162,36 @@ function Manga() {
         if (response.ok) {
           setManga((prevManga) => {
             if (prevManga.userRating === 0) {
-              return({
+              return ({
                 ...prevManga,
                 userRating: e.target.value,
-                avgRating: ((prevManga.avgRating*prevManga.ratingCount)+e.target.value)/(prevManga.ratingCount+1),
+                avgRating: ((prevManga.avgRating * prevManga.ratingCount) + e.target.value) / (prevManga.ratingCount + 1),
                 ratingCount: prevManga.ratingCount + 1,
               })
             }
 
-            return({
+            return ({
               ...prevManga,
-              avgRating: ((prevManga.avgRating*prevManga.ratingCount)-prevManga.userRating+e.target.value)/(prevManga.ratingCount),
+              avgRating: ((prevManga.avgRating * prevManga.ratingCount) - prevManga.userRating + e.target.value) / (prevManga.ratingCount),
               userRating: e.target.value,
             })
           })
           dispatch(displaySuccess({
             "title": "Thành công",
             "content": "Đánh giá đã được gửi thành công",
-          }))   
+          }))
         } else {
-            if (response.status === 401) {
-                dispatch(displayFailure({
-                    "title": "Đăng xuất",
-                    "content": "Phiên đăng nhập của bạn đã hết hạn",
-                }))    
-            }
-            var json = await response.json()
+          if (response.status === 401) {
             dispatch(displayFailure({
-                "title": "Thất bại",
-                "content": json.message,
+              "title": "Đăng xuất",
+              "content": "Phiên đăng nhập của bạn đã hết hạn",
             }))
+          }
+          var json = await response.json()
+          dispatch(displayFailure({
+            "title": "Thất bại",
+            "content": json.message,
+          }))
         }
       } catch (error) {
         dispatch(displayFailure({
@@ -217,17 +217,17 @@ function Manga() {
   }
 
   const handleCommentSubmition = (e) => {
-    const postComment = async() => {
+    const postComment = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhostapi/v1/comment/' + mangaId, {
+        const response = await fetch('http://localhost:8081/api/v1/comment/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': newSessionkey?newSessionkey:sessionkey,
+            'Authorization': newSessionkey ? newSessionkey : sessionkey,
           },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             'content': currentComment
           })
         });
@@ -242,23 +242,23 @@ function Manga() {
             },
             ...commentList
           ])
-      
+
           dispatch(displaySuccess({
             "title": "Thành công",
             "content": "Bình luận đã được đăng thành công",
           }))
         } else {
-            if (response.status === 401) {
-                dispatch(displayFailure({
-                    "title": "Đăng xuất",
-                    "content": "Phiên đăng nhập của bạn đã hết hạn",
-                }))    
-            }
-            var json = await response.json()
+          if (response.status === 401) {
             dispatch(displayFailure({
-                "title": "Thất bại",
-                "content": json.message,
+              "title": "Đăng xuất",
+              "content": "Phiên đăng nhập của bạn đã hết hạn",
             }))
+          }
+          var json = await response.json()
+          dispatch(displayFailure({
+            "title": "Thất bại",
+            "content": json.message,
+          }))
         }
       } catch (error) {
         dispatch(displayFailure({
@@ -287,7 +287,7 @@ function Manga() {
   useEffect(() => {
     const fetchMangaInfo = async () => {
       try {
-        const response = await fetch('http://localhostapi/v1/manga/' + mangaId, {
+        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId, {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -321,24 +321,20 @@ function Manga() {
   useEffect(() => {
     const fetchChapterListInfo = async () => {
       try {
-        const response = await fetch('http://localhostapi/v1/manga/' + mangaId + '/chapterlist', {
-          method: 'POST',
+        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId + '/chapterlist/' + chapterOffset + '/' + chaptersPerPage + '/', {
+          method: 'GET',
           credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ 
-            'count': chaptersPerPage,
-            'position': chapterOffset,
-          })
+          }
         });
         if (response.ok) {
           const json = await response.json();
-  
+
           console.log(json)
           json.forEach((chapter) => {
             var currentTime = Date.now()
-            chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+            chapter.updateTime = timeDifference(currentTime / 1000, chapter.updateTime)
           })
           setChapterList(json)
         } else {
@@ -360,31 +356,27 @@ function Manga() {
   useEffect(() => {
     const fetchCommentListData = async () => {
       try {
-        const response = await fetch('http://localhostapi/v1/manga/' + mangaId + '/commentlist', {
-          method: 'POST',
+        const response = await fetch('http://localhost:8081/api/v1/manga/' + mangaId + '/commentlist/' + commentOffset + '/' + commentsPerPage + '/', {
+          method: 'GET',
           credentials: 'same-origin',
           headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ 
-            'count': commentsPerPage,
-            'position': commentOffset,
-          })
+          }
         });
         if (response.ok) {
           // convert data to json
           const json = await response.json();
-          
+
           if (json.data === null || json.data?.length === 0) {
             console.log("Hello")
             setCommentList([])
           } else {
             json.data.forEach((chapter) => {
               var currentTime = Date.now()
-              chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+              chapter.updateTime = timeDifference(currentTime / 1000, chapter.updateTime)
             })
             setCommentList(json.data)
-            setNumberOfCommentPages(Math.ceil(json.totalCount/commentsPerPage))
+            setNumberOfCommentPages(Math.ceil(json.totalCount / commentsPerPage))
           }
         } else {
           setCommentList([])
@@ -426,7 +418,7 @@ function Manga() {
             </Grid>
             <Grid item xs={4}>
               <p>
-                {manga.author===""?"Đang cập nhật":manga.author}
+                {manga.author === "" ? "Đang cập nhật" : manga.author}
               </p>
             </Grid>
             <Grid item xs={2}>
@@ -440,7 +432,7 @@ function Manga() {
             </Grid>
             <Grid item xs={4}>
               <p>
-                {manga.status===0?"Đang tiến hành":"Đã hoàn thành"}
+                {manga.status === 0 ? "Đang tiến hành" : "Đã hoàn thành"}
               </p>
             </Grid>
             <Grid item xs={2}>
@@ -559,56 +551,56 @@ function Manga() {
               variant="standard"
             />
           </Box>
-          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" }, marginLeft:"75%", marginTop:"10px", maxWidth:"20%"}} onClick={handleCommentSubmition} variant="contained">Bình luận</Button>
+          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" }, marginLeft: "75%", marginTop: "10px", maxWidth: "20%" }} onClick={handleCommentSubmition} variant="contained">Bình luận</Button>
           <h2 className='section-header' ref={commentListRef}>Bình luận</h2>
           <div className="comment-list-wrapper">
             {
-              commentList.length === 0?
-              <div>Chưa có ai bình luận. Hay bạn là người đầu tiên nhé!</div>
-              :
-              <div>
-                {commentList.map((comment) => 
-                  <Grid container>
-                  <Grid item xs={2} sx={{textAlign:"center"}}>
-                    <img className="comment-avatar" src={comment.avatar} alt="user-avatar"/>
-                  </Grid>
-                  <Grid item xs={10}>
-                    <div className="comment-content-wrapper">
-                      <h3 className="comment-username">
-                        {comment.username}
-                      </h3>
-                      <p className="comment-content">
-                        {comment.content}
-                      </p>
-                      <p className="comment-updatetime">
-                        {comment.updateTime}
-                      </p>
-                    </div>
-                  </Grid>
-                </Grid>)}
-                <div className="page-paginate">
-                  <ReactPaginate
-                    nextLabel=">"
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={2}
-                    pageCount={numberOfCommentPages}
-                    onPageChange={handleCommentPageClick}
-                    previousLabel="<"
-                    pageClassName="page-item"
-                    pageLinkClassName="page-link"
-                    previousClassName="page-item"
-                    previousLinkClassName="page-link"
-                    nextClassName="page-item"
-                    nextLinkClassName="page-link"
-                    breakLabel="..."
-                    breakClassName="page-item"
-                    breakLinkClassName="page-link"
-                    containerClassName="pagination"
-                    activeClassName="active"
-                    renderOnZeroPageCount={null}
-                  />
+              commentList.length === 0 ?
+                <div>Chưa có ai bình luận. Hay bạn là người đầu tiên nhé!</div>
+                :
+                <div>
+                  {commentList.map((comment) =>
+                    <Grid container>
+                      <Grid item xs={2} sx={{ textAlign: "center" }}>
+                        <img className="comment-avatar" src={comment.avatar} alt="user-avatar" />
+                      </Grid>
+                      <Grid item xs={10}>
+                        <div className="comment-content-wrapper">
+                          <h3 className="comment-username">
+                            {comment.username}
+                          </h3>
+                          <p className="comment-content">
+                            {comment.content}
+                          </p>
+                          <p className="comment-updatetime">
+                            {comment.updateTime}
+                          </p>
+                        </div>
+                      </Grid>
+                    </Grid>)}
+                  <div className="page-paginate">
+                    <ReactPaginate
+                      nextLabel=">"
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={2}
+                      pageCount={numberOfCommentPages}
+                      onPageChange={handleCommentPageClick}
+                      previousLabel="<"
+                      pageClassName="page-item"
+                      pageLinkClassName="page-link"
+                      previousClassName="page-item"
+                      previousLinkClassName="page-link"
+                      nextClassName="page-item"
+                      nextLinkClassName="page-link"
+                      breakLabel="..."
+                      breakClassName="page-item"
+                      breakLinkClassName="page-link"
+                      containerClassName="pagination"
+                      activeClassName="active"
+                      renderOnZeroPageCount={null}
+                    />
+                  </div>
                 </div>
-              </div>  
             }
           </div>
         </div>

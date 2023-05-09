@@ -116,7 +116,7 @@ function Read() {
 
   useEffect(() => {
     setChapterId(params.id)
-  })
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {

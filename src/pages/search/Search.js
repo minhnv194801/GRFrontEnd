@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import PaginateItemList from "../../components/paginateitem/PaginateItemList";
 import InputAdornment from '@mui/material/InputAdornment';
@@ -16,7 +16,7 @@ import { InputBase } from '@mui/material';
 import './Search.css'
 import { timeDifference } from "../../common/Date";
 import { useDispatch } from "react-redux";
-import { displayFailure, displaySuccess } from "../../components/topalert/TopAlertSlice";
+import { displayFailure } from "../../components/topalert/TopAlertSlice";
 
 function Search() {
   const loadingItem = [{
@@ -27,7 +27,6 @@ function Search() {
     "chapters": []
   }]
   
-  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const dispatch = useDispatch()
 
@@ -61,8 +60,6 @@ function Search() {
         // convert data to json
         const json = await response.json();
       
-        console.log(json)
-        
         if (json.data === null || json.data?.length === 0) {
           setSearchResults([])
           setResultCount(0)
@@ -172,8 +169,8 @@ function Search() {
         </div>
         <Grid className="checkbox-grid" container spacing={2}>
           {searchTags.map((tag) => 
-            <Grid item xs={6} md={2}>
-              <FormGroup>
+            <Grid item xs={6} md={2} key={tag}>
+              <FormGroup key={tag}>
                 <FormControlLabel control={<Checkbox icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} checked={selectedTags.includes(tag)} value={tag} onChange={handleCheckBox}/>} label={tag} />
               </FormGroup>
             </Grid>
