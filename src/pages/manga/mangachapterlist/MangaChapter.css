@@ -1,0 +1,36 @@
+.single-chapter-wrapper {
+    background-color: #990000;
+    color: #fff;
+    width: 100%;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.chapter-info-wrapper {
+    width: 100%;
+}
+
+.chapter-cover {
+    height: auto;
+    max-width: 100%;
+    object-fit: cover;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.chapter-updatetime {
+    margin-bottom: 120px;
+}
+
+.chapter-list-section-header {
+    width: 100%;
+    font-weight: bold;
+    border-bottom: 3px solid #000;
+}
+
+.manga-chapter-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

@@ -44,7 +44,7 @@ function Info() {
     }
     const handleFirstNameChange = (e) => {
         setFirstName(e.target.value)
-    }    
+    }
     const handleUsernameChange = (e) => {
         dispatch(setUsername(e.target.value))
     }
@@ -55,33 +55,32 @@ function Info() {
     const onFileInputChange = (e) => {
         const file = e.target?.files?.[0];
         if (file) {
-          getBase64(file).then((base64) => {
-            dispatch(setUserAvatar(base64))
-          });
+            getBase64(file).then((base64) => {
+                dispatch(setUserAvatar(base64))
+            });
         }
     }
 
     const handleUpdate = (e) => {
-        //TODO: Send user info update to server
-        const refresh = async() => {
+        const refresh = async () => {
             var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
             if (res.isRefresh) {
-              if (res.sessionkey) {
-                dispatch(login(res))
-              } else {
-                dispatch(logout())
-                navigate('/')
-                dispatch(displayFailure({
-                  "title": "Đăng xuất",
-                  "content": "Phiên đăng nhập của bạn đã hết hạn. Xin hãy đăng nhập lại",
-                }))
-              }
+                if (res.sessionkey) {
+                    dispatch(login(res))
+                } else {
+                    dispatch(logout())
+                    navigate('/')
+                    dispatch(displayFailure({
+                        "title": "Đăng xuất",
+                        "content": "Phiên đăng nhập của bạn đã hết hạn. Xin hãy đăng nhập lại",
+                    }))
+                }
             }
 
             return res.sessionkey
         }
 
-        const postUserInfo = async() => {
+        const postUserInfo = async () => {
             let newSessionkey = await refresh()
             try {
                 const response = await fetch('http://localhost:8081/api/v1/user/info', {
@@ -89,9 +88,9 @@ function Info() {
                     credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': newSessionkey?newSessionkey:sessionkey,
+                        'Authorization': newSessionkey ? newSessionkey : sessionkey,
                     },
-                    body: JSON.stringify({ 
+                    body: JSON.stringify({
                         "firstName": firstName,
                         "lastName": lastName,
                         "gender": gender,
@@ -105,14 +104,14 @@ function Info() {
                     dispatch(displaySuccess({
                         "title": "Thành công",
                         "content": "Thông tin cá nhân của bạn đã được cập nhật thành công"
-                    }))    
+                    }))
                 } else {
                     if (response.status === 401) {
                         navigate("/")
                         dispatch(displayFailure({
                             "title": "Đăng xuất",
                             "content": "Phiên đăng nhập của bạn đã hết hạn",
-                        }))    
+                        }))
                     }
                     var json = await response.json()
                     dispatch(displayFailure({
@@ -154,8 +153,8 @@ function Info() {
                     if (response.status === 401) {
                         navigate("/")
                         dispatch(displayFailure({
-                          "title": "Unauthorized",
-                          "content": "Vui lòng đăng nhập lại",
+                            "title": "Unauthorized",
+                            "content": "Vui lòng đăng nhập lại",
                         }))
                     }
 
@@ -173,57 +172,58 @@ function Info() {
         }
 
         fetchUserInfo()
+        // eslint-disable-next-line
     }, [])
-    
+
     return (
-        <Grid container sx={{marginTop:'30px'}}>
-            <Grid item xs={3} md={3} sx={{textAlign:"left"}}>
+        <Grid container sx={{ marginTop: '30px' }}>
+            <Grid item xs={3} md={3} sx={{ textAlign: "left" }}>
                 <h3 className='info-header'>Họ:</h3>
             </Grid>
             <Grid item xs={9} md={4}>
                 <TextField
-                sx={{
-                    background: "#ffff",
-                    height: "80%",
-                    width: "90%",
-                }}
-                value={lastName}
-                onChange={handleLastNameChange}
-                hiddenLabel
-                placeholder="Xin hãy cập nhật họ của bạn"
-                variant="standard"
-                InputProps={{ disableUnderline: true }}
+                    sx={{
+                        background: "#ffff",
+                        height: "80%",
+                        width: "90%",
+                    }}
+                    value={lastName}
+                    onChange={handleLastNameChange}
+                    hiddenLabel
+                    placeholder="Xin hãy cập nhật họ của bạn"
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
                 />
             </Grid>
-            <Grid item xs={3} md={1} sx={{textAlign:"left"}}>
+            <Grid item xs={3} md={1} sx={{ textAlign: "left" }}>
                 <h3 className='info-header'>Tên:</h3>
             </Grid>
             <Grid item xs={9} md={4}>
                 <TextField
-                sx={{
-                    background: "#ffff",
-                    height: "80%",
-                    width: "90%",
-                }}
-                value={firstName}
-                onChange={handleFirstNameChange}
-                fullWidth
-                hiddenLabel
-                placeholder="Xin hãy cập nhật tên của bạn"
-                variant="standard"
-                InputProps={{ disableUnderline: true }}
+                    sx={{
+                        background: "#ffff",
+                        height: "80%",
+                        width: "90%",
+                    }}
+                    value={firstName}
+                    onChange={handleFirstNameChange}
+                    fullWidth
+                    hiddenLabel
+                    placeholder="Xin hãy cập nhật tên của bạn"
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
                 />
             </Grid>
-            <Grid item xs={3} sx={{marginTop:'30px'}}>
+            <Grid item xs={3} sx={{ marginTop: '30px' }}>
                 <h3 className='info-header'>Email:</h3>
             </Grid>
-            <Grid item xs={9} sx={{marginTop:'30px'}}>
+            <Grid item xs={9} sx={{ marginTop: '30px' }}>
                 <h3 className='info-content'>{email}</h3>
             </Grid>
-            <Grid item xs={3} sx={{marginTop:'30px'}}>
+            <Grid item xs={3} sx={{ marginTop: '30px' }}>
                 <h3 className='info-header'>Tên hiển thị:</h3>
             </Grid>
-            <Grid item xs={9} sx={{marginTop:'30px'}}>
+            <Grid item xs={9} sx={{ marginTop: '30px' }}>
                 <TextField
                     sx={{
                         background: "#ffff",
@@ -239,34 +239,34 @@ function Info() {
                     InputProps={{ disableUnderline: true }}
                 />
             </Grid>
-            <Grid item xs={3} sx={{marginTop:'30px'}}>
+            <Grid item xs={3} sx={{ marginTop: '30px' }}>
                 <h3 className='info-header'>Ảnh đại diện:</h3>
             </Grid>
-            <Grid item xs={9} sx={{marginTop:'30px'}}>
+            <Grid item xs={9} sx={{ marginTop: '30px' }}>
                 <input
                     onChange={onFileInputChange}
                     type="file"
                     accept="image/png,image/jpeg,image/gif"
-                />  
+                />
             </Grid>
-            <Grid item xs={3} sx={{marginTop:'30px'}}>
+            <Grid item xs={3} sx={{ marginTop: '30px' }}>
                 <h3 className='info-header'>Giới tính:</h3>
             </Grid>
-            <Grid item xs={9} sx={{marginTop:'30px'}}>
+            <Grid item xs={9} sx={{ marginTop: '30px' }}>
                 <select className='gender-selector' value={gender} onChange={handleGenderChange}>
                     <option value={0}>Nam</option>
                     <option value={1}>Nữ</option>
                     <option value={2}>Không xác đinh</option>
                 </select>
             </Grid>
-            <Grid item xs={3} sx={{marginTop:'30px'}}>
+            <Grid item xs={3} sx={{ marginTop: '30px' }}>
                 <h3 className='info-header'>Vai trò:</h3>
             </Grid>
-            <Grid item xs={9} sx={{marginTop:'30px'}}>
+            <Grid item xs={9} sx={{ marginTop: '30px' }}>
                 <h3 className='info-content'>{role}</h3>
             </Grid>
-            <Grid item xs={12} sx={{marginTop:'30px', marginBottom:'30px', textAlign:'right'}}>
-                <Button sx={{ color: "#fff", backgroundColor: "#ed2939", marginRight:'5%', "&:hover": { backgroundColor: "#cc0023" } }} onClick={handleUpdate} variant="contained">Cập nhật</Button>
+            <Grid item xs={12} sx={{ marginTop: '30px', marginBottom: '30px', textAlign: 'right' }}>
+                <Button sx={{ color: "#fff", backgroundColor: "#ed2939", marginRight: '5%', "&:hover": { backgroundColor: "#cc0023" } }} onClick={handleUpdate} variant="contained">Cập nhật</Button>
             </Grid>
         </Grid>
     )

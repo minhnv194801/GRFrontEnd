@@ -16,19 +16,19 @@ function Owned() {
     const sessionkey = useSelector((state) => state.app.sessionkey)
     const refreshkey = useSelector((state) => state.app.refreshkey)
 
-    const refresh = async() => {
+    const refresh = async () => {
         var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
         if (res.isRefresh) {
-          if (res.sessionkey) {
-            dispatch(login(res))
-          } else {
-            dispatch(logout())
-            navigate('/')
-            dispatch(displayFailure({
-              "title": "Đăng xuất",
-              "content": "Phiên đăng nhập của bạn đã hết hạn. Xin hãy đăng nhập lại",
-            }))
-          }
+            if (res.sessionkey) {
+                dispatch(login(res))
+            } else {
+                dispatch(logout())
+                navigate('/')
+                dispatch(displayFailure({
+                    "title": "Đăng xuất",
+                    "content": "Phiên đăng nhập của bạn đã hết hạn. Xin hãy đăng nhập lại",
+                }))
+            }
         }
         return res.sessionkey
     }
@@ -48,47 +48,48 @@ function Owned() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-              let newSessionkey = await refresh()
-              const response = await fetch('http://localhost:8081/api/v1/user/owned', {
-                method: 'GET',
-                credentials: 'same-origin',
-                headers: {
-                  'Authorization': newSessionkey?newSessionkey:sessionkey, 
-                  'Content-Type': 'application/json'
-                }
-              })
-              if (response.ok) {
-                // convert data to json
-                const json = await response.json();
+                let newSessionkey = await refresh()
+                const response = await fetch('http://localhost:8081/api/v1/user/owned', {
+                    method: 'GET',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Authorization': newSessionkey ? newSessionkey : sessionkey,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                if (response.ok) {
+                    // convert data to json
+                    const json = await response.json();
 
-                if (json === null || json.length === 0) {
-                    setOwnedMangaList([])
+                    if (json === null || json.length === 0) {
+                        setOwnedMangaList([])
+                    } else {
+                        setOwnedMangaList(json)
+                    }
                 } else {
-                    setOwnedMangaList(json)
+                    if (response.status === 401) {
+                        navigate("/")
+                        dispatch(displayFailure({
+                            "title": "Unauthorized",
+                            "content": "Vui lòng đăng nhập lại",
+                        }))
+                    } else {
+                        dispatch(displayFailure({
+                            "title": "Lỗi hệ thống",
+                            "content": "Gặp lỗi hệ thống khi tải danh sách chương truyện sở hữu, xin vui lòng thử tải lại trang",
+                        }))
+                    }
                 }
-              } else {
-                if (response.status === 401) {
-                  navigate("/")
-                  dispatch(displayFailure({
-                    "title": "Unauthorized",
-                    "content": "Vui lòng đăng nhập lại",
-                  }))
-                } else {
-                    dispatch(displayFailure({
-                        "title": "Lỗi hệ thống",
-                        "content": "Gặp lỗi hệ thống khi tải danh sách chương truyện sở hữu, xin vui lòng thử tải lại trang",
-                    }))
-                }
-              }
             } catch (error) {
-              dispatch(displayFailure({
-                "title": "Lỗi kết nối",
-                "content": "Kết nối với server thất bại",
-              }))
+                dispatch(displayFailure({
+                    "title": "Lỗi kết nối",
+                    "content": "Kết nối với server thất bại",
+                }))
             }
         }
 
         fetchData()
+        // eslint-disable-next-line
     }, [])
 
     return (
@@ -96,38 +97,38 @@ function Owned() {
             dataLength={1}
             height={660}
         >
-            {ownedMangaList.length !== 0?
+            {ownedMangaList.length !== 0 ?
                 ownedMangaList.map((owned) =>
-                <div className='owned-list-wrapper'>
-                    <Grid container sx={{ marginTop: '30px' }}>
-                        <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
-                            <a href={'/manga/' + owned.id}>
-                                <img className='owned-manga-cover' src={owned.cover} alt='owned-cover' />
-                            </a>
-                        </Grid>
-                        <Grid item xs={12} md={8}>
-                            <div className='owned-chapter-title-wrapper'>
-                                <a className='owned-title-href' href={'/manga/' + owned.id}>
-                                    <h3 className='owned-chapter-title'>{owned.title}</h3>
+                    <div className='owned-list-wrapper'>
+                        <Grid container sx={{ marginTop: '30px' }}>
+                            <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
+                                <a href={'/manga/' + owned.id}>
+                                    <img className='owned-manga-cover' src={owned.cover} alt='owned-cover' />
                                 </a>
-                                <div></div>
-                            </div>
-                            <h3>Danh sách chương sở hữu:</h3>
-                            <div className='scroll-wrapper'>
-                                <InfiniteScroll
-                                    dataLength={3}
-                                    height={200}
-                                >
-                                    {owned.chapters.map((chapter) =>
-                                        <div className={selectedChapterId === chapter.id ? 'selected-owned-chapter-wrapper' : 'owned-chapter-wrapper'} id={chapter.id} onClick={handleSelectChapter}>
-                                            {chapter.title}
-                                        </div>
-                                    )}
-                                </InfiniteScroll>
-                            </div>
+                            </Grid>
+                            <Grid item xs={12} md={8}>
+                                <div className='owned-chapter-title-wrapper'>
+                                    <a className='owned-title-href' href={'/manga/' + owned.id}>
+                                        <h3 className='owned-chapter-title'>{owned.title}</h3>
+                                    </a>
+                                    <div></div>
+                                </div>
+                                <h3>Danh sách chương sở hữu:</h3>
+                                <div className='scroll-wrapper'>
+                                    <InfiniteScroll
+                                        dataLength={3}
+                                        height={200}
+                                    >
+                                        {owned.chapters.map((chapter) =>
+                                            <div className={selectedChapterId === chapter.id ? 'selected-owned-chapter-wrapper' : 'owned-chapter-wrapper'} id={chapter.id} onClick={handleSelectChapter}>
+                                                {chapter.title}
+                                            </div>
+                                        )}
+                                    </InfiniteScroll>
+                                </div>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </div>
+                    </div>
                 )
                 :
                 <div><h3 className='emptyHeader'>Hiện bạn chưa sở hữu chương truyện nào</h3></div>}

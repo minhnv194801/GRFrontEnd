@@ -1,0 +1,111 @@
+.login-outer {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+}
+
+.login-outer:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    background-image: url("./logo.png");
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    background-size: cover;
+}
+
+.login-inner {
+    position: relative;
+    background-color: #900;
+    height: auto;
+    width: 70vw;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50%;
+    transform: translate(0, -50%);
+    border-radius: 50px;
+    color: #fff;
+    padding-bottom: 10px;
+}
+
+.login-title {
+    text-align: center;
+    padding-top: 0;
+    padding-bottom: 1rem;
+}
+
+.login-input-wrapper {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.login-textfield-label {
+    /* padding-left: 10px; */
+}
+
+.login-textfield-wrapper {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.login-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.register-href {
+    margin-left: 10px;
+    font-style: italic;
+}
+
+a.register-href {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.register-href:link {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.register-href:visited {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.register-href:active {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.register-href:hover {
+    color: #ffffff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.error-message {
+    color: white;
+    font-style: italic;
+}
+
+@media only screen and (orientation: portrait) {
+    .login-inner {
+        width: 100vw;
+    }
+}

@@ -38,44 +38,45 @@ function User(props) {
   useEffect(() => {
     dispatch(setUsername(appUsername))
     dispatch(setUserAvatar(appUserAvatar))
+    // eslint-disable-next-line
   }, [])
 
   return (
-    <div className='outer'>
-      <div className='inner'>
-        <div className='header-wrapper'>
-          <img className='user-avatar' src={userAvatar} alt='User avatar'/>
-          <h1 className='username-header'>{username}</h1>
+    <div className='inner'>
+      <div className='header-wrapper'>
+        <div className='user-bg-img-wrapper'>
+          <img className='user-bg-img' src={'/logo/logo.png'} alt='Background' />
         </div>
-        <div className='content-wrapper'>
-          <Grid container justifyContent={'center'}>
-            <Grid item xs={12} md={3}>
-              <div className={currentPage==='info'?'first-selected-page-button-div':'first-page-button-div'} id='info' onClick={handlePageChange}>
-                <h3 className='button-header' id='info'>Thông tin cá nhân</h3>
-              </div>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <div className={currentPage==='favorite'?'selected-page-button-div':'page-button-div'} id='favorite' onClick={handlePageChange}>
-                <h3 className='button-header' id='favorite'>Truyện theo dõi</h3>
-              </div>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <div className={currentPage==='owned'?'selected-page-button-div':'page-button-div'} id='owned' onClick={handlePageChange}>
-                <h3 className='button-header' id='owned'>Chương sở hữu</h3>
-              </div>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <div className={currentPage==='report'?'last-selected-button-div':'last-page-button-div'} id='report' onClick={handlePageChange}>
-                <h3 className='button-header' id='report'>Thông tin báo lỗi</h3>
-              </div>
-            </Grid>
+        <img className='user-avatar' src={userAvatar} alt='User avatar' />
+        <h1 className='username-header'>{username}</h1>
+      </div>
+      <div className='content-wrapper'>
+        <Grid container sx={{ borderBottom: '2px solid black' }}>
+          <Grid item xs={12} md={3}>
+            <div className={currentPage === 'info' ? 'first-selected-page-button-div' : 'first-page-button-div'} id='info' onClick={handlePageChange}>
+              <h3 className='button-header' id='info'>Thông tin cá nhân</h3>
+            </div>
           </Grid>
-          {userPage()}
-        </div>
+          <Grid item xs={12} md={3}>
+            <div className={currentPage === 'favorite' ? 'selected-page-button-div' : 'page-button-div'} id='favorite' onClick={handlePageChange}>
+              <h3 className='button-header' id='favorite'>Truyện theo dõi</h3>
+            </div>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <div className={currentPage === 'owned' ? 'selected-page-button-div' : 'page-button-div'} id='owned' onClick={handlePageChange}>
+              <h3 className='button-header' id='owned'>Chương sở hữu</h3>
+            </div>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <div className={currentPage === 'report' ? 'last-selected-page-button-div' : 'last-page-button-div'} id='report' onClick={handlePageChange}>
+              <h3 className='button-header' id='report'>Thông tin báo lỗi</h3>
+            </div>
+          </Grid>
+        </Grid>
+        {userPage()}
       </div>
     </div>
   );
 }
-  
+
 export default User;
-  

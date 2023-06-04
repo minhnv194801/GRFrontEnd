@@ -1,23 +1,41 @@
 .header-wrapper {
-    padding-top: 20px;
-    margin-left: 5%;
-    display: flex;
+    text-align: center;
+    position: relative;
+}
+
+.user-bg-img-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 25vh;
+    left: 0;
+    right: 0;
+}
+
+.user-bg-img {
+    opacity: 0.2;
+    width: 100%;
+    height: 100%;
 }
 
 .user-avatar {
-    height: 200px;
-    width: 150px;
+    position: relative;
+    margin-top: 7.5vh;
+    height: 30vh;
+    width: 30vh;
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 1;
 }
 
 .username-header {
-    margin-top: 120px;
-    width: 60vw;
+    width: 100vw;
     word-wrap: break-word;
     overflow: hidden;
     display: -webkit-box;
-   -webkit-line-clamp: 2; /* number of lines to show */
-           line-clamp: 2; 
-   -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .content-wrapper {
@@ -33,108 +51,111 @@
 }
 
 .page-button-div {
-    background-color: #fff;
-    color: #000;
+    background-color: #990000;
     height: 100%;
     width: 100%;
-    justify-content: left !important;
-    border: 1px solid #000;
+    text-align: center !important;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .selected-page-button-div {
-    background-color: #990000;
+    background-color: #ED2939;
     height: 100%;
     width: 100%;
-    justify-content: left !important;
-    border: 1px solid #000;
+    text-align: center !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .first-page-button-div {
-    background-color: #fff;
-    color: #000;
+    background-color: #990000;
     width: 100%;
     height: 100%;
-    justify-content: left !important;
-    border: 1px solid #000;
+    text-align: center !important;
     cursor: pointer;
     border-top-left-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .first-selected-page-button-div {
-    background-color: #990000;
+    background-color: #ED2939;
     width: 100%;
     height: 100%;
-    justify-content: left !important;
-    border: 1px solid #000;
+    text-align: center !important;
     border-top-left-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .last-page-button-div {
-    background-color: #fff;
-    color: #000;
-    width: 100%;
-    height: 100%;
-    justify-content: left !important;
-    border: 1px solid #000;
-    cursor: pointer;
-    border-top-right-radius: 25px;
-}
-
-.last-selected-page-button-div {
     background-color: #990000;
     width: 100%;
     height: 100%;
-    justify-content: left !important;
-    border: 1px solid #000;
+    text-align: center !important;
+    cursor: pointer;
     border-top-right-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.last-selected-page-button-div {
+    background-color: #ED2939;
+    width: 100%;
+    height: 100%;
+    text-align: center !important;
+    border-top-right-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button-header {
-    margin-left: 3px;
     width: 100%;
+    margin-top: 0.5rem;
 }
 
 @media only screen and (orientation: portrait) {
     .first-page-button-div {
-        background-color: #fff;
-        color: #000;
+        background-color: #990000;
         width: 100%;
         height: 100%;
-        justify-content: left !important;
-        border: 1px solid #000;
+        text-align: center !important;
         cursor: pointer;
         border-top-right-radius: 25px;
         border-top-left-radius: 25px;
     }
-    
+
     .first-selected-page-button-div {
-        background-color: #990000;
+        background-color: #ED2939;
         width: 100%;
         height: 100%;
-        justify-content: left !important;
-        border: 1px solid #000;
+        text-align: center !important;
         border-top-right-radius: 25px;
         border-top-left-radius: 25px;
     }
 
     .last-page-button-div {
-        background-color: #fff;
-        color: #000;
-        width: 100%;
-        height: 100%;
-        justify-content: left !important;
-        border: 1px solid #000;
-        cursor: pointer;
-        border-top-right-radius: 0;
-    }
-    
-    .last-selected-page-button-div {
         background-color: #990000;
         width: 100%;
         height: 100%;
-        justify-content: left !important;
-        border: 1px solid #000;
+        text-align: center !important;
+        cursor: pointer;
+        border-top-right-radius: 0;
+    }
+
+    .last-selected-page-button-div {
+        background-color: #ED2939;
+        width: 100%;
+        height: 100%;
+        text-align: center !important;
         border-top-right-radius: 0;
     }
 }

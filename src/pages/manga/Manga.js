@@ -10,18 +10,18 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useDispatch, useSelector } from 'react-redux'
 import { displayFailure, displaySuccess } from '../../components/topalert/TopAlertSlice'
 import { timeDifference } from "../../common/Date";
-import './Manga.css'
 import refreshTokenIfNeeded from "../../common/JWT";
 import { login, logout } from "../../AppSlice";
-import { openLoginModal } from "../../components/loginmodal/LoginModalSlice";
+import MangaChapterList from "./mangachapterlist/MangaChapterList";
+import { Circle } from "@mui/icons-material";
+import './Manga.css'
 
 function Manga() {
-  const chaptersPerPage = 5
+  const chaptersPerPage = 6
   const commentsPerPage = 6
 
   const params = useParams()
-  const chapterListRef = useRef(null)
-  const commentListRef = useRef(null)
+  const pageRef = useRef(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -39,6 +39,7 @@ function Manga() {
     "ratingCount": "0",
     "description": "Loading..."
   })
+  const [isDescExpand, setIsDescExpand] = useState(false)
   const [numberOfChapterPages, setNumberOfChapterPages] = useState(1)
   const [chapterOffset, setChapterOffset] = useState(0)
   const [chapterList, setChapterList] = useState([{}])
@@ -46,11 +47,127 @@ function Manga() {
   const [commentOffset, setCommentOffset] = useState(0)
   const [commentList, setCommentList] = useState([{}])
   const [currentComment, setCurrentComment] = useState("")
+  const [currentSection, setCurrentSection] = useState('chapterlist')
   const sessionkey = useSelector((state) => state.app.sessionkey)
   const refreshkey = useSelector((state) => state.app.refreshkey)
   const username = useSelector((state) => state.app.username)
   const avatar = useSelector((state) => state.app.avatar)
   const isLogin = useSelector((state) => state.app.isLogin)
+
+  const handleSectionChange = (e) => {
+    setCurrentSection(e.target.id)
+  }
+
+  const mangaSection = () => {
+    switch (currentSection) {
+      case 'chapterlist':
+        return (
+          <div className="chapter-list-wrapper">
+            <MangaChapterList chapterList={chapterList} />
+            <div className="page-paginate">
+              <ReactPaginate
+                nextLabel=">"
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={2}
+                pageCount={numberOfChapterPages}
+                onPageChange={handleChapterPageClick}
+                previousLabel="<"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakLabel="..."
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
+                renderOnZeroPageCount={null}
+              />
+            </div>
+          </div>
+        )
+      case 'commentlist':
+        return (
+          <div className='comment-wrapper'>
+            <div className='comment-input-wrapper'>
+              <Box className='comment-box-wrapper'>
+                <TextField
+                  sx={{
+                    background: "#ffff"
+                  }}
+                  onChange={handleCommentBoxChange}
+                  fullWidth
+                  hiddenLabel
+                  multiline
+                  rows={6}
+                  placeholder="Mời bạn tham gia bình luận tại đây"
+                  variant="standard"
+                />
+              </Box>
+              <Button sx={{ borderRadius: '25px', backgroundColor: "#ED2939", "&:hover": { backgroundColor: "#C00000" }, marginLeft: "0%", marginTop: "10px" }} onClick={handleCommentSubmition} variant="contained">Bình luận</Button>
+            </div>
+            <div className="comment-list-wrapper">
+              {
+                commentList.length === 0 ?
+                  <div>Chưa có ai bình luận. Hay bạn là người đầu tiên nhé!</div>
+                  :
+                  <div>
+                    {commentList.map((comment) =>
+                      <Grid container>
+                        <Grid item xs={3} md={2} sx={{ textAlign: "center" }}>
+                          <img className="comment-avatar" src={comment.avatar} alt="user-avatar" />
+                        </Grid>
+                        <Grid item xs={9} md={10}>
+                          <div className="comment-content-wrapper">
+                            <h3 className="comment-username">
+                              {comment.username}
+                            </h3>
+                            <p className="comment-content">
+                              {comment.content}
+                            </p>
+                            <p className="comment-updatetime">
+                              {comment.updateTime}
+                            </p>
+                          </div>
+                        </Grid>
+                      </Grid>)}
+                    <div className="page-paginate">
+                      <ReactPaginate
+                        nextLabel=">"
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={2}
+                        pageCount={numberOfCommentPages}
+                        onPageChange={handleCommentPageClick}
+                        previousLabel="<"
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        renderOnZeroPageCount={null}
+                      />
+                    </div>
+                  </div>
+              }
+            </div>
+          </div>
+        )
+      default:
+        setCurrentSection('chapterlist')
+    }
+  }
+
+  const procDescParagraph = () => {
+    setIsDescExpand(!isDescExpand)
+  }
 
   const refresh = async () => {
     var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
@@ -71,12 +188,12 @@ function Manga() {
 
   const handleChapterPageClick = (event) => {
     setChapterOffset(event.selected * chaptersPerPage);
-    chapterListRef.current.scrollIntoView()
+    pageRef.current.scrollIntoView()
   }
 
   const handleCommentPageClick = (event) => {
     setCommentOffset(event.selected * commentsPerPage);
-    commentListRef.current.scrollIntoView()
+    pageRef.current.scrollIntoView()
   }
 
   const handleFavorite = (e) => {
@@ -137,7 +254,6 @@ function Manga() {
         "title": "Thất bại",
         "content": "Hãy đăng nhập để bắt đầu theo dõi truyện nhé",
       }))
-      dispatch(openLoginModal())
     } else {
       postFavorite()
     }
@@ -206,7 +322,6 @@ function Manga() {
         "title": "Thất bại",
         "content": "Hãy đăng nhập để bắt đầu đánh giá truyện nhé",
       }))
-      dispatch(openLoginModal())
     } else {
       postRating()
     }
@@ -274,14 +389,9 @@ function Manga() {
         "title": "Thất bại",
         "content": "Hãy đăng nhập để bắt đầu bình luận truyện nhé",
       }))
-      dispatch(openLoginModal())
     } else {
       postComment()
     }
-  }
-
-  const handleReadChapter = (e) => {
-    navigate('/read/' + e.target.value)
   }
 
   useEffect(() => {
@@ -316,6 +426,7 @@ function Manga() {
     }
 
     fetchMangaInfo()
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -351,6 +462,7 @@ function Manga() {
       }
     }
     fetchChapterListInfo()
+    // eslint-disable-next-line
   }, [chapterOffset])
 
   useEffect(() => {
@@ -395,215 +507,61 @@ function Manga() {
     }
 
     fetchCommentListData()
+    // eslint-disable-next-line
   }, [commentOffset])
 
   return (
-    <div className='outer'>
-      <div className='inner'>
-        <h1 className='manga-title-header'>{manga.title}</h1>
-        <div className='cover-wrapper'>
-          <img className="manga-cover" src={manga.cover} alt='bìa truyện' />
+    <div className='inner'>
+      <div className='manga-header-wrapper'>
+        <div className='manga-bg-img-wrapper'>
+          <img className='manga-bg-img' src={manga.cover} alt='Manga Banner' />
         </div>
-        <div className='favorite-btn-wrapper'>
-          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" } }} variant="contained" onClick={handleFavorite} startIcon={<FavoriteIcon />}>{manga.isFavorite ? "Bỏ theo dõi" : "Theo dõi"}</Button>
-        </div>
-        <div className="info-grid">
-          <Grid container>
-            <Grid item xs={2}>
+        <div className='manga-detail-wrapper'>
+          <Grid container spacing={0}>
+            <Grid item xs={5} md={3} sx={{ textAlign: 'center' }}>
+              <img className='manga-cover' src={manga.cover} alt='Manga Cover' />
             </Grid>
-            <Grid item xs={4}>
-              <b>
-                Tác giả:
-              </b>
-            </Grid>
-            <Grid item xs={4}>
-              <p>
-                {manga.author === "" ? "Đang cập nhật" : manga.author}
-              </p>
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={4}>
-              <b>
-                Tình trạng:
-              </b>
-            </Grid>
-            <Grid item xs={4}>
-              <p>
-                {manga.status === 0 ? "Đang tiến hành" : "Đã hoàn thành"}
-              </p>
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={4}>
-              <b>
-                Thể loại:
-              </b>
-            </Grid>
-            <Grid item xs={4}>
-              <p>
-                {manga.tags.join(" - ")}
-              </p>
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={4}>
-              <b>
-                Đánh giá:
-              </b>
-            </Grid>
-            <Grid item xs={4}>
-              <Rating
-                onChange={handleRating}
-                value={manga.userRating}
-              />
-            </Grid>
-            <Grid item xs={2}>
-            </Grid>
-            <Grid item xs={6}>
-            </Grid>
-            <Grid item xs={6}>
-              (Trung bình: {manga.avgRating}/5 - {manga.ratingCount} lượt đánh giá)
+            <Grid item xs={7} md={9}>
+              <div className='right-manga-detail-wrapper'>
+                <h1 className='manga-header'>{manga.title}</h1>
+              </div>
+              <div className='rating-wrapper'>
+                <Rating
+                  onChange={handleRating}
+                  value={manga.userRating}
+                />
+                <p className='avg-rating-text'>(Trung bình: {manga.avgRating}/5 - {manga.ratingCount} lượt đánh giá)</p>
+              </div>
+              <div className="tag-list-wrapper">
+                {manga.tags === undefined ? null : manga.tags.map((tag) => <div className="tag-wrapper">{tag}</div>)}
+              </div>
+              <div className='favorite-btn-wrapper'>
+                <Button sx={{ borderRadius: '25px', backgroundColor: "#ED2939", "&:hover": { backgroundColor: "#cc0023" } }} variant="contained" onClick={handleFavorite} startIcon={<FavoriteIcon sx={{ color: manga.isFavorite ? 'orange' : 'white' }} />}>{manga.isFavorite ? "Bỏ theo dõi" : "Theo dõi"}</Button>
+              </div>
             </Grid>
           </Grid>
         </div>
+        <div className='manga-status-wrapper'>
+          <h5 className='manga-status'>
+            <Circle sx={{ color: manga.status === 0 ? '#00FF00' : '#87CEEB', fontSize: '16px', marginRight: '10px' }} />
+            {manga.status === 0 ? "Đang tiến hành" : "Đã hoàn thành"}
+          </h5>
+        </div>
+        <div className='manga-author-wrapper'>
+          <h5 className='manga-author'>Tác giả: {manga.author === "" ? "Đang cập nhật" : manga.author}</h5>
+        </div>
         <div className='description-wrapper'>
           <h2 className='section-header'>Mô tả</h2>
-          <p className='desc-paragraph'>
+          <p className={isDescExpand ? 'desc-paragraph' : 'short-desc-paragraph'}>
             {manga.description}
           </p>
+          <a className='desc-expand' onClick={procDescParagraph}>{isDescExpand ? '< Thu gọn' : 'Xem thêm >'}</a>
         </div>
-        <div className='chapter-list-wrapper'>
-          <h2 className='section-header' ref={chapterListRef}>Chương truyện</h2>
-          {chapterList.map((chapter) =>
-            <div className='single-chapter-wrapper'>
-              <Grid container spacing={'5px'}>
-                <Grid sx={{ textAlign: "center" }} item md={3}>
-                  <img className='chapter-cover' src={chapter.cover} alt="Bìa chương truyện" />
-                </Grid>
-                <Grid item md={9}>
-                  <div>
-                    <h3 className='manga-chapter-title'>
-                      {chapter.title}
-                    </h3>
-                    <p className='chapter-updatetime'>
-                      {"(Cập nhật: " + chapter.updateTime + ")"}
-                    </p>
-                    {
-                      (!chapter.isOwned) ?
-                        <div>
-                          <h6>
-                            {chapter.price + " VND"}
-                          </h6>
-                          <Button sx={{ borderRadius: '25px', backgroundColor: "#ed2939", "&:hover": { backgroundColor: "#cc0023" } }} variant="contained">Mua</Button>
-                        </div>
-                        :
-                        <div>
-                          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" } }} value={chapter.id} onClick={handleReadChapter} variant="contained">Đọc</Button>
-                        </div>
-                    }
-                  </div>
-                </Grid>
-              </Grid>
-            </div>
-          )}
-          <div className="page-paginate">
-            <ReactPaginate
-              nextLabel=">"
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={2}
-              pageCount={numberOfChapterPages}
-              onPageChange={handleChapterPageClick}
-              previousLabel="<"
-              pageClassName="page-item"
-              pageLinkClassName="page-link"
-              previousClassName="page-item"
-              previousLinkClassName="page-link"
-              nextClassName="page-item"
-              nextLinkClassName="page-link"
-              breakLabel="..."
-              breakClassName="page-item"
-              breakLinkClassName="page-link"
-              containerClassName="pagination"
-              activeClassName="active"
-              renderOnZeroPageCount={null}
-            />
-          </div>
+        <div className="manga-section-btn-wrapper" ref={pageRef}>
+          <div className={currentSection === 'chapterlist' ? 'selected-manga-section-btn' : 'manga-section-btn'} id='chapterlist' onClick={handleSectionChange}>Danh sách chương</div>
+          <div className={currentSection === 'commentlist' ? 'selected-manga-section-btn' : 'manga-section-btn'} id='commentlist' onClick={handleSectionChange}>Bình luận</div>
         </div>
-        <div className='comment-wrapper'>
-          <Box className='comment-box-wrapper' boxShadow={1}>
-            <TextField
-              sx={{
-                background: "#ffff"
-              }}
-              onChange={handleCommentBoxChange}
-              fullWidth
-              hiddenLabel
-              multiline
-              rows={6}
-              placeholder="Mời bạn tham gia bình luận tại đây"
-              variant="standard"
-            />
-          </Box>
-          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", "&:hover": { backgroundColor: "#C00000" }, marginLeft: "75%", marginTop: "10px", maxWidth: "20%" }} onClick={handleCommentSubmition} variant="contained">Bình luận</Button>
-          <h2 className='section-header' ref={commentListRef}>Bình luận</h2>
-          <div className="comment-list-wrapper">
-            {
-              commentList.length === 0 ?
-                <div>Chưa có ai bình luận. Hay bạn là người đầu tiên nhé!</div>
-                :
-                <div>
-                  {commentList.map((comment) =>
-                    <Grid container>
-                      <Grid item xs={2} sx={{ textAlign: "center" }}>
-                        <img className="comment-avatar" src={comment.avatar} alt="user-avatar" />
-                      </Grid>
-                      <Grid item xs={10}>
-                        <div className="comment-content-wrapper">
-                          <h3 className="comment-username">
-                            {comment.username}
-                          </h3>
-                          <p className="comment-content">
-                            {comment.content}
-                          </p>
-                          <p className="comment-updatetime">
-                            {comment.updateTime}
-                          </p>
-                        </div>
-                      </Grid>
-                    </Grid>)}
-                  <div className="page-paginate">
-                    <ReactPaginate
-                      nextLabel=">"
-                      marginPagesDisplayed={2}
-                      pageRangeDisplayed={2}
-                      pageCount={numberOfCommentPages}
-                      onPageChange={handleCommentPageClick}
-                      previousLabel="<"
-                      pageClassName="page-item"
-                      pageLinkClassName="page-link"
-                      previousClassName="page-item"
-                      previousLinkClassName="page-link"
-                      nextClassName="page-item"
-                      nextLinkClassName="page-link"
-                      breakLabel="..."
-                      breakClassName="page-item"
-                      breakLinkClassName="page-link"
-                      containerClassName="pagination"
-                      activeClassName="active"
-                      renderOnZeroPageCount={null}
-                    />
-                  </div>
-                </div>
-            }
-          </div>
-        </div>
+        {mangaSection()}
       </div>
     </div>
   );

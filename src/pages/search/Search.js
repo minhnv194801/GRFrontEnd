@@ -1,22 +1,33 @@
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
-import PaginateItemList from "../../components/paginateitem/PaginateItemList";
+import SearchPaginateItemList from "./searchpaginateitem/SearchPaginateItemList";
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import Grid from '@mui/material/Grid';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { InputBase } from '@mui/material';
-import './Search.css'
 import { timeDifference } from "../../common/Date";
 import { useDispatch } from "react-redux";
 import { displayFailure } from "../../components/topalert/TopAlertSlice";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import './Search.css'
+
+const buttonStyle = {
+  backgroundColor: '#ed2939',
+  "&:hover": { backgroundColor: "#cc0023" },
+  borderRadius: '25px',
+  height: '3vh',
+  minHeight: '25px',
+  marginTop: 'auto',
+  marginBottom: 'auto',
+}
+
+const tagsExpandIconStyle = {
+  "&:hover": {
+    cursor: "pointer",
+  },
+}
 
 function Search() {
   const loadingItem = [{
@@ -26,21 +37,24 @@ function Search() {
     "href": "",
     "chapters": []
   }]
-  
+
   const [searchParams] = useSearchParams()
   const dispatch = useDispatch()
 
   const pageRef = useRef(null)
   const itemsPerPage = 12
-  const searchTags = ["Action", "Adult", "Adventure", "Chuyển Sinh", "Comedy", "Comic", "Cooking", "Cổ Đại", "Doujinshi", "Drama", "Ecchi", "Fantasy", "Gender Bender", "Harem", "Historical", "Horror", "Josei", "Live action", "Manga", "Manhua", "Manhwa", "Martial Arts", "Mature", "Mystery", "Ngôn Tình", "Psychological", "Romance", "School Life", "Sci-fi", "Seinen", "Shoujo", "Shounen", "Slice of Life", "Smut", "Soft Yaoi", "Sports", "Supernatural", "Thiếu Nhi", "Tragedy", "Trinh Thám", "Truyện Màu", "Truyện scan", "Tạp chí truyện tranh", "Webtoon", "Xuyên Không", "Đam Mỹ"]
-  
+  // const searchTags = ["Action", "Adult", "Adventure", "Chuyển Sinh", "Comedy", "Comic", "Cooking", "Cổ Đại", "Doujinshi", "Drama", "Ecchi", "Fantasy", "Gender Bender", "Harem", "Historical", "Horror", "Josei", "Live action", "Manga", "Manhua", "Manhwa", "Martial Arts", "Mature", "Mystery", "Ngôn Tình", "Psychological", "Romance", "School Life", "Sci-fi", "Seinen", "Shoujo", "Shounen", "Slice of Life", "Smut", "Soft Yaoi", "Sports", "Supernatural", "Thiếu Nhi", "Tragedy", "Trinh Thám", "Truyện Màu", "Truyện scan", "Tạp chí truyện tranh", "Webtoon", "Xuyên Không", "Đam Mỹ"]
+
   const [searchValue, setSearchValue] = useState("")
   const [searchResultOffset, setSearchResultOffset] = useState(0)
   const [searchResults, setSearchResults] = useState([])
   const [selectedTags, setSelectedTags] = useState([])
+  const [searchTags, setSearchTags] = useState(["Action", "Adult", "Adventure", "Chuyển Sinh", "Comedy", "Comic", "Cooking", "Cổ Đại", "Doujinshi", "Drama", "Ecchi", "Fantasy", "Gender Bender", "Harem", "Historical", "Horror", "Josei", "Live action", "Manga", "Manhua", "Manhwa", "Martial Arts", "Mature", "Mystery", "Ngôn Tình", "Psychological", "Romance", "School Life", "Sci-fi", "Seinen", "Shoujo", "Shounen", "Slice of Life", "Smut", "Soft Yaoi", "Sports", "Supernatural", "Thiếu Nhi", "Tragedy", "Trinh Thám", "Truyện Màu", "Truyện scan", "Tạp chí truyện tranh", "Webtoon", "Xuyên Không", "Đam Mỹ"])
+  const [selectedTagsVisibility, setSelectedTagsVisibility] = useState(false)
+  const [searchTagsVisibility, setSearchTagsVisibility] = useState(true)
   const [resultCount, setResultCount] = useState(0)
   const [numberOfPages, setNumberOfPages] = useState(1)
-  
+
   const fetchSearchResult = async (searchValue, selectedTags) => {
     try {
       const response = await fetch('http://localhost:8081/api/v1/search', {
@@ -49,7 +63,7 @@ function Search() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           'query': searchValue,
           'tags': selectedTags,
           'count': itemsPerPage,
@@ -59,7 +73,7 @@ function Search() {
       if (response.ok) {
         // convert data to json
         const json = await response.json();
-      
+
         if (json.data === null || json.data?.length === 0) {
           setSearchResults([])
           setResultCount(0)
@@ -70,13 +84,13 @@ function Search() {
             var currentTime = Date.now()
             respond.chapters.forEach((chapter) => {
               chapter.href = '/read/' + chapter.id
-              chapter.updateTime = timeDifference(currentTime/1000, chapter.updateTime)
+              chapter.updateTime = timeDifference(currentTime / 1000, chapter.updateTime)
             })
           })
-          
+
           setSearchResults(json.data)
           setResultCount(json.totalCount)
-          setNumberOfPages(Math.ceil(json.totalCount/itemsPerPage))
+          setNumberOfPages(Math.ceil(json.totalCount / itemsPerPage))
         }
       } else {
         setSearchResults([])
@@ -93,7 +107,29 @@ function Search() {
         "content": "Kết nối với server thất bại",
       }))
     }
-    
+  }
+
+  const handleExpandSearchTags = (event) => {
+    setSearchTagsVisibility(!searchTagsVisibility)
+  }
+
+  const handleExpandSelectedTags = (event) => {
+    setSelectedTagsVisibility(!selectedTagsVisibility)
+  }
+
+  const handleAddSelectedTags = (event) => {
+    let filteredArray = searchTags.filter(item => item !== event.target.id)
+    setSearchTags(filteredArray)
+
+    setSelectedTags(prevState => ([...prevState, event.target.id]))
+    setSelectedTagsVisibility(true)
+  }
+
+  const handleRemoveSelectedTags = (event) => {
+    let filteredArray = selectedTags.filter(item => item !== event.target.id)
+    setSelectedTags(filteredArray)
+
+    setSearchTags(prevState => ([...prevState, event.target.id].sort()))
   }
 
   const handlePageClick = (event) => {
@@ -101,12 +137,12 @@ function Search() {
   }
 
   function handleKeyPress(e) {
-    if (e.keyCode === 13){
+    if (e.keyCode === 13) {
       let url = "/search?value=" + e.target.value + "&tags="
       selectedTags.forEach((tag) => {
         url += tag + ","
       })
-      url = url.slice(0, -1); 
+      url = url.slice(0, -1);
       window.location.href = url
     }
   }
@@ -117,103 +153,107 @@ function Search() {
       console.log(tag)
       url += tag + ","
     })
-    url = url.slice(0, -1); 
+    url = url.slice(0, -1);
     window.location.href = url
-  }
-
-  function handleCheckBox(e, isChecked) {
-    if (isChecked) {
-      setSelectedTags([...selectedTags, e.target.value])
-    } else {
-      setSelectedTags((state) => state.filter((tag) => tag !== e.target.value))
-    }
   }
 
   useEffect(() => {
     if (searchParams.get('tags') != null) {
-      setSelectedTags(searchParams.get('tags').split(","))
       var tags = searchParams.get('tags').split(",")
+      setSelectedTags(tags.filter(tag => tag!==""))
+      let filteredArray = searchTags.filter(item => !tags.includes(item))
+      setSearchTags(filteredArray)
     }
     if (searchParams.get('value') != null) {
-      setSearchValue(searchParams.get('value'))
       var value = searchParams.get('value')
+      setSearchValue(value)
     }
 
     fetchSearchResult(value, tags)
-    
+
     setSearchResults(loadingItem)
-    
+
     pageRef.current.scrollIntoView()
     // eslint-disable-next-line
   }, [searchResultOffset])
 
   return (
-    <div className='outer'>
-      <div className='inner'>
+    <div className='inner'>
+      <div className='search-container'>
         <h1 className='search-header'>Tìm Kiếm</h1>
-        <div className='search-text-input'>
-          <FormControl variant="standard" fullWidth>
-          <InputBase className='search-text-input' 
-              sx={{borderRadius: '25px', backgroundColor: '#fff'}}
-              placeholder="Tìm kiếm" 
-              value={searchValue}
-              fullWidth
-              onChange={(e) => {setSearchValue(e.target.value)}}
-              onKeyDown={handleKeyPress}
-              startAdornment={
+        <div className="search-text-wrapper">
+          <div className='search-text-input'>
+            <FormControl variant="standard" fullWidth>
+              <InputBase className='search-text-input'
+                sx={{ borderRadius: '25px', backgroundColor: '#fff' }}
+                placeholder="Tìm kiếm"
+                value={searchValue}
+                fullWidth
+                onChange={(e) => { setSearchValue(e.target.value) }}
+                onKeyDown={handleKeyPress}
+                startAdornment={
                   <InputAdornment position="start">
-                  <SearchIcon />
+                    <SearchIcon />
                   </InputAdornment>
-              }/>
-          </FormControl>
+                } />
+            </FormControl>
+          </div>
+          <Button sx={buttonStyle} variant="contained" onClick={handleSearchClicked}>Tìm</Button>
         </div>
-        <Grid className="checkbox-grid" container spacing={2}>
-          {searchTags.map((tag) => 
-            <Grid item xs={6} md={2} key={tag}>
-              <FormGroup key={tag}>
-                <FormControlLabel control={<Checkbox icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} checked={selectedTags.includes(tag)} value={tag} onChange={handleCheckBox}/>} label={tag} />
-              </FormGroup>
-            </Grid>
-          )}
-        </Grid>
-        <div className='button-div'>
-          <Button sx={{borderRadius: '25px', backgroundColor:"#990000", "&:hover": {backgroundColor: "#c00000"}}} className='search-button' variant="contained" onClick={handleSearchClicked}>Tìm kiếm</Button>
-        </div>
-        <h2 ref={pageRef}>Kết quả tìm kiếm</h2>
-        <h4 ref={pageRef}>Hiển thị {searchResults.length} trên {resultCount} kết quả</h4>
-          {searchResults.length === 0?
-            <div></div>
-            :
-            <div>
-              <PaginateItemList items={searchResults}/>
-              <div className="page-paginate">
-                <ReactPaginate
-                  nextLabel=">"
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={2}
-                  pageCount={numberOfPages}
-                  onPageChange={handlePageClick}
-                  previousLabel="<"
-                  pageClassName="page-item"
-                  pageLinkClassName="page-link"
-                  previousClassName="page-item"
-                  previousLinkClassName="page-link"
-                  nextClassName="page-item"
-                  nextLinkClassName="page-link"
-                  breakLabel="..."
-                  breakClassName="page-item"
-                  breakLinkClassName="page-link"
-                  containerClassName="pagination"
-                  activeClassName="active"
-                  renderOnZeroPageCount={null}
-                />
-              </div>
+        <h2 className="search-page-title">Đã chọn {"(" + selectedTags.length + ")"} {selectedTagsVisibility ? <KeyboardArrowUp fontSize="large" sx={tagsExpandIconStyle} onClick={handleExpandSelectedTags} /> : <KeyboardArrowDown fontSize="large" sx={tagsExpandIconStyle} onClick={handleExpandSelectedTags} />}</h2>
+        {
+          selectedTagsVisibility ?
+            <div className="search-tag-list-wrapper">
+              {selectedTags.map((tag) =>
+                <div className="search-tag-wrapper" id={tag} onClick={handleRemoveSelectedTags}>{tag}</div>
+              )}
             </div>
-          }
+            : null
+        }
+        <h2 className="search-page-title">Thể loại {searchTagsVisibility ? <KeyboardArrowUp fontSize="large" sx={tagsExpandIconStyle} onClick={handleExpandSearchTags} /> : <KeyboardArrowDown fontSize="large" sx={tagsExpandIconStyle} onClick={handleExpandSearchTags} />}</h2>
+        {
+          searchTagsVisibility ?
+            <div className="search-tag-list-wrapper">
+              {searchTags.map((tag) =>
+                <div className="search-tag-wrapper" id={tag} onClick={handleAddSelectedTags}>{tag}</div>
+              )}
+            </div>
+            : null
+        }
+        <h2 className="search-page-title" ref={pageRef}>Kết quả tìm kiếm</h2>
+        <h4 className="search-page-title" ref={pageRef}>Hiển thị {searchResults.length} trên {resultCount} kết quả</h4>
+        {searchResults.length === 0 ?
+          <div></div>
+          :
+          <div>
+            <SearchPaginateItemList items={searchResults} />
+            <div className="page-paginate">
+              <ReactPaginate
+                nextLabel=">"
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={2}
+                pageCount={numberOfPages}
+                onPageChange={handlePageClick}
+                previousLabel="<"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakLabel="..."
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
+                renderOnZeroPageCount={null}
+              />
+            </div>
+          </div>
+        }
       </div>
     </div>
   );
 }
-  
-  export default Search;
-  
+
+export default Search;

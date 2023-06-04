@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import { React, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import logo from '../../logo/magna-logo.png'
 import InputAdornment from '@mui/material/InputAdornment';
@@ -8,11 +8,10 @@ import Grid from '@mui/material/Grid';
 import './Navbar.css'
 import { InputBase } from '@mui/material';
 import Dropdown from 'react-bootstrap/Dropdown';
-import LoginModal from '../loginmodal/LoginModal';
-import { openLoginModal, openSignupModal } from '../loginmodal/LoginModalSlice';
 import { logout } from '../../AppSlice';
 import { displaySuccess } from '../topalert/TopAlertSlice';
 import { useMediaQuery } from 'react-responsive'
+import { AccountCircle } from '@mui/icons-material';
 
 const Navbar = () => {
     const [searchValue, setSearchValue] = useState("")
@@ -21,131 +20,201 @@ const Navbar = () => {
     const avatar = useSelector((state) => state.app.avatar)
     const dispatch = useDispatch()
     const isPortrait = useMediaQuery({ orientation: 'portrait' })
-    
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter'){
-            window.location.href = "/search?value=" + e.target.value;
-        }
-    }
-    
-    const handleSearchClicked = (e) => {
+    const [isSearching, setIsSearching] = useState(false)
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
         window.location.href = "/search?value=" + searchValue;
+    }
+
+    const handleSearchFocus = (e) => {
+        setIsSearching(true)
+    }
+
+    const handleSearchBlur = (e) => {
+        setIsSearching(false)
     }
 
     const handleLogout = (e) => {
         dispatch(logout())
+        window.location.reload(false);
         dispatch(displaySuccess({
             "title": "Thành công",
             "content": "Đăng xuất thành công",
         }))
     }
-    
+
     return (
         <div className='navbar'>
-            {isPortrait?
+            {isPortrait ?
                 <div className='navbar-wrapper'>
                     <Grid className='navbar-item-container' container>
-                        <Grid sx={{textAlign:'center'}} item xs={3}>
-                            <a href='/'>
-                                <img className='logo' src={logo} alt='logo'/>
-                            </a>
-                        </Grid>
-                        <Grid sx={{textAlign:'right', maxHeight:'100%', marginRight:'10px', marginTop:'auto', marginBottom:'auto'}} item xs={9}>
-                            {!isLogin?
-                                <div className='userbox' >
-                                    <a className='loginBtn' onClick={(() => {dispatch(openLoginModal())})} rel='nofollow'>Đăng nhập</a>
-                                    /
-                                    <a className='registerBtn' onClick={(() => {dispatch(openSignupModal())})} rel='nofollow'>Đăng ký</a>
-                                </div>
-                                :
-                                <Dropdown align='end'>
-                                    <Dropdown.Toggle className='avatar-dropdown'>
-                                        <img className='navbar-avatar' src={avatar} alt='navbar-avatar'/>
-                                        <p className='username-wrapper'>{username}</p>
-                                    </Dropdown.Toggle>
-
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item href='/user'>Thông tin tài khoản</Dropdown.Item>
-                                        <Dropdown.Divider />
-                                        <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown>
-                            }
-                        </Grid>
-                    </Grid>
-                    <Grid className='navbar-searchbox-container' container>
-                        <Grid item xs={12}>
-                            <form>
-                                <InputBase className='text-input' 
-                                        sx={{background:"#D9D9D9", borderRadius:'25px'}}
+                        {isSearching ? <div></div> :
+                            <Grid sx={{ textAlign: 'center' }} item xs={3}>
+                                <a href='/'>
+                                    <img className='logo' src={logo} alt='logo' />
+                                </a>
+                            </Grid>
+                        }
+                        <Grid sx={{ textAlign: 'center' }} item xs={12}>
+                            <div className='text-input-wrapper'>
+                                <form className='text-input' onSubmit={handleSubmit}>
+                                    <InputBase
+                                        sx={{ background: "#D9D9D9", borderRadius: '25px', maxHeight: '100%' }}
                                         type='text'
-                                        placeholder="Tìm kiếm" 
+                                        placeholder="Tìm kiếm"
                                         fullWidth
-                                        onChange={(e) => {setSearchValue(e.target.value)}}
-                                        onKeyDown={handleKeyPress}
+                                        onChange={(e) => { setSearchValue(e.target.value) }}
+                                        onFocus={handleSearchFocus}
+                                        onBlur={handleSearchBlur}
                                         startAdornment={
                                             <InputAdornment position="start">
-                                            <SearchIcon />
+                                                <SearchIcon />
                                             </InputAdornment>
                                         }
                                     />
-                            </form>
+                                </form>
+                            </div>
                         </Grid>
+                        {isSearching ?
+                            <div></div>
+                            :
+                            <Grid sx={{ textAlign: 'right', maxHeight: '100%', marginRight: '10px', marginTop: 'auto', marginBottom: 'auto' }} item xs={2}>
+                                {!isLogin ?
+                                    <Dropdown align='end'>
+                                        <Dropdown.Toggle className='avatar-dropdown'>
+                                            <AccountCircle />
+                                        </Dropdown.Toggle>
+
+                                        <Dropdown.Menu>
+                                            <Dropdown.ItemText>
+                                                <div className='dropdown-avatar-wrapper'>
+                                                    <img className='navbar-avatar' src='https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' alt='navbar-avatar' />
+                                                </div>
+                                            </Dropdown.ItemText>
+                                            <Dropdown.ItemText>
+                                                <div className='dropdown-username-wrapper'>
+                                                    Khách
+                                                </div>
+                                            </Dropdown.ItemText>
+                                            <Dropdown.Divider />
+                                            <Dropdown.Item href='/login'>Đăng nhập</Dropdown.Item>
+                                            <Dropdown.Item href='/register'>Đăng ký</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                    :
+                                    <Dropdown align='end'>
+                                        <Dropdown.Toggle className='avatar-dropdown'>
+                                            <img className='navbar-avatar' src={avatar} alt='navbar-avatar' />
+                                        </Dropdown.Toggle>
+
+                                        <Dropdown.Menu>
+                                            <Dropdown.ItemText>
+                                                <div className='dropdown-avatar-wrapper'>
+                                                    <img className='big-navbar-avatar' src={avatar} alt='navbar-avatar' />
+                                                </div>
+                                            </Dropdown.ItemText>
+                                            <Dropdown.ItemText>
+                                                <div className='dropdown-username-wrapper'>
+                                                    {username}
+                                                </div>
+                                            </Dropdown.ItemText>
+                                            <Dropdown.Divider />
+                                            <Dropdown.Item href='/user'>Thông tin tài khoản</Dropdown.Item>
+                                            <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                }
+                            </Grid>
+                        }
                     </Grid>
                 </div>
-            :
+                :
                 <Grid className='navbar' container>
-                    <Grid sx={{textAlign:'center'}} item xs={3}>
+                    <Grid sx={{ textAlign: 'center' }} item xs={3}>
                         <a href='/'>
-                            <img className='logo' src={logo} alt='logo'/>
+                            <img className='logo' src={logo} alt='logo' />
                         </a>
                     </Grid>
                     <Grid item xs={5}>
-                        <InputBase className='text-input' 
-                            sx={{background:"#D9D9D9", borderRadius:'25px'}}
-                            placeholder="Tìm kiếm" 
-                            fullWidth
-                            onChange={(e) => {setSearchValue(e.target.value)}}
-                            onKeyDown={handleKeyPress}
-                            startAdornment={
-                                <InputAdornment position="start">
-                                <SearchIcon />
-                                </InputAdornment>
-                            }
-                        />
+                        <form className='text-input' onSubmit={handleSubmit}>
+                            <InputBase className='text-input'
+                                sx={{ background: "#D9D9D9", borderRadius: '25px' }}
+                                placeholder="Tìm kiếm"
+                                fullWidth
+                                onChange={(e) => { setSearchValue(e.target.value) }}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                }
+                            />
+                        </form>
                     </Grid>
                     <Grid item xs={1}>
-                    <div className='search-btn'>
-                        <Button 
-                            sx={{backgroundColor:'#ed2939', 
-                            "&:hover": { backgroundColor: "#cc0023" },
-                            marginTop:'auto',
-                            marginBottom:'auto',
-                            borderRadius: '25px',
-                            maxHeight:'3vh'}}
-                            variant="contained" 
-                            onClick={handleSearchClicked}>
-                                Tìm kiếm
-                        </Button>
-                    </div>
+                        <div className='search-btn'>
+                            <Button
+                                sx={{
+                                    backgroundColor: '#ed2939',
+                                    "&:hover": { backgroundColor: "#cc0023" },
+                                    marginTop: 'auto',
+                                    marginBottom: 'auto',
+                                    borderRadius: '25px',
+                                    height: '3vh',
+                                    minHeight: '25px'
+                                }}
+                                variant="contained"
+                                onClick={handleSubmit}>
+                                Tìm
+                            </Button>
+                        </div>
                     </Grid>
-                    <Grid sx={{textAlign:'center', maxHeight:'100%'}} item xs={3}>
-                        {!isLogin?
-                            <div className='userbox' >
-                                <a className='loginBtn' onClick={(() => {dispatch(openLoginModal())})} rel='nofollow'>Đăng nhập</a>
-                                /
-                                <a className='registerBtn' onClick={(() => {dispatch(openSignupModal())})} rel='nofollow'>Đăng ký</a>
-                            </div>
-                            :
-                            <Dropdown>
+                    <Grid sx={{ textAlign: 'right', maxHeight: '100%', minHeight: '30px', width: '100%' }} item xs={3}>
+                        {!isLogin ?
+                            <Dropdown align='end'>
                                 <Dropdown.Toggle className='avatar-dropdown'>
-                                    <img className='navbar-avatar' src={avatar} alt='user-avatar'/>
-                                    <p className='username-wrapper'>{username}</p>
+                                    <div className='navbar-avatar-wrapper'>
+                                        <img className='navbar-avatar' src='https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' alt='navbar-avatar' />
+                                    </div>
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    <Dropdown.Item href='/user'>Thông tin tài khoản</Dropdown.Item>
+                                    <Dropdown.ItemText>
+                                        <div className='dropdown-avatar-wrapper'>
+                                            <img className='big-navbar-avatar' src='https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' alt='navbar-avatar' />
+                                        </div>
+                                    </Dropdown.ItemText>
+                                    <Dropdown.ItemText>
+                                        <div className='dropdown-username-wrapper'>
+                                            Khách
+                                        </div>
+                                    </Dropdown.ItemText>
                                     <Dropdown.Divider />
+                                    <Dropdown.Item href='/login'>Đăng nhập</Dropdown.Item>
+                                    <Dropdown.Item href='/register'>Đăng ký</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                            :
+                            <Dropdown align='end'>
+                                <Dropdown.Toggle className='avatar-dropdown'>
+                                    <div className='navbar-avatar-wrapper'>
+                                        <img className='navbar-avatar' src={avatar} alt='navbar-avatar' />
+                                    </div>
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    <Dropdown.ItemText>
+                                        <div className='dropdown-avatar-wrapper'>
+                                            <img className='big-navbar-avatar' src={avatar} alt='navbar-avatar' />
+                                        </div>
+                                    </Dropdown.ItemText>
+                                    <Dropdown.ItemText>
+                                        <div className='dropdown-username-wrapper'>
+                                            {username}
+                                        </div>
+                                    </Dropdown.ItemText>
+                                    <Dropdown.Divider />
+                                    <Dropdown.Item href='/user'>Thông tin tài khoản</Dropdown.Item>
                                     <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
@@ -153,7 +222,6 @@ const Navbar = () => {
                     </Grid>
                 </Grid>
             }
-            <LoginModal/>
         </div>
     );
 };

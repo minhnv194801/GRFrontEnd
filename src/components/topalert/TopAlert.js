@@ -25,18 +25,19 @@ function TopAlert() {
                 }
             }, 2000)
         }
+        // eslint-disable-next-line
     }, [alertVisibility])
 
     return (
-        <div className={alertVisibility?'alert-wrapper':'hidden-alert-wrapper'}>
+        <div className={alertVisibility ? 'alert-wrapper' : 'hidden-alert-wrapper'}>
             <Fade
                 in={alertVisibility}
                 timeout={{ enter: 1000, exit: 1000 }}
-                >
+            >
                 <Alert severity={alertSeverity} variant="standard" className="alert">
                     <AlertTitle>{alertTitle}</AlertTitle>
-                        {alertContent}
-                    </Alert>
+                    {alertContent}
+                </Alert>
             </Fade>
         </div>
     )

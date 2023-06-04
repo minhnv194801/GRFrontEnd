@@ -1,5 +1,14 @@
 .footer {
+    position: relative;
     background-color: #990000;
+    color: #fff;
     width: 100%;
     height: 5vh;
+}
+
+.footer-text {
+    position: absolute;
+    right: 5px;
+    bottom: 0;
+    margin-bottom: 0px;
 }

@@ -1,0 +1,105 @@
+.news-paginate-item-list-wrapper {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.news-paginate-item-wrapper {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    background-color: #990000;
+    color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.news-cover {
+    height: auto;
+    width: 100px;
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 1px 1px 1px 1px #000;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.news-item-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-left: 0px;
+}
+
+.news-chapter-title-href {
+    width: 100%;
+}
+
+.news-chapter-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.news-time {
+    float: right;
+}
+
+.news-cover-wrapper {
+    height: 100%;
+    width: 100%;
+    /* text-align: center; */
+    position: relative;
+}
+
+.news-cover-href {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+a.news-chapter-title-href {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+a.news-chapter-title-href:link {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+a.news-chapter-title-href:visited {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+a.news-chapter-title-href:active {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+a.news-chapter-title-href:hover {
+    color: #fff !important;
+    text-decoration: underline;
+}
+
+@media only screen and (orientation: portrait) {
+    .news-cover {
+        height: 225px;
+        width: 150px;
+    }
+
+    .news-time {
+        font-size: 14px;
+    }
+
+    .news-chapter-title {
+        font-size: 14px;
+    }
+}

@@ -26,6 +26,7 @@
     "redux": "^4.2.1",
     "sass": "^1.57.1",
     "styled-components": "^5.3.6",
+    "swiper": "^9.3.2",
     "web-vitals": "^2.1.4",
     "workbox-background-sync": "^6.5.4",
     "workbox-broadcast-update": "^6.5.4",
@@ -41,7 +42,7 @@
     "workbox-streams": "^6.5.4"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

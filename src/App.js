@@ -9,6 +9,8 @@ import Read from './pages/read/Read'
 import Manga from './pages/manga/Manga'
 import User from './pages/user/User'
 import Search from './pages/search/Search'
+import Login from './pages/login/Login'
+import Register from './pages/register/Register'
 import { useEffect } from 'react';
 import { login, logout } from './AppSlice';
 import { displayFailure } from './components/topalert/TopAlertSlice';
@@ -17,27 +19,47 @@ import refreshTokenIfNeeded from './common/JWT';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <div><Navbar /><Home /><Footer/></div>,
   },
   {
     path: "/manga/:id",
-    element: <Manga />,
+    element: <div><Navbar /><Manga /><Footer/></div>,
   },
   {
     path: "/read/:id",
-    element: <Read />,
+    element: <div><Navbar /><Read /><Footer/></div>,
   },
   {
     path: "/user",
-    element: <User page='info' />,
+    element: <div><Navbar /><User page='info' /><Footer/></div>,
+  },
+  {
+    path: "/user/favorite",
+    element: <div><Navbar /><User page='favorite' /><Footer/></div>,
+  },
+  {
+    path: "/user/owned",
+    element: <div><Navbar /><User page='owned' /><Footer/></div>,
+  },
+  {
+    path: "/user/report",
+    element: <div><Navbar /><User page='report' /><Footer/></div>,
   },
   {
     path: "/search",
-    element: <Search />,
+    element: <div><Navbar /><Search /><Footer/></div>,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "*",
-    element: <Home />,
+    element: <div><Navbar /><Home /><Footer/></div>,
   }
 ]);
 
@@ -66,10 +88,8 @@ function App() {
 
   return (
     <div className='page-wrapper'>
-      <Navbar />
       <TopAlert />
       <RouterProvider router={router} />
-      <Footer />
     </div>
   );
 }

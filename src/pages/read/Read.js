@@ -48,7 +48,7 @@ function Read() {
     p: 4,
   };
 
-  const refresh = async() => {
+  const refresh = async () => {
     var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
     if (res.isRefresh) {
       if (res.sessionkey) {
@@ -77,7 +77,7 @@ function Read() {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
-            'Authorization': newSessionkey?newSessionkey:sessionkey, 
+            'Authorization': newSessionkey ? newSessionkey : sessionkey,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -86,7 +86,7 @@ function Read() {
         })
         if (response.ok) {
           setOpenReportModal(false)
-      
+
           dispatch(displaySuccess({
             "title": "Thành công",
             "content": "Báo lỗi đã được gửi thành công",
@@ -94,14 +94,14 @@ function Read() {
         } else {
           if (response.status === 401) {
             dispatch(displayFailure({
-                "title": "Đăng xuất",
-                "content": "Phiên đăng nhập của bạn đã hết hạn",
-            }))    
+              "title": "Đăng xuất",
+              "content": "Phiên đăng nhập của bạn đã hết hạn",
+            }))
           }
           var json = await response.json()
           dispatch(displayFailure({
-              "title": "Thất bại",
-              "content": json.message,
+            "title": "Thất bại",
+            "content": json.message,
           }))
         }
       } catch (error) {
@@ -116,6 +116,7 @@ function Read() {
 
   useEffect(() => {
     setChapterId(params.id)
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -126,16 +127,16 @@ function Read() {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
-            'Authorization': newSessionkey?newSessionkey:sessionkey, 
+            'Authorization': newSessionkey ? newSessionkey : sessionkey,
             'Content-Type': 'application/json'
           }
         })
         if (response.ok) {
           // convert data to json
           const json = await response.json();
-          
+
           setMangaTitle(json.mangaTitle)
-          setMangaHref("/manga/"+json.mangaId)
+          setMangaHref("/manga/" + json.mangaId)
           setChapterTitle(json.title)
           setChapterImages(json.pages)
         } else {
@@ -167,21 +168,20 @@ function Read() {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
-            'Authorization': newSessionkey?newSessionkey:sessionkey, 
+            'Authorization': newSessionkey ? newSessionkey : sessionkey,
             'Content-Type': 'application/json'
           }
         });
         if (response.ok) {
           const json = await response.json();
-          console.log(json)
-  
+
           setChapterList(json)
-          let index = json.map(function(e) { return e.id; }).indexOf(chapterId);
+          let index = json.map(function (e) { return e.id; }).indexOf(chapterId);
           if (index > 0) {
-            setPrevChapterHref("/read/" + json[index-1].id)
+            setPrevChapterHref("/read/" + json[index - 1].id)
           }
           if (index + 1 < json.length) {
-            setNextChapterHref("/read/" + json[index+1].id)
+            setNextChapterHref("/read/" + json[index + 1].id)
           }
         } else {
           dispatch(displayFailure({
@@ -195,7 +195,7 @@ function Read() {
           "content": "Kết nối với server thất bại",
         }))
       }
-      
+
     }
 
     fetchChapterData()
@@ -204,73 +204,74 @@ function Read() {
   }, [chapterId])
 
   return (
-  <div className='outer'>
-    <div className='inner-read'>
-      <h1 className='title-header'>
-        <a className='title-link' href={mangaHref}>{mangaTitle}</a> - {chapterTitle}
-      </h1>
-      <div className='report-wrapper'>
-        <Button sx={{borderRadius:'25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}}} variant="outlined" onClick={handleOpenReportModal} startIcon={<ReportIcon />}>
-          Báo lỗi
-        </Button>
+    <div className='outer'>
+      <div className='inner-read'>
+        <h1 className='title-header'>
+          <a className='title-link' href={mangaHref}>{mangaTitle}</a> - {chapterTitle}
+        </h1>
+        <div className='report-wrapper'>
+          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": { backgroundColor: "#C00000" } }} variant="outlined" onClick={handleOpenReportModal} startIcon={<ReportIcon />}>
+            Báo lỗi
+          </Button>
+        </div>
+        <div className='chapter-selector-wrapper'>
+          <Button sx={{ borderRadius: '50%', height: '30px', minWidth: '30px', maxWidth: '30px', marginTop: 'auto', marginBottom: 'auto', backgroundColor: "#990000", color: "#ffffff", "&:hover": { backgroundColor: "#C00000" } }} disabled={prevChapterHref === ""} variant="outlined" href={prevChapterHref}>
+            <NavigateBeforeIcon />
+          </Button>
+          <select className='chapter-selector' onChange={changeChapter} value={chapterId}>
+            {chapterList.map((chapter) => <option value={chapter.id}>{chapter.title}</option>)}
+          </select>
+          <Button sx={{ borderRadius: '50%', height: '30px', minWidth: '30px', maxWidth: '30px', marginTop: 'auto', marginBottom: 'auto', backgroundColor: "#990000", color: "#ffffff", "&:hover": { backgroundColor: "#C00000" } }} disabled={nextChapterHref === ""} variant="outlined" href={nextChapterHref}>
+            <NavigateNextIcon />
+          </Button>
+        </div>
       </div>
-      <div className='chapter-selector-wrapper'>
-        <Button sx={{borderRadius: '50%', height: '30px', minWidth: '30px', maxWidth:'30px', marginTop: 'auto', marginBottom: 'auto', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}}} disabled={prevChapterHref === ""} variant="outlined" href={prevChapterHref}>
-          <NavigateBeforeIcon />
-        </Button>
-        <select className='chapter-selector' onChange={changeChapter} value={chapterId}>
-          {chapterList.map((chapter) => <option value={chapter.id}>{chapter.title}</option>)}
-        </select>
-        <Button sx={{borderRadius: '50%', height: '30px', minWidth: '30px', maxWidth:'30px', marginTop: 'auto', marginBottom: 'auto', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}}} disabled={nextChapterHref === ""} variant="outlined" href={nextChapterHref}>
-          <NavigateNextIcon />
-        </Button>
+      <div className='reading-box'>
+        {chapterImages.map((image, index) => <img className='page-image' src={image} alt={"page " + index} />)}
       </div>
-    </div>
-    <div className='reading-box'>
-      {chapterImages.map((image, index) => <img className='page-image' src={image} alt={"page " + index}/>)}
-    </div>
-    <div className='inner-read'>
-    <div className='chapter-selector-wrapper'>
-        <Button sx={{borderRadius: '25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginRight:"30px"}} disabled={prevChapterHref === ""} variant="outlined" href={prevChapterHref}>
-          <NavigateBeforeIcon/> Chương trước
-        </Button>
-        <Button sx={{borderRadius: '25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": {backgroundColor: "#C00000"}, marginLeft:"30px"}} disabled={nextChapterHref === ""} variant="outlined" href={nextChapterHref}>
-          Chương sau <NavigateNextIcon/>
-        </Button>
+      <div className='inner-read'>
+        <div className='chapter-selector-wrapper'>
+          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": { backgroundColor: "#C00000" }, marginRight: "30px" }} disabled={prevChapterHref === ""} variant="outlined" href={prevChapterHref}>
+            <NavigateBeforeIcon /> Chương trước
+          </Button>
+          <Button sx={{ borderRadius: '25px', backgroundColor: "#990000", color: "#ffffff", "&:hover": { backgroundColor: "#C00000" }, marginLeft: "30px" }} disabled={nextChapterHref === ""} variant="outlined" href={nextChapterHref}>
+            Chương sau <NavigateNextIcon />
+          </Button>
+        </div>
       </div>
+      <Modal
+        open={openReportModal}
+        onClose={handleCloseReportModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <h3>Báo lỗi truyện</h3>
+          <h4>Xin hãy nhập nội dung lỗi</h4>
+          <TextField
+            placeholder="Nội dung lỗi"
+            sx={{ width: "100%" }}
+            multiline
+            rows={4}
+            variant="outlined"
+            onChange={(e) => setReportContent(e.target.value)}
+          />
+          <Button
+            sx={{
+              borderRadius: '25px',
+              backgroundColor: "#990000",
+              color: "#ffffff",
+              "&:hover": { backgroundColor: "#C00000" },
+              marginTop: 1
+            }}
+            variant="outlined"
+            onClick={sendReport}
+          >
+            Gửi lỗi
+          </Button>
+        </Box>
+      </Modal>
     </div>
-    <Modal
-      open={openReportModal}
-      onClose={handleCloseReportModal}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={modalStyle}>
-        <h3>Báo lỗi truyện</h3>
-        <h4>Xin hãy nhập nội dung lỗi</h4>
-        <TextField
-          placeholder="Nội dung lỗi"
-          sx={{width: "100%"}}
-          multiline
-          rows={4}
-          variant="outlined"
-          onChange={(e) => setReportContent(e.target.value)}
-        />
-      <Button 
-        sx={{
-          borderRadius:'25px',
-          backgroundColor: "#990000", 
-          color: "#ffffff",
-          "&:hover": {backgroundColor: "#C00000"},
-          marginTop:1}}
-          variant="outlined"
-          onClick={sendReport}
-        >
-        Gửi lỗi
-      </Button>
-      </Box>
-    </Modal>
-  </div>
   );
 }
 
