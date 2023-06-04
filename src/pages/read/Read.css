@@ -54,6 +54,6 @@ a.title-link:hover {
 
 @media only screen and (orientation: portrait) {
     .page-image {
-        width: 90vw;
+        width: 100vw;
     }
 }
