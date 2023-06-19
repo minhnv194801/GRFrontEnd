@@ -443,10 +443,12 @@ function Manga() {
           const json = await response.json();
 
           console.log(json)
-          json.forEach((chapter) => {
-            var currentTime = Date.now()
-            chapter.updateTime = timeDifference(currentTime / 1000, chapter.updateTime)
-          })
+          if (json) {
+            json.forEach((chapter) => {
+              var currentTime = Date.now()
+              chapter.updateTime = timeDifference(currentTime / 1000, chapter.updateTime)
+            })
+          }
           setChapterList(json)
         } else {
           dispatch(displayFailure({

@@ -11,43 +11,47 @@ import User from './pages/user/User'
 import Search from './pages/search/Search'
 import Login from './pages/login/Login'
 import Register from './pages/register/Register'
+import { useSidebarState, Resource, List, Datagrid, TextField, EmailField, useRecordContext, ReferenceArrayField, EditButton, Layout, Menu, RefreshIconButton, TitlePortal, Button, Title } from 'react-admin';
+import simpleRestProvider from 'ra-data-simple-rest';
 import { useEffect } from 'react';
 import { login, logout } from './AppSlice';
 import { displayFailure } from './components/topalert/TopAlertSlice';
 import refreshTokenIfNeeded from './common/JWT';
+import { AppBar, Box, Toolbar } from '@mui/material';
+import Admin from './pages/admin/Admin';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div><Navbar /><Home /><Footer/></div>,
+    element: <div><Navbar /><Home /><Footer /></div>,
   },
   {
     path: "/manga/:id",
-    element: <div><Navbar /><Manga /><Footer/></div>,
+    element: <div><Navbar /><Manga /><Footer /></div>,
   },
   {
     path: "/read/:id",
-    element: <div><Navbar /><Read /><Footer/></div>,
+    element: <div><Navbar /><Read /><Footer /></div>,
   },
   {
     path: "/user",
-    element: <div><Navbar /><User page='info' /><Footer/></div>,
+    element: <div><Navbar /><User page='info' /><Footer /></div>,
   },
   {
     path: "/user/favorite",
-    element: <div><Navbar /><User page='favorite' /><Footer/></div>,
+    element: <div><Navbar /><User page='favorite' /><Footer /></div>,
   },
   {
     path: "/user/owned",
-    element: <div><Navbar /><User page='owned' /><Footer/></div>,
+    element: <div><Navbar /><User page='owned' /><Footer /></div>,
   },
   {
     path: "/user/report",
-    element: <div><Navbar /><User page='report' /><Footer/></div>,
+    element: <div><Navbar /><User page='report' /><Footer /></div>,
   },
   {
     path: "/search",
-    element: <div><Navbar /><Search /><Footer/></div>,
+    element: <div><Navbar /><Search /><Footer /></div>,
   },
   {
     path: "/login",
@@ -58,8 +62,12 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
+    path: "/admin/*",
+    element: <Admin />,
+  },
+  {
     path: "*",
-    element: <div><Navbar /><Home /><Footer/></div>,
+    element: <div><Navbar /><Home /><Footer /></div>,
   }
 ]);
 

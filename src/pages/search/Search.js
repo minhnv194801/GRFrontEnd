@@ -73,6 +73,7 @@ function Search() {
       if (response.ok) {
         // convert data to json
         const json = await response.json();
+        console.log(json.data)
 
         if (json.data === null || json.data?.length === 0) {
           setSearchResults([])
@@ -82,10 +83,12 @@ function Search() {
           json.data.forEach((respond) => {
             respond.href = '/manga/' + respond.id
             var currentTime = Date.now()
-            respond.chapters.forEach((chapter) => {
-              chapter.href = '/read/' + chapter.id
-              chapter.updateTime = timeDifference(currentTime / 1000, chapter.updateTime)
-            })
+            if (respond.chapters) {
+              respond.chapters.forEach((chapter) => {
+                chapter.href = '/read/' + chapter.id
+                chapter.updateTime = timeDifference(currentTime / 1000, chapter.updateTime)
+              })
+            }
           })
 
           setSearchResults(json.data)
@@ -160,7 +163,7 @@ function Search() {
   useEffect(() => {
     if (searchParams.get('tags') != null) {
       var tags = searchParams.get('tags').split(",")
-      setSelectedTags(tags.filter(tag => tag!==""))
+      setSelectedTags(tags.filter(tag => tag !== ""))
       let filteredArray = searchTags.filter(item => !tags.includes(item))
       setSearchTags(filteredArray)
     }
@@ -169,9 +172,9 @@ function Search() {
       setSearchValue(value)
     }
 
-    fetchSearchResult(value, tags)
-
     setSearchResults(loadingItem)
+
+    fetchSearchResult(value, tags)
 
     pageRef.current.scrollIntoView()
     // eslint-disable-next-line

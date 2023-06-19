@@ -3,17 +3,20 @@ import Grid from '@mui/material/Grid';
 import './NewsPaginateItem.css'
 
 const NewsPaginateItem = (props) => {
+    if (props.item.chapters === null) {
+        props.item.chapters = []
+    }
     return (
         <div className='news-paginate-item-wrapper'>
             <Grid container spacing={1}>
-                <Grid item xs={3}>
+                <Grid item xs={3} sx={{minHeight: '200px'}}>
                     <div className='news-cover-wrapper'>
                         <a href={props.item.href} className='news-cover-href'>
                             <img className='news-cover' src={props.item.cover} alt='chapterCover' />
                         </a>
                     </div>
                 </Grid>
-                <Grid item xs={9} sx={{ textAlign: 'left' }}>
+                <Grid item xs={9} sx={{ textAlign: 'left', minHeight: '200px', display:'flex', flexDirection:'column', justifyContent:'center'}}>
                     <a className='news-chapter-title-href' href={props.item.href}>
                         <h2 className='news-item-title'>{props.item.title}</h2>
                     </a>

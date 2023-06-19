@@ -4,13 +4,16 @@ import { Grid } from '@mui/material';
 
 const MangaChapterList = (props) => {
     return (
-        <Grid container spacing={3}>
-            {props.chapterList.map((chapter) =>
-                <Grid item xs={12} md={6}>
-                    <MangaChapter chapter={chapter} />
-                </Grid>
-            )}
-        </Grid>
+        props.chapterList ?
+            <Grid container spacing={3}>
+                {props.chapterList.map((chapter) =>
+                    <Grid item xs={12} md={6}>
+                        <MangaChapter chapter={chapter} />
+                    </Grid>
+                )}
+            </Grid>
+            :
+            <h5>Truyện hiện chưa có chương truyện nào, bạn vui lòng đợi nhé</h5>
     );
 };
 

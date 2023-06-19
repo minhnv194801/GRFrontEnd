@@ -7,6 +7,7 @@
 .news-paginate-item-wrapper {
     display: inline-block;
     text-align: center;
+    min-height: 200px;
     width: 100%;
     background-color: #990000;
     color: #fff;

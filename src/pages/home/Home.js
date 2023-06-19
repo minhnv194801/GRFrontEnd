@@ -141,10 +141,12 @@ function Home() {
             json.data.forEach((respond) => {
               respond.href = '/manga/' + respond.id
               var currentTime = Date.now()
-              respond.chapters.forEach((chapter) => {
-                chapter.href = '/read/' + chapter.id
-                chapter.updateTime = timeDifference(currentTime / 1000, chapter.updateTime)
-              })
+              if (respond.chapters) {
+                respond.chapters.forEach((chapter) => {
+                  chapter.href = '/read/' + chapter.id
+                  chapter.updateTime = timeDifference(currentTime / 1000, chapter.updateTime)
+                })
+              }
             })
 
             setNewestItems(json.data)
