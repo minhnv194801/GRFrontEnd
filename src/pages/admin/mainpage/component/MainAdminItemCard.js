@@ -12,6 +12,7 @@ const MainAdminItemCard = (props) => {
 
     const handleClick = (event) => {
         setFadeout(true)
+        window.location.href = props.href
     }
 
     return (

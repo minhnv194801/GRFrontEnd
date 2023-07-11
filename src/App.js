@@ -60,29 +60,29 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/admin/*",
+    path: "/admin",
     element: <Admin adminContent={<MainAdmin />}/>,
   },
-  // {
-  //   path: "/admin/manga",
-  //   element: <Admin adminContent={<></>} selected='manga'/>,
-  // },
-  // {
-  //   path: "/admin/chapter",
-  //   element: <Admin adminContent={<></>} selected='chapter'/>,
-  // },
-  // {
-  //   path: "/admin/user",
-  //   element: <Admin adminContent={<></>} selected='user'/>,
-  // },
-  // {
-  //   path: "/admin/comment",
-  //   element: <Admin adminContent={<></>} selected='comment'/>,
-  // },
-  // {
-  //   path: "/admin/report",
-  //   element: <Admin adminContent={<></>} selected='report'/>,
-  // },
+  {
+    path: "/admin/manga",
+    element: <Admin adminContent={<></>} selected='manga'/>,
+  },
+  {
+    path: "/admin/chapter",
+    element: <Admin adminContent={<></>} selected='chapter'/>,
+  },
+  {
+    path: "/admin/user",
+    element: <Admin adminContent={<></>} selected='user'/>,
+  },
+  {
+    path: "/admin/comment",
+    element: <Admin adminContent={<></>} selected='comment'/>,
+  },
+  {
+    path: "/admin/report",
+    element: <Admin adminContent={<></>} selected='report'/>,
+  },
   {
     path: "*",
     element: <div><Navbar /><Home /><Footer /></div>,
