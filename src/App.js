@@ -1,6 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import './App.css';
 import Footer from './components/footer/Footer';
 import Navbar from './components/navbar/Navbar';
 import TopAlert from './components/topalert/TopAlert';
@@ -11,14 +10,13 @@ import User from './pages/user/User'
 import Search from './pages/search/Search'
 import Login from './pages/login/Login'
 import Register from './pages/register/Register'
-import { useSidebarState, Resource, List, Datagrid, TextField, EmailField, useRecordContext, ReferenceArrayField, EditButton, Layout, Menu, RefreshIconButton, TitlePortal, Button, Title } from 'react-admin';
-import simpleRestProvider from 'ra-data-simple-rest';
 import { useEffect } from 'react';
 import { login, logout } from './AppSlice';
 import { displayFailure } from './components/topalert/TopAlertSlice';
 import refreshTokenIfNeeded from './common/JWT';
-import { AppBar, Box, Toolbar } from '@mui/material';
 import Admin from './pages/admin/Admin';
+import MainAdmin from './pages/admin/mainpage/MainAdmin';
+import './App.css';
 
 const router = createBrowserRouter([
   {
@@ -63,8 +61,28 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin/*",
-    element: <Admin />,
+    element: <Admin adminContent={<MainAdmin />}/>,
   },
+  // {
+  //   path: "/admin/manga",
+  //   element: <Admin adminContent={<></>} selected='manga'/>,
+  // },
+  // {
+  //   path: "/admin/chapter",
+  //   element: <Admin adminContent={<></>} selected='chapter'/>,
+  // },
+  // {
+  //   path: "/admin/user",
+  //   element: <Admin adminContent={<></>} selected='user'/>,
+  // },
+  // {
+  //   path: "/admin/comment",
+  //   element: <Admin adminContent={<></>} selected='comment'/>,
+  // },
+  // {
+  //   path: "/admin/report",
+  //   element: <Admin adminContent={<></>} selected='report'/>,
+  // },
   {
     path: "*",
     element: <div><Navbar /><Home /><Footer /></div>,
