@@ -1,0 +1,59 @@
+.admin-user-item-card-wrapper {
+    background-color: #fff;
+    box-shadow: 1px 1px 1px 1px;
+    min-height: 20vh;
+    /* max-width: 30vw; */
+    display: flex;
+    flex-flow: column;
+    position: relative;
+}
+
+.admin-user-item-card-wrapper:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 1px #66C2FF;
+}
+
+.admin-user-avatar-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-user-avatar {
+    width: 100%;
+    height: auto;
+    max-height: 30vh;
+}
+
+.admin-user-item-card-content-wrapper {
+    display: flex;
+    height: 100%;
+    max-width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.admin-user-display-name {
+    margin-left: 0;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.admin-user-email {
+    margin-left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.admin-user-role {
+    margin-left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,73 @@
+.admin-comment-item-card-wrapper {
+    background-color: #fff;
+    border: 1px solid #0099ff;
+    box-shadow: 1px 1px 1px 1px #0099ff;
+    border-radius: 25px;
+    min-height: 30vh;
+    max-width: 40vw;
+    position: relative;
+}
+
+.admin-comment-item-card-wrapper:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 1px #66C2FF;
+}
+
+.admin-comment-manga-cover {
+    margin-top: 5px;
+    height: 80%;
+    width: 80%;
+    object-fit: cover;
+}
+
+.admin-comment-manga-title {
+    max-width: 100%;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.admin-comment-user-wrapper {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    gap: 10px;
+    border-bottom: 1px solid #0099ff;
+}
+
+.admin-comment-user-avatar {
+    height: 100px;
+    width: 100px;
+    object-fit: fill;
+}
+
+.admin-comment-user-displayname {
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 0px;
+}
+
+.admin-comment-content-wrapper {
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+    height: 100%;
+}
+
+.admin-comment-content {
+    margin-top: 5px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    /* number of lines to show */
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.admin-comment-updatetime {
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: 10px;
+}

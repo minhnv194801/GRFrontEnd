@@ -2,7 +2,7 @@ import React from 'react';
 import AdminNavbar from './navbar/AdminNavbar'
 import './Admin.css'
 
-const CustomAdmin = (props) => {
+const Admin = (props) => {
     return (
         // <Admin basename='/admin' dataProvider={dataProvider}>
         //     <Resource name="users" list={UserList} create={UserCreate} show={UserShow} edit={UserEdit} />
@@ -14,10 +14,10 @@ const CustomAdmin = (props) => {
         <div>
             <AdminNavbar selected={props.selected}/>
             <div className='admin-outer'>
-                {props.adminContent}
+                {props.children}
             </div>
         </div>
     )
 }
 
-export default CustomAdmin
+export default Admin

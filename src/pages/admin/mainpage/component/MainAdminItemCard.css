@@ -39,8 +39,3 @@
     align-items: center;
     justify-content: center;
 }
-
-.flex-break {
-    flex-basis: 100%;
-    height: 0;
-}

@@ -17,6 +17,11 @@ import refreshTokenIfNeeded from './common/JWT';
 import Admin from './pages/admin/Admin';
 import MainAdmin from './pages/admin/mainpage/MainAdmin';
 import './App.css';
+import MangaAdminList from './pages/admin/list/mangalist/MangaAdminList';
+import ChapterAdminList from './pages/admin/list/chapterlist/ChapterAdminList';
+import UserAdminList from './pages/admin/list/userlist/UserAdminList';
+import CommentAdminList from './pages/admin/list/commentlist/CommentAdminLIst';
+import ReportAdminList from './pages/admin/list/reportlist/ReportAdminList';
 
 const router = createBrowserRouter([
   {
@@ -61,27 +66,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Admin adminContent={<MainAdmin />}/>,
+    element: <Admin > <MainAdmin /> </Admin>,
   },
   {
     path: "/admin/manga",
-    element: <Admin adminContent={<></>} selected='manga'/>,
+    element: <Admin selected='manga'> <MangaAdminList/> </Admin>,
   },
   {
     path: "/admin/chapter",
-    element: <Admin adminContent={<></>} selected='chapter'/>,
+    element: <Admin selected='chapter'> <ChapterAdminList/> </Admin>,
   },
   {
     path: "/admin/user",
-    element: <Admin adminContent={<></>} selected='user'/>,
+    element: <Admin selected='user'> <UserAdminList/> </Admin>,
   },
   {
     path: "/admin/comment",
-    element: <Admin adminContent={<></>} selected='comment'/>,
+    element: <Admin selected='comment'> <CommentAdminList/> </Admin>,
   },
   {
     path: "/admin/report",
-    element: <Admin adminContent={<></>} selected='report'/>,
+    element: <Admin selected='report'> <ReportAdminList/> </Admin>,
   },
   {
     path: "*",
