@@ -22,6 +22,7 @@ import ChapterAdminList from './pages/admin/list/chapterlist/ChapterAdminList';
 import UserAdminList from './pages/admin/list/userlist/UserAdminList';
 import CommentAdminList from './pages/admin/list/commentlist/CommentAdminLIst';
 import ReportAdminList from './pages/admin/list/reportlist/ReportAdminList';
+import MangaAdminShow from './pages/admin/show/mangashow/MangaAdminShow';
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,26 @@ const router = createBrowserRouter([
   {
     path: "/admin/report",
     element: <Admin selected='report'> <ReportAdminList/> </Admin>,
+  },
+  {
+    path: "/admin/manga/show/:id",
+    element: <Admin selected='manga'> <MangaAdminShow/> </Admin>,
+  },
+  {
+    path: "/admin/chapter/show/:id",
+    element: <Admin selected='chapter'> </Admin>,
+  },
+  {
+    path: "/admin/user/show/:id",
+    element: <Admin selected='user'> </Admin>,
+  },
+  {
+    path: "/admin/comment/show/:id",
+    element: <Admin selected='comment'> </Admin>,
+  },
+  {
+    path: "/admin/report/show/:id",
+    element: <Admin selected='report'> </Admin>,
   },
   {
     path: "*",

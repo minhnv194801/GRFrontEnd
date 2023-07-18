@@ -1,0 +1,32 @@
+.show-admin-header-wrapper {
+    width: 95%;
+    padding-top: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.show-admin-wrapper {
+    width: 95%;
+    display: flex;
+    flex-direction: column !important;
+    flex-flow: wrap;
+    margin-bottom: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #fff;
+    box-shadow: 1px 1px 1px 1px;
+}
+
+.show-admin-wrapper > div {
+    margin-top: 20px;
+    margin-left: 20px;
+    max-width: 100%;
+}
+
+.show-admin-wrapper h1 {
+    font-weight: bold;
+}
