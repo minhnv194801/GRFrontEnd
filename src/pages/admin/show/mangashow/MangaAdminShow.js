@@ -2,11 +2,15 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
 import './MangaAdminShow.css'
-import { CircleOutlined, Clear, Edit, } from "@mui/icons-material";
+import { Add, CircleOutlined, Clear, Edit, } from "@mui/icons-material";
 import FollowUserCard from "./followusercard/FollowUserCard";
 import MangaChapterCard from "./mangachaptercard/MangaChapterCard";
 import MangaCommentCard from "./mangacommentcard/MangaCommentCard";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
+
+const iconStyle = {
+  'color': '#0099FF',
+}
 
 function MangaAdminShow() {
   const params = useParams()
@@ -22,42 +26,54 @@ function MangaAdminShow() {
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Name</h1>
-          <Button startIcon={<Edit />} />
+          <IconButton >
+            <Edit sx={iconStyle} />
+          </IconButton>
         </div>
         <p>Tên truyện</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>AlternateNames</h1>
-          <Button startIcon={<Edit />} />
+          <IconButton >
+            <Edit sx={iconStyle} />
+          </IconButton>
         </div>
         <p>Tên truyện 1</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Author</h1>
-          <Button startIcon={<Edit />} />
+          <IconButton >
+            <Edit sx={iconStyle} />
+          </IconButton>
         </div>
         <p>Tác giả</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Cover</h1>
-          <Button startIcon={<Edit />} />
+          <IconButton >
+            <Edit sx={iconStyle} />
+          </IconButton>
         </div>
         <img src='/mangaicon.jpg' alt='manga-cover' />
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Description</h1>
-          <Button startIcon={<Edit />} />
+          <IconButton >
+            <Edit sx={iconStyle} />
+          </IconButton>
         </div>
         <p>Mô tả truyện</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Status</h1>
-          <Button startIcon={<Edit />} />
+          <IconButton >
+            <Edit sx={iconStyle} />
+          </IconButton>
         </div>
         <p className="manga-admin-show-finish-status">Đã hoàn thành</p>
       </div>
@@ -68,7 +84,9 @@ function MangaAdminShow() {
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>IsRecommeded</h1>
-          <Button startIcon={<Edit />} />
+          <IconButton >
+            <Edit sx={iconStyle} />
+          </IconButton>
         </div>
         <CircleOutlined />
         <Clear />
@@ -76,7 +94,9 @@ function MangaAdminShow() {
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Tags</h1>
-          <Button startIcon={<Edit />} />
+          <IconButton>
+            <Edit sx={iconStyle} />
+          </IconButton>
         </div>
         <div className="tag-list-wrapper">
           <div className="tag-wrapper">Tag 1</div>
@@ -87,7 +107,9 @@ function MangaAdminShow() {
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>FollowedUsers</h1>
-          <Button startIcon={<Edit />} />
+          <IconButton >
+            <Edit sx={iconStyle} />
+          </IconButton>
         </div>
         <div className="admin-manga-show-list-wrapper">
           <FollowUserCard />
@@ -108,7 +130,12 @@ function MangaAdminShow() {
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Chapters</h1>
-          <Button startIcon={<Edit />} />
+          <IconButton >
+            <Edit sx={iconStyle} />
+          </IconButton>
+          <IconButton >
+            <Add sx={iconStyle} />
+          </IconButton>
         </div>
         <div className="admin-manga-show-list-wrapper">
           <MangaChapterCard
