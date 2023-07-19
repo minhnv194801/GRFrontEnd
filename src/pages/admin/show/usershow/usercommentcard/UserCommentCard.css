@@ -1,41 +1,54 @@
-.owned-chapter-card-wrapper {
-    background-color: #fff;
-    box-shadow: 1px 1px 1px 1px;
-    border-radius: 25px;
-    min-width: 15vw;
+.admin-user-comment-card-wrapper {
     display: flex;
-    flex-flow: column;
+    flex-direction: row;
+    height: auto;
+    min-width: 30vw;
+    max-width: 30vw;
+    gap: 20px;
+    border: 1px solid #09f;
+    border-radius: 25px;
+    box-shadow: 1px 1px 1px 1px #09f;
 }
 
-.owned-chapter-card-cover-wrapper {
+.admin-user-comment-card-manga-wrapper{
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-right: 1px solid #09f
 }
 
-.owned-chapter-card-cover {
+.admin-user-comment-card-manga-cover {
     width: 100%;
     height: auto;
-    max-height: 100%;
-    border-radius: 25px 25px 0px 0px;
+    object-fit: fill;
+    padding: 10px;
 }
 
-.owned-chapter-card-title-wrapper {
-    color: #000;
-    flex: 1 1 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.admin-user-comment-card-manga-title {
     font-weight: bold;
 }
 
-.owned-chapter-title {
-    margin-top: auto;
-    margin-bottom: auto;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    max-width: 100%;
+.admin-user-comment-card-content-wrapper{
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.admin-user-comment-card-content {
+    margin-top: 5px;
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    /* number of lines to show */
+    line-clamp: 8;
+    -webkit-box-orient: vertical;
+}
+
+.admin-user-comment-card-updatetime {
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: 10px;
 }

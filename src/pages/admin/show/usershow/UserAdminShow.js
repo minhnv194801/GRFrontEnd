@@ -4,8 +4,10 @@ import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
 import './UserAdminShow.css'
 import { Add, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
 import { IconButton } from "@mui/material";
-import OwnedUserCard from "./ownedusercard/OwnedUserCard";
-import ChapterReportCard from "./chapterreportcard/ChapterReportCard";
+import UserCommentCard from "./usercommentcard/UserCommentCard";
+import OwnedChapterCard from "./ownedchaptercard/OwnedChapterCard";
+import FollowMangaCard from "./followmangacard/FollowMangaCard";
+import UserReportCard from "./userreportcard/UserReportCard";
 
 const iconStyle = {
   'color': '#0099FF',
@@ -96,6 +98,59 @@ function UserAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
+        <div className="admin-card-list-wrapper">
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+          <FollowMangaCard 
+            cover='/mangaicon.jpg'
+            content='Manga'
+          />
+        </div>
+        <div className='admin-show-expand-wrapper'>
+          <a href="/admin/manga">{'Mở rộng >'}</a>
+        </div>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
@@ -104,15 +159,149 @@ function UserAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>Họ</p>
+        <div className="admin-card-list-wrapper">
+          <OwnedChapterCard 
+            cover='/chaptericon.jpg'
+            content='Chapter'
+          />
+          <OwnedChapterCard 
+            cover='/chaptericon.jpg'
+            content='Chapter'
+          />
+          <OwnedChapterCard 
+            cover='/chaptericon.jpg'
+            content='Chapter'
+          />
+          <OwnedChapterCard 
+            cover='/chaptericon.jpg'
+            content='Chapter'
+          />
+          <OwnedChapterCard 
+            cover='/chaptericon.jpg'
+            content='Chapter'
+          />
+          <OwnedChapterCard 
+            cover='/chaptericon.jpg'
+            content='Chapter'
+          />
+        </div>
+        <div className='admin-show-expand-wrapper'>
+          <a href="/admin/chapter">{'Mở rộng >'}</a>
+        </div>
       </div>
       <div>
         <h1>Comments</h1>
-        <p>Họ</p>
+        <div className="admin-card-list-wrapper">
+          <UserCommentCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Truyện hay!'
+            updateTime='16:57 1/02/2023'
+          />
+          <UserCommentCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Truyện hay!'
+            updateTime='16:57 1/02/2023'
+          />
+          <UserCommentCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Truyện hay!'
+            updateTime='16:57 1/02/2023'
+          />
+          <UserCommentCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Truyện hay!'
+            updateTime='16:57 1/02/2023'
+          />
+          <UserCommentCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Truyện hay!'
+            updateTime='16:57 1/02/2023'
+          />
+          <UserCommentCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Truyện hay!'
+            updateTime='16:57 1/02/2023'
+          />
+          <UserCommentCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Truyện hay!'
+            updateTime='16:57 1/02/2023'
+          />
+        </div>
+        <div className='admin-show-expand-wrapper'>
+          <a href="/admin/comment">{'Mở rộng >'}</a>
+        </div>
       </div>
       <div>
         <h1>Reports</h1>
-        <p>Họ</p>
+        <div className="admin-card-list-wrapper">
+          <UserReportCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Ảnh truyện bị lổi rồi'
+            updateTime='16:57 1/02/2023'
+            status={0}
+          />
+          <UserReportCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Ảnh truyện bị lổi rồi'
+            updateTime='16:57 1/02/2023'
+            status={0}
+          />
+          <UserReportCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Ảnh truyện bị lổi rồi'
+            updateTime='16:57 1/02/2023'
+            status={1}
+          />
+          <UserReportCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Ảnh truyện bị lổi rồi'
+            updateTime='16:57 1/02/2023'
+            status={1}
+          />
+          <UserReportCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Ảnh truyện bị lổi rồi'
+            updateTime='16:57 1/02/2023'
+            status={1}
+          />
+          <UserReportCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Ảnh truyện bị lổi rồi'
+            updateTime='16:57 1/02/2023'
+            status={1}
+          />
+          <UserReportCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Ảnh truyện bị lổi rồi'
+            updateTime='16:57 1/02/2023'
+            status={1}
+          />
+          <UserReportCard 
+            mangaCover='/mangaicon.jpg'
+            mangaTitle='Manga'
+            content='Ảnh truyện bị lổi rồi'
+            updateTime='16:57 1/02/2023'
+            status={1}
+          />
+        </div>
+        <div className='admin-show-expand-wrapper'>
+          <a href="/admin/report">{'Mở rộng >'}</a>
+        </div>
       </div>
     </ShowAdminWrapper >
   );

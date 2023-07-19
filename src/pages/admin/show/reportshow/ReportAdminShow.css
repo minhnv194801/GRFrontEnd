@@ -7,6 +7,10 @@
     flex-flow: column;
 }
 
+.admin-report-chapter-card-wrapper:hover {
+    cursor: pointer;
+}
+
 .admin-report-chapter-card-cover-wrapper {
     display: flex;
     align-items: center;
@@ -42,6 +46,10 @@
 .report-admin-user-wrapper {
     display: flex;
     flex-direction: row;
+}
+
+.report-admin-user-wrapper:hover {
+    cursor: pointer;
 }
 
 .report-admin-user-avatar {

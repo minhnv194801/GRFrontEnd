@@ -1,26 +1,27 @@
-.owned-chapter-card-wrapper {
+.admin-follow-manga-card-wrapper {
     background-color: #fff;
     box-shadow: 1px 1px 1px 1px;
     border-radius: 25px;
-    min-width: 15vw;
+    min-width: 10vw;
+    max-width: 10vw;
     display: flex;
     flex-flow: column;
 }
 
-.owned-chapter-card-cover-wrapper {
+.admin-follow-manga-card-cover-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.owned-chapter-card-cover {
+.admin-follow-manga-card-cover {
     width: 100%;
     height: auto;
     max-height: 100%;
     border-radius: 25px 25px 0px 0px;
 }
 
-.owned-chapter-card-title-wrapper {
+.admin-follow-manga-card-title-wrapper {
     color: #000;
     flex: 1 1 auto;
     display: flex;
@@ -29,7 +30,7 @@
     font-weight: bold;
 }
 
-.owned-chapter-title {
+.admin-follow-manga-title {
     margin-top: auto;
     margin-bottom: auto;
     padding-top: 5px;

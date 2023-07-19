@@ -4,8 +4,8 @@ import './FollowUserCard.css'
 const FollowUserCard = (props) => {
     return (
         <div className='followuser-card-wrapper'>
-            <img className='followuser-card-avatar' src='/defaultavatar.jpg' alt='avatar' />
-            <p>Tên hiển thị</p>
+            <img className='followuser-card-avatar' src={props.avatar} alt='avatar' />
+            <p>{props.displayname}</p>
         </div>
     )
 }

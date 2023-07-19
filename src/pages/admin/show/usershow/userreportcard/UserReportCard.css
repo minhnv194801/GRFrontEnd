@@ -1,0 +1,74 @@
+.admin-user-finish-report-card-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    min-width: 30vw;
+    max-width: 30vw;
+    gap: 20px;
+    border: 1px solid #0f0;
+    border-radius: 25px;
+    box-shadow: 1px 1px 1px 1px #0f0;
+}
+
+.admin-user-unfinish-report-card-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    min-width: 30vw;
+    max-width: 30vw;
+    gap: 20px;
+    border: 1px solid #f00;
+    border-radius: 25px;
+    box-shadow: 1px 1px 1px 1px #f00;
+}
+
+.admin-user-finish-report-card-manga-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #0f0
+}
+
+.admin-user-unfinish-report-card-manga-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #f00
+}
+
+.admin-user-report-card-manga-cover {
+    width: 100%;
+    height: auto;
+    object-fit: fill;
+    padding: 10px;
+}
+
+.admin-user-report-card-manga-title {
+    font-weight: bold;
+}
+
+.admin-user-report-card-content-wrapper{
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.admin-user-report-card-content {
+    margin-top: 5px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    /* number of lines to show */
+    line-clamp: 8;
+    -webkit-box-orient: vertical;
+}
+
+.admin-user-report-card-updatetime {
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: 10px;
+}
