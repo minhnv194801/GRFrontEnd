@@ -1,3 +1,8 @@
+.admin-chapter-cover {
+    height: 300px;
+    width: 200px;
+}
+
 .admin-chapter-manga-card-wrapper {
     background-color: #fff;
     box-shadow: 1px 1px 1px 1px;

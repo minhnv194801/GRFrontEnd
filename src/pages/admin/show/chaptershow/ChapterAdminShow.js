@@ -54,7 +54,7 @@ function ChapterAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <img src='/chaptericon.jpg' alt='chapter-cover' />
+        <img className='admin-chapter-cover' src='/chaptericon.jpg' alt='chapter-cover' />
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>

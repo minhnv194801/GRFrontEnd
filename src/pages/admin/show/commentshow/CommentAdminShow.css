@@ -7,6 +7,10 @@
     flex-flow: column;
 }
 
+.admin-comment-manga-card-wrapper:hover {
+    cursor: pointer;
+}
+
 .admin-comment-manga-card-cover-wrapper {
     display: flex;
     align-items: center;
@@ -42,6 +46,10 @@
 .comment-admin-user-wrapper {
     display: flex;
     flex-direction: row;
+}
+
+.comment-admin-user-wrapper:hover {
+    cursor: pointer;
 }
 
 .comment-admin-user-avatar {

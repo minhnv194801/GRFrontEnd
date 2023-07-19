@@ -11,6 +11,10 @@
     color: #0000ff;
 }
 
+.manga-admin-cover {
+    max-height: 30vh;
+}
+
 .show-admin-wrapper .tag-wrapper {
     font-weight: normal;
 }

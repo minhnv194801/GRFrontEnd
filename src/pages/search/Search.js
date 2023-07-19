@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { displayFailure } from "../../components/topalert/TopAlertSlice";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import './Search.css'
+import CONFIG from "../../common/Config";
 
 const buttonStyle = {
   backgroundColor: '#ed2939',
@@ -49,7 +50,7 @@ function Search() {
   const [searchResultOffset, setSearchResultOffset] = useState(0)
   const [searchResults, setSearchResults] = useState([])
   const [selectedTags, setSelectedTags] = useState([])
-  const [searchTags, setSearchTags] = useState(["Action", "Adult", "Adventure", "Chuyển Sinh", "Comedy", "Comic", "Cooking", "Cổ Đại", "Doujinshi", "Drama", "Ecchi", "Fantasy", "Gender Bender", "Harem", "Historical", "Horror", "Josei", "Live action", "Manga", "Manhua", "Manhwa", "Martial Arts", "Mature", "Mystery", "Ngôn Tình", "Psychological", "Romance", "School Life", "Sci-fi", "Seinen", "Shoujo", "Shounen", "Slice of Life", "Smut", "Soft Yaoi", "Sports", "Supernatural", "Thiếu Nhi", "Tragedy", "Trinh Thám", "Truyện Màu", "Truyện scan", "Tạp chí truyện tranh", "Webtoon", "Xuyên Không", "Đam Mỹ"])
+  const [searchTags, setSearchTags] = useState(CONFIG.TAG_LIST)
   const [selectedTagsVisibility, setSelectedTagsVisibility] = useState(false)
   const [searchTagsVisibility, setSearchTagsVisibility] = useState(true)
   const [resultCount, setResultCount] = useState(0)
