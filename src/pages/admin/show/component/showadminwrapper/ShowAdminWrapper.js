@@ -11,7 +11,7 @@ const deleteIconStyle = {
 
 const deleteBtnStyle = {
     'color': 'red',
-    'fontSize': '24px',
+    'fontSize': '16px',
     'fontWeight': 'bold',
 }
 

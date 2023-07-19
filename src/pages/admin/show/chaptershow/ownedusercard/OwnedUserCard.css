@@ -1,4 +1,4 @@
-.followuser-card-wrapper {
+.owneduser-card-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,6 +8,6 @@
     box-shadow: 1px 1px 1px 1px;
 }
 
-.followuser-card-avatar {
+.owneduser-card-avatar {
     width: 100%;
 }

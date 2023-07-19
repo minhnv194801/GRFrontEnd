@@ -1,0 +1,64 @@
+.chapter-finish-report-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #00ff00;
+    box-shadow: 1px 1px 1px 1px #00ff00;
+    border-radius: 25px;
+    min-height: 30vh;
+    min-width: 20vw;
+}
+
+.chapter-unfinish-report-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #ff0000;
+    box-shadow: 1px 1px 1px 1px #ff0000;
+    border-radius: 25px;
+    min-height: 30vh;
+    min-width: 20vw;
+}
+
+.chapter-report-card-user-wrapper {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    gap: 10px;
+    border-bottom: 1px solid #0099ff;
+}
+
+.chapter-report-card-avatar {
+    height: 100px;
+    width: 100px;
+    border-radius: 25px;
+    object-fit: fill;
+}
+
+.chapter-report-card-user-displayname {
+    font-weight: bold;
+}
+
+.chapter-report-card-content-wrapper {
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+    height: 100%;
+}
+
+.chapter-report-content {
+    margin-top: 5px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    /* number of lines to show */
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.chapter-report-updatetime {
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: 10px;
+}

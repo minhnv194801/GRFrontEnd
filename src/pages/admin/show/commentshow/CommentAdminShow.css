@@ -1,0 +1,55 @@
+.admin-comment-manga-card-wrapper {
+    background-color: #fff;
+    box-shadow: 1px 1px 1px 1px;
+    border-radius: 25px;
+    width: 15vw;
+    display: flex;
+    flex-flow: column;
+}
+
+.admin-comment-manga-card-cover-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-comment-manga-card-cover {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    border-radius: 25px 25px 0px 0px;
+}
+
+.admin-comment-manga-card-title-wrapper {
+    color: #000;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.admin-comment-manga-title {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.comment-admin-user-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.comment-admin-user-avatar {
+    height: 100px;
+    width: 100px;
+}
+
+.comment-user-displayname {
+    margin-top: auto;
+    font-weight: bold;
+}

@@ -111,7 +111,7 @@ function MangaAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <div className="admin-manga-show-list-wrapper">
+        <div className="admin-card-list-wrapper">
           <FollowUserCard />
           <FollowUserCard />
           <FollowUserCard />
@@ -137,7 +137,7 @@ function MangaAdminShow() {
             <Add sx={iconStyle} />
           </IconButton>
         </div>
-        <div className="admin-manga-show-list-wrapper">
+        <div className="admin-card-list-wrapper">
           <MangaChapterCard
             cover='/chaptericon.jpg'
             content='Chapter'
@@ -173,7 +173,7 @@ function MangaAdminShow() {
       </div>
       <div>
         <h1>Comments</h1>
-        <div className="admin-manga-show-list-wrapper">
+        <div className="admin-card-list-wrapper">
           <MangaCommentCard />
           <MangaCommentCard />
           <MangaCommentCard />

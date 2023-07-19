@@ -1,7 +1,7 @@
 import React from 'react'
 import './MangaCommentCard.css'
 
-const MangaCommentCard = () => {
+const MangaCommentCard = (props) => {
     return (
         <div className='manga-comment-card-wrapper'>
             <div className='manga-comment-card-user-wrapper'>

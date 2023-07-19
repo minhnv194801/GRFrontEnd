@@ -23,6 +23,10 @@ import UserAdminList from './pages/admin/list/userlist/UserAdminList';
 import CommentAdminList from './pages/admin/list/commentlist/CommentAdminLIst';
 import ReportAdminList from './pages/admin/list/reportlist/ReportAdminList';
 import MangaAdminShow from './pages/admin/show/mangashow/MangaAdminShow';
+import ReportAdminShow from './pages/admin/show/reportshow/ReportAdminShow';
+import CommentAdminShow from './pages/admin/show/commentshow/CommentAdminShow';
+import ChapterAdminShow from './pages/admin/show/chaptershow/ChapterAdminShow';
+import UserAdminShow from './pages/admin/show/usershow/UserAdminShow';
 
 const router = createBrowserRouter([
   {
@@ -95,19 +99,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin/chapter/show/:id",
-    element: <Admin selected='chapter'> </Admin>,
+    element: <Admin selected='chapter'> <ChapterAdminShow/> </Admin>,
   },
   {
     path: "/admin/user/show/:id",
-    element: <Admin selected='user'> </Admin>,
+    element: <Admin selected='user'> <UserAdminShow/> </Admin>,
   },
   {
     path: "/admin/comment/show/:id",
-    element: <Admin selected='comment'> </Admin>,
+    element: <Admin selected='comment'> <CommentAdminShow/> </Admin>,
   },
   {
     path: "/admin/report/show/:id",
-    element: <Admin selected='report'> </Admin>,
+    element: <Admin selected='report'> <ReportAdminShow /> </Admin>,
   },
   {
     path: "*",
