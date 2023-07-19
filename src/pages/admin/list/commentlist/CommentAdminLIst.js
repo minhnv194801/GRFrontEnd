@@ -10,6 +10,7 @@ import CommentItemCard from './commentitemcard/CommentItemCard';
 const CommentAdminList = (props) => {
     const searchFieldList = [
         { key: "user", value: "Theo ID tài khoản bình luận" },
+        { key: "manga", value: "Theo ID bộ truyện bình luận" },
     ]
     const sortFieldList = [
         { key: "timeCreated", value: "Theo thời gian bình luận" }

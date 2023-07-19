@@ -565,8 +565,7 @@ function MangaAdminShow() {
           }
         </div>
         <div className='admin-show-expand-wrapper'>
-          {/* TODO: list user query */}
-          <a href="/admin/user">{'Mở rộng >'}</a>
+          <a href={"/admin/user?searchfield=followMangas&searchvalue="+item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
       <div>
@@ -587,7 +586,7 @@ function MangaAdminShow() {
           }
         </div>
         <div className='admin-show-expand-wrapper'>
-          <a href="/admin/chapter">{'Mở rộng >'}</a>
+          <a href={"/admin/chapter?searchfield=manga&searchvalue="+item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
       <div>
@@ -605,7 +604,7 @@ function MangaAdminShow() {
           }
         </div>
         <div className='admin-show-expand-wrapper'>
-          <a href="/admin/comment">{'Mở rộng >'}</a>
+          <a href={"/admin/comment?searchfield=manga&searchvalue="+item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
     </ShowAdminWrapper >

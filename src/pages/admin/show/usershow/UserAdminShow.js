@@ -18,11 +18,189 @@ function UserAdminShow() {
 
   const [userId] = useState(params.id)
 
+  const [item, setItem] = useState({})
+  const [followMangaIds, setFollowMangaIds] = useState([])
+  const [ownedChapterIds, setOwnedChapterIds] = useState([])
+  const [commentIds, setCommentIds] = useState([])
+  const [reportIds, setReportIds] = useState([])
+
+  const [followMangas, setFollowMangas] = useState([])
+  const [ownedChapters, setOwnedChapters] = useState([])
+  const [comments, setComments] = useState([])
+  const [reports, setReports] = useState([])
+
+  useEffect(() => {
+    let fetchItem = {
+      'id': userId,
+      'email': 'email@email.com',
+      'password': '$2a$14$TS7aakGm9DIBS2iUvWHNSe4xzh57oJfy34Y/nVnrTtF923bpcw09C',
+      'role': 'Người dùng',
+      'displayname': 'Tên hiển thị',
+      'avatar': '/defaultavatar.jpg',
+      'firstName': 'Tên',
+      'lastName': 'Họ',
+      'gender': 0,
+      'followMangas': ['1'],
+      'ownedChapters': ['1'],
+      'comments': ['1'],
+      'reports': ['1']
+    }
+
+    setItem(fetchItem)
+    setFollowMangaIds(fetchItem.followMangas)
+    setOwnedChapterIds(fetchItem.ownedChapters)
+    setCommentIds(fetchItem.comments)
+    setReportIds(fetchItem.reports)
+  }, [])
+
+  useEffect(() => {
+    let fetchMangas = [
+      {
+        'cover': '/mangaicon.jpg',
+        'title': 'Manga'
+      },
+      {
+        'cover': '/mangaicon.jpg',
+        'title': 'Manga'
+      },
+      {
+        'cover': '/mangaicon.jpg',
+        'title': 'Manga'
+      },
+      {
+        'cover': '/mangaicon.jpg',
+        'title': 'Manga'
+      },
+      {
+        'cover': '/mangaicon.jpg',
+        'title': 'Manga'
+      },
+    ]
+    setFollowMangas(fetchMangas)
+  }, [followMangaIds])
+
+  useEffect(() => {
+    let fetchChapters = [
+      {
+        'cover': '/chaptericon.jpg',
+        'title': 'Chapter'
+      },
+      {
+        'cover': '/chaptericon.jpg',
+        'title': 'Chapter'
+      },
+      {
+        'cover': '/chaptericon.jpg',
+        'title': 'Chapter'
+      },
+      {
+        'cover': '/chaptericon.jpg',
+        'title': 'Chapter'
+      },
+      {
+        'cover': '/chaptericon.jpg',
+        'title': 'Chapter'
+      },
+    ]
+
+    setOwnedChapters(fetchChapters)
+  }, [ownedChapterIds])
+
+  useEffect(() => {
+    let fetchComments = [
+      {
+        'manga': {
+          'cover': '/mangaicon.jpg',
+          'title': 'Manga',
+        },
+        'content': 'Truyện hay!',
+        'timeCreated': '16:57 1/02/2023',
+      },
+      {
+        'manga': {
+          'cover': '/mangaicon.jpg',
+          'title': 'Manga',
+        },
+        'content': 'Truyện hay!',
+        'timeCreated': '16:57 1/02/2023',
+      },
+      {
+        'manga': {
+          'cover': '/mangaicon.jpg',
+          'title': 'Manga',
+        },
+        'content': 'Truyện hay!',
+        'timeCreated': '16:57 1/02/2023',
+      },
+      {
+        'manga': {
+          'cover': '/mangaicon.jpg',
+          'title': 'Manga',
+        },
+        'content': 'Truyện hay!',
+        'timeCreated': '16:57 1/02/2023',
+      },
+      {
+        'manga': {
+          'cover': '/mangaicon.jpg',
+          'title': 'Manga',
+        },
+        'content': 'Truyện hay!',
+        'timeCreated': '16:57 1/02/2023',
+      },
+    ]
+    setComments(fetchComments)
+  }, [commentIds])
+
+  useEffect(() => {
+    let fetchReports = [
+      {
+        'chapter': {
+          'cover': '/chaptericon.jpg',
+          'title': 'Chapter',
+        },
+        'content': 'Ảnh truyện bị lổi rồi',
+        'timeCreated': '16:57 1/02/2023',
+        'status': 0,
+      },
+      {
+        'chapter': {
+          'cover': '/chaptericon.jpg',
+          'title': 'Chapter',
+        },
+        'content': 'Ảnh truyện bị lổi rồi',
+        'timeCreated': '16:57 1/02/2023',
+        'status': 1,
+      },
+      {
+        'chapter': {
+          'cover': '/chaptericon.jpg',
+          'title': 'Chapter',
+        },
+        'content': 'Ảnh truyện bị lổi rồi',
+        'timeCreated': '16:57 1/02/2023',
+        'status': 1,
+      },
+    ]
+    setReports(fetchReports)
+  }, [reportIds])
+
+  const renderGender = () => {
+    switch (item.gender) {
+      case 1:
+        return (<p>Nữ</p>)
+      case 2:
+        return (<p>Không xác định</p>)
+      default:
+        return (<p>Nam</p>)
+    }
+  }
+
   return (
     <ShowAdminWrapper>
       <div>
         <h1>Id</h1>
-        <p>{userId}</p>
+        <p>{item.id}</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
@@ -31,11 +209,11 @@ function UserAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>email@email.com</p>
+        <p>{item.email}</p>
       </div>
       <div>
         <h1>Password</h1>
-        <p>$2a$14$TS7aakGm9DIBS2iUvWHNSe4xzh57oJfy34Y/nVnrTtF923bpcw09C</p>
+        <p>{item.password}</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
@@ -44,7 +222,7 @@ function UserAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>Người dùng</p>
+        <p>{item.role}</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
@@ -53,7 +231,7 @@ function UserAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>Tên hiển thị</p>
+        <p>{item.displayname}</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
@@ -62,7 +240,7 @@ function UserAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <img src='/defaultavatar.jpg' alt='user-avatar' />
+        <img className='user-admin-show-avatar' src={item.avatar} alt='user-avatar' />
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
@@ -71,7 +249,7 @@ function UserAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>Tên</p>
+        <p>{item.firstName}</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
@@ -80,7 +258,7 @@ function UserAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>Họ</p>
+        <p>{item.lastName}</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
@@ -89,67 +267,22 @@ function UserAdminShow() {
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>Nam</p>
+        <p>{renderGender()}</p>
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>FollowMangas</h1>
-          <IconButton >
-            <Edit sx={iconStyle} />
-          </IconButton>
         </div>
         <div className="admin-card-list-wrapper">
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
-          <FollowMangaCard 
-            cover='/mangaicon.jpg'
-            content='Manga'
-          />
+          {followMangas && followMangas.map(manga => (
+            <FollowMangaCard
+              cover={manga.cover}
+              content={manga.title}
+            />
+          ))}
         </div>
         <div className='admin-show-expand-wrapper'>
-          <a href="/admin/manga">{'Mở rộng >'}</a>
+          <a href={"/admin/manga?searchfield=followedUsers&searchvalue="+item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
       <div>
@@ -160,147 +293,54 @@ function UserAdminShow() {
           </IconButton>
         </div>
         <div className="admin-card-list-wrapper">
-          <OwnedChapterCard 
-            cover='/chaptericon.jpg'
-            content='Chapter'
-          />
-          <OwnedChapterCard 
-            cover='/chaptericon.jpg'
-            content='Chapter'
-          />
-          <OwnedChapterCard 
-            cover='/chaptericon.jpg'
-            content='Chapter'
-          />
-          <OwnedChapterCard 
-            cover='/chaptericon.jpg'
-            content='Chapter'
-          />
-          <OwnedChapterCard 
-            cover='/chaptericon.jpg'
-            content='Chapter'
-          />
-          <OwnedChapterCard 
-            cover='/chaptericon.jpg'
-            content='Chapter'
-          />
+          {
+            ownedChapters && ownedChapters.map(chapter => (
+              <OwnedChapterCard
+                cover={chapter.cover}
+                content={chapter.title}
+              />
+            ))
+          }
         </div>
         <div className='admin-show-expand-wrapper'>
-          <a href="/admin/chapter">{'Mở rộng >'}</a>
+          <a href={"/admin/chapter?searchfield=ownedUsers&searchvalue="+item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
       <div>
         <h1>Comments</h1>
         <div className="admin-card-list-wrapper">
-          <UserCommentCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Truyện hay!'
-            updateTime='16:57 1/02/2023'
-          />
-          <UserCommentCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Truyện hay!'
-            updateTime='16:57 1/02/2023'
-          />
-          <UserCommentCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Truyện hay!'
-            updateTime='16:57 1/02/2023'
-          />
-          <UserCommentCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Truyện hay!'
-            updateTime='16:57 1/02/2023'
-          />
-          <UserCommentCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Truyện hay!'
-            updateTime='16:57 1/02/2023'
-          />
-          <UserCommentCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Truyện hay!'
-            updateTime='16:57 1/02/2023'
-          />
-          <UserCommentCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Truyện hay!'
-            updateTime='16:57 1/02/2023'
-          />
+          {
+            comments && comments.map((comment) => (
+              <UserCommentCard
+                mangaCover={comment.manga.cover}
+                mangaTitle={comment.manga.title}
+                content={comment.content}
+                updateTime={comment.timeCreated}
+              />
+            ))
+          }
         </div>
         <div className='admin-show-expand-wrapper'>
-          <a href="/admin/comment">{'Mở rộng >'}</a>
+          <a href={"/admin/comment?searchfield=user&searchvalue="+item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
       <div>
         <h1>Reports</h1>
         <div className="admin-card-list-wrapper">
-          <UserReportCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Ảnh truyện bị lổi rồi'
-            updateTime='16:57 1/02/2023'
-            status={0}
-          />
-          <UserReportCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Ảnh truyện bị lổi rồi'
-            updateTime='16:57 1/02/2023'
-            status={0}
-          />
-          <UserReportCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Ảnh truyện bị lổi rồi'
-            updateTime='16:57 1/02/2023'
-            status={1}
-          />
-          <UserReportCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Ảnh truyện bị lổi rồi'
-            updateTime='16:57 1/02/2023'
-            status={1}
-          />
-          <UserReportCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Ảnh truyện bị lổi rồi'
-            updateTime='16:57 1/02/2023'
-            status={1}
-          />
-          <UserReportCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Ảnh truyện bị lổi rồi'
-            updateTime='16:57 1/02/2023'
-            status={1}
-          />
-          <UserReportCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Ảnh truyện bị lổi rồi'
-            updateTime='16:57 1/02/2023'
-            status={1}
-          />
-          <UserReportCard 
-            mangaCover='/mangaicon.jpg'
-            mangaTitle='Manga'
-            content='Ảnh truyện bị lổi rồi'
-            updateTime='16:57 1/02/2023'
-            status={1}
-          />
+          {
+            reports && reports.map((report) => (
+              <UserReportCard
+                chapterCover={report.chapter.cover}
+                chapterTitle={report.chapter.title}
+                content={report.content}
+                updateTime={report.timeCreated}
+                status={report.status}
+              />
+            ))
+          }
         </div>
         <div className='admin-show-expand-wrapper'>
-          <a href="/admin/report">{'Mở rộng >'}</a>
+          <a href={"/admin/report?searchfield=user&searchvalue="+item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
     </ShowAdminWrapper >

@@ -16,6 +16,7 @@ const gridItemStyle = {
 const ChapterAdminList = (props) => {
     const searchFieldList = [
         { key: "name", value: "Theo tên chương truyện" },
+        { key: "manga", value: "Theo ID bộ truyện" },
         { key: "ownedUsers", value: "Theo ID tài khoản sở hữu" },
     ]
     const sortFieldList = [
