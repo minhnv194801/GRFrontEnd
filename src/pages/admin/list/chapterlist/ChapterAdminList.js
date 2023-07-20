@@ -92,7 +92,7 @@ const ChapterAdminList = (props) => {
                 let totalItemCount = fetchItemCount.split('/')[1]
                 setPageCount(Math.ceil(parseInt(totalItemCount) / itemPerPage))
                 console.log(json)
-                // setItemList(json)
+                setItemList(json)
             }
         }
 
@@ -117,7 +117,7 @@ const ChapterAdminList = (props) => {
                     <Grid item xs={3} sx={gridItemStyle}>
                         <ChapterItemCard
                             cover={item.cover}
-                            content={item.name}
+                            content={item.title}
                             href={item.href} />
                     </Grid>
                 ))}

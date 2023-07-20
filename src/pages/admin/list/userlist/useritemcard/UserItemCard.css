@@ -19,6 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .admin-user-avatar {
@@ -39,6 +41,7 @@
 .admin-user-display-name {
     margin-left: 0;
     font-weight: bold;
+    max-width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

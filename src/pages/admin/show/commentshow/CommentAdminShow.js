@@ -64,6 +64,7 @@ function CommentAdminShow() {
         // convert data to json
         const json = await response.json()
         console.log(json)
+        json.id = mangaId
         setManga(json)
       }
     }
@@ -89,6 +90,7 @@ function CommentAdminShow() {
         // convert data to json
         const json = await response.json()
         console.log(json)
+        json.id = userId
         setUser(json)
       }
     }

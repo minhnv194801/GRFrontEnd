@@ -130,7 +130,7 @@ const ReportAdminList = (props) => {
                 let totalItemCount = fetchItemCount.split('/')[1]
                 setPageCount(Math.ceil(parseInt(totalItemCount) / itemPerPage))
                 console.log(json)
-                // setItemList(json)
+                setItemList(json)
             }
         }
 

@@ -46,6 +46,7 @@
 .comment-admin-user-wrapper {
     display: flex;
     flex-direction: row;
+    gap: 10px;
 }
 
 .comment-admin-user-wrapper:hover {

@@ -33,7 +33,7 @@ function ChapterAdminShow() {
   const [chapterId] = useState(params.id)
   const [item, setItem] = useState({})
   const [mangaId, setMangaId] = useState("")
-  const [manga, setManga] = useState([])
+  const [manga, setManga] = useState({})
   const [ownedUserIds, setOwnedUserIds] = useState(null)
   const [ownedUsers, setOwnedUsers] = useState([])
   const [reportIds, setReportIds] = useState(null)
@@ -93,6 +93,7 @@ function ChapterAdminShow() {
         // convert data to json
         const json = await response.json()
         console.log(json)
+        json.id = mangaId
         setManga(json)
       }
     }

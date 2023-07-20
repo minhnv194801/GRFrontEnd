@@ -96,7 +96,7 @@ const UserAdminList = (props) => {
                 let totalItemCount = fetchItemCount.split('/')[1]
                 setPageCount(Math.ceil(parseInt(totalItemCount) / itemPerPage))
                 console.log(json)
-                // setItemList(json)
+                setItemList(json)
             }
         }
 
@@ -121,7 +121,7 @@ const UserAdminList = (props) => {
                     <Grid item xs={4} sx={gridItemStyle}>
                         <UserItemCard
                             avatar={item.avatar}
-                            displayName={item.displayName}
+                            displayName={item.displayname}
                             email={item.email}
                             role={item.role}
                             href={item.href} />

@@ -76,7 +76,8 @@ function MangaAdminShow() {
         // convert data to json
         const json = await response.json();
         json.updateTime = timeConverter(json.updateTime)
-        // setItem(json)
+        console.log(json)
+        setItem(json)
         setFollowedUserIds(json.followedUsers)
         setChapterIds(json.chapters)
         setCommentIds(json.comments)
@@ -116,7 +117,7 @@ function MangaAdminShow() {
         }
         fetchedFollowedUsers[fetchedFollowedUsers.length] = await fetchUserReference(userId)
       }
-      // setFollowedUsers(fetchFollowedUsers)
+      setFollowedUsers(fetchedFollowedUsers)
     }
 
     if (followedUserIds !== null) {
@@ -151,7 +152,7 @@ function MangaAdminShow() {
         }
         fetchedChapters[fetchedChapters.length] = await fetchChapterReference(chapterId)
       }
-      // setChapters(fetchedChapters)
+      setChapters(fetchedChapters)
     }
 
     if (chapterIds !== null) {
@@ -186,7 +187,7 @@ function MangaAdminShow() {
         }
         fetchedComments[fetchedComments.length] = await fetchCommentReference(commentId)
       }
-      // setComments(fetchComments)
+      setComments(fetchedComments)
     }
     if (commentIds !== null) {
       fetchComments()
@@ -195,7 +196,7 @@ function MangaAdminShow() {
 
   const procEditName = (e) => {
     setIsEditName(!isEditName)
-    setEditedNameValue(item.title)
+    setEditedNameValue(item.name)
   }
 
   const procEditAlternateNames = (e) => {
@@ -303,7 +304,7 @@ function MangaAdminShow() {
     //POST to backend
     let newItem = {
       ...item,
-      'title': editedNameValue,
+      'name': editedNameValue,
     }
     console.log(newItem)
     setItem(newItem)
@@ -421,7 +422,7 @@ function MangaAdminShow() {
             </IconButton>
           </div>
           :
-          <p>{item.title}</p>}
+          <p>{item.name}</p>}
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
