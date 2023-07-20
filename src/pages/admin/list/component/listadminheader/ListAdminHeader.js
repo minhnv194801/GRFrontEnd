@@ -37,6 +37,10 @@ const ListAdminHeader = (props) => {
         window.location.href = getPathName()
     }
 
+    const handleSearchTextFieldChange = (e) => {
+        searchValue = e.target.value
+    }
+
     const handleSearchTextFieldSubmit = (e) => {
         if (e.keyCode === 13) {
             searchValue = e.target.value
@@ -71,6 +75,7 @@ const ListAdminHeader = (props) => {
                             sx={searchTextInputStyle}
                             placeholder="Filter"
                             defaultValue={searchValue}
+                            onChange={handleSearchTextFieldChange}
                             onKeyDown={handleSearchTextFieldSubmit}
                             startAdornment={
                                 <InputAdornment position="start">
