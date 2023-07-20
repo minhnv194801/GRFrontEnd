@@ -4,6 +4,7 @@ import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
 import './ReportAdminShow.css'
 import { Add, Check, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
 import { IconButton, TextField } from "@mui/material";
+import { timeConverter } from "../../../../common/Date";
 
 const iconStyle = {
   'color': '#0099FF',
@@ -22,44 +23,81 @@ function ReportAdminShow() {
   const [responseEditValue, setResponseEditValue] = useState('')
 
   useEffect(() => {
-    //fetch backend
-    let fetchItem = {
-      'id': reportId,
-      'content': 'Chương truyện bị lỗi',
-      'timeCreated': '16:57 1/02/2023',
-      'status': 0,
-      'response': '',
-      'chapter': '1',
-      'user': '1'
+    const fetchItem = async () => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/reports/' + reportId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+        json.timeCreated = timeConverter(json.timeCreated)
+        console.log(json)
+        setItem(json)
+        setChapterId(json.chapter)
+        setUserId(json.user)
+      } else {
+        window.location.href = '/admin/report'
+      }
     }
 
-    setItem(fetchItem)
-
-    setChapterId(fetchItem.chapter)
-    setUserId(fetchItem.user)
+    fetchItem()
   }, [])
 
   useEffect(() => {
-    //fetch backend
-    if (chapterId !== '') {
-      let fetchChapter = {
-        'id': '1',
-        'cover': '/chaptericon.jpg',
-        'title': 'Chapter'
+    const fetchChapterReference = async (chapterId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/chapters/reference/' + chapterId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json()
+        console.log(json)
+        json.id = chapterId
+        setChapter(json)
       }
-      setChapter(fetchChapter)
+    }
+
+    if (chapterId !== '') {
+      fetchChapterReference(chapterId)
     }
   }, [chapterId])
 
   useEffect(() => {
-    //fetch backend
-    if (userId !== '') {
-      let fetchUser = {
-        'id': '1',
-        'avatar': '/defaultavatar.jpg',
-        'displayname': 'Tên hiển thị'
+    const fetchUserReference = async (userId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/users/reference/' + userId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json()
+        console.log(json)
+        setUser(json)
       }
-      setUser(fetchUser)
+    }
+
+    if (userId !== '') {
+      fetchUserReference(userId)
     }
   }, [userId])
 

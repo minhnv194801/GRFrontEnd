@@ -8,21 +8,26 @@ import UserCommentCard from "./usercommentcard/UserCommentCard";
 import OwnedChapterCard from "./ownedchaptercard/OwnedChapterCard";
 import FollowMangaCard from "./followmangacard/FollowMangaCard";
 import UserReportCard from "./userreportcard/UserReportCard";
+import { timeConverter } from "../../../../common/Date";
 
 const iconStyle = {
   'color': '#0099FF',
 }
 
 function UserAdminShow() {
+  const MAX_MANGA_REFERENCE = 20
+  const MAX_CHAPTER_REFERENCE = 20
+  const MAX_COMMENT_REFERENCE = 20
+  const MAX_REPORT_REFERENCE = 20
   const params = useParams()
 
   const [userId] = useState(params.id)
 
   const [item, setItem] = useState({})
-  const [followMangaIds, setFollowMangaIds] = useState([])
-  const [ownedChapterIds, setOwnedChapterIds] = useState([])
-  const [commentIds, setCommentIds] = useState([])
-  const [reportIds, setReportIds] = useState([])
+  const [followMangaIds, setFollowMangaIds] = useState(null)
+  const [ownedChapterIds, setOwnedChapterIds] = useState(null)
+  const [commentIds, setCommentIds] = useState(null)
+  const [reportIds, setReportIds] = useState(null)
 
   const [followMangas, setFollowMangas] = useState([])
   const [ownedChapters, setOwnedChapters] = useState([])
@@ -47,142 +52,183 @@ function UserAdminShow() {
     }
 
     setItem(fetchItem)
-    setFollowMangaIds(fetchItem.followMangas)
-    setOwnedChapterIds(fetchItem.ownedChapters)
-    setCommentIds(fetchItem.comments)
-    setReportIds(fetchItem.reports)
   }, [])
 
   useEffect(() => {
-    let fetchMangas = [
-      {
-        'cover': '/mangaicon.jpg',
-        'title': 'Manga'
-      },
-      {
-        'cover': '/mangaicon.jpg',
-        'title': 'Manga'
-      },
-      {
-        'cover': '/mangaicon.jpg',
-        'title': 'Manga'
-      },
-      {
-        'cover': '/mangaicon.jpg',
-        'title': 'Manga'
-      },
-      {
-        'cover': '/mangaicon.jpg',
-        'title': 'Manga'
-      },
-    ]
-    setFollowMangas(fetchMangas)
+    const fetchItem = async () => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/users/' + userId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+        console.log(json)
+        setItem(json)
+        setFollowMangaIds(json.followMangas)
+        setOwnedChapterIds(json.ownedChapters)
+        setCommentIds(json.comments)
+        setReportIds(json.reports)
+      } else {
+        window.location.href = '/admin/user'
+      }
+    }
+
+    fetchItem()
+  }, [])
+
+  useEffect(() => {
+    const fetchMangaReference = async (mangaId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/mangas/reference/' + mangaId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+        return json
+      }
+    }
+
+    const fetchMangas = async () => {
+      let fetchedMangas = []
+      for (let [index, mangaId] of followMangaIds.entries()) {
+        if (index >= MAX_MANGA_REFERENCE) {
+          break
+        }
+        fetchedMangas[fetchedMangas.length] = await fetchMangaReference(mangaId)
+      }
+      setFollowMangas(fetchedMangas)
+    }
+
+    if (followMangaIds !== null) {
+      fetchMangas()
+    }
   }, [followMangaIds])
 
   useEffect(() => {
-    let fetchChapters = [
-      {
-        'cover': '/chaptericon.jpg',
-        'title': 'Chapter'
-      },
-      {
-        'cover': '/chaptericon.jpg',
-        'title': 'Chapter'
-      },
-      {
-        'cover': '/chaptericon.jpg',
-        'title': 'Chapter'
-      },
-      {
-        'cover': '/chaptericon.jpg',
-        'title': 'Chapter'
-      },
-      {
-        'cover': '/chaptericon.jpg',
-        'title': 'Chapter'
-      },
-    ]
+    const fetchChapterReference = async (chapterId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/chapters/reference/' + chapterId
 
-    setOwnedChapters(fetchChapters)
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+        return json
+      }
+    }
+
+    const fetchChapters = async () => {
+      let fetchedChapters = []
+      for (let [index, chapterId] of ownedChapterIds.entries()) {
+        if (index >= MAX_CHAPTER_REFERENCE) {
+          break
+        }
+        console.log(index)
+        console.log(chapterId)
+        fetchedChapters[fetchedChapters.length] = await fetchChapterReference(chapterId)
+      }
+      setOwnedChapters(fetchedChapters)
+    }
+
+    if (ownedChapterIds !== null) {
+      console.log()
+      fetchChapters()
+    }
   }, [ownedChapterIds])
 
   useEffect(() => {
-    let fetchComments = [
-      {
-        'manga': {
-          'cover': '/mangaicon.jpg',
-          'title': 'Manga',
-        },
-        'content': 'Truyện hay!',
-        'timeCreated': '16:57 1/02/2023',
-      },
-      {
-        'manga': {
-          'cover': '/mangaicon.jpg',
-          'title': 'Manga',
-        },
-        'content': 'Truyện hay!',
-        'timeCreated': '16:57 1/02/2023',
-      },
-      {
-        'manga': {
-          'cover': '/mangaicon.jpg',
-          'title': 'Manga',
-        },
-        'content': 'Truyện hay!',
-        'timeCreated': '16:57 1/02/2023',
-      },
-      {
-        'manga': {
-          'cover': '/mangaicon.jpg',
-          'title': 'Manga',
-        },
-        'content': 'Truyện hay!',
-        'timeCreated': '16:57 1/02/2023',
-      },
-      {
-        'manga': {
-          'cover': '/mangaicon.jpg',
-          'title': 'Manga',
-        },
-        'content': 'Truyện hay!',
-        'timeCreated': '16:57 1/02/2023',
-      },
-    ]
-    setComments(fetchComments)
+    const fetchCommentReference = async (commentId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/comments/reference/' + commentId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+        return json
+      }
+    }
+
+    const fetchComments = async () => {
+      let fetchedComments = []
+      for (let [index, commentId] of commentIds.entries()) {
+        if (index >= MAX_COMMENT_REFERENCE) {
+          break
+        }
+        let comment = await fetchCommentReference(commentId)
+        comment.timeCreated = timeConverter(comment.timeCreated)
+        fetchedComments[fetchedComments.length] = comment
+      }
+      setComments(fetchedComments)
+    }
+
+    if (commentIds !== null) {
+      fetchComments()
+    }
   }, [commentIds])
 
   useEffect(() => {
-    let fetchReports = [
-      {
-        'chapter': {
-          'cover': '/chaptericon.jpg',
-          'title': 'Chapter',
-        },
-        'content': 'Ảnh truyện bị lổi rồi',
-        'timeCreated': '16:57 1/02/2023',
-        'status': 0,
-      },
-      {
-        'chapter': {
-          'cover': '/chaptericon.jpg',
-          'title': 'Chapter',
-        },
-        'content': 'Ảnh truyện bị lổi rồi',
-        'timeCreated': '16:57 1/02/2023',
-        'status': 1,
-      },
-      {
-        'chapter': {
-          'cover': '/chaptericon.jpg',
-          'title': 'Chapter',
-        },
-        'content': 'Ảnh truyện bị lổi rồi',
-        'timeCreated': '16:57 1/02/2023',
-        'status': 1,
-      },
-    ]
-    setReports(fetchReports)
+    const fetchReportReference = async (reportId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/reports/reference/' + reportId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+        return json
+      }
+    }
+
+    const fetchReports = async () => {
+      let fetchedReports = []
+      for (let [index, reportId] of reportIds.entries()) {
+        if (index >= MAX_REPORT_REFERENCE) {
+          break
+        }
+        let report = await fetchReportReference(reportId)
+        report.timeCreated = timeConverter(report.timeCreated)
+        fetchedReports[fetchedReports.length] = report
+      }
+      console.log(fetchedReports)
+      setReports(fetchedReports)
+    }
+
+    if (reportIds !== null) {
+      fetchReports()
+    }
   }, [reportIds])
 
   const renderGender = () => {
@@ -197,7 +243,7 @@ function UserAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper>
+    <ShowAdminWrapper deleteAPIUrl={'http://localhost:8081/api/v1/admin/users/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>
@@ -282,7 +328,7 @@ function UserAdminShow() {
           ))}
         </div>
         <div className='admin-show-expand-wrapper'>
-          <a href={"/admin/manga?searchfield=followedUsers&searchvalue="+item.id}>{'Mở rộng >'}</a>
+          <a href={"/admin/manga?searchfield=followedUsers&searchvalue=" + item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
       <div>
@@ -303,7 +349,7 @@ function UserAdminShow() {
           }
         </div>
         <div className='admin-show-expand-wrapper'>
-          <a href={"/admin/chapter?searchfield=ownedUsers&searchvalue="+item.id}>{'Mở rộng >'}</a>
+          <a href={"/admin/chapter?searchfield=ownedUsers&searchvalue=" + item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
       <div>
@@ -312,8 +358,8 @@ function UserAdminShow() {
           {
             comments && comments.map((comment) => (
               <UserCommentCard
-                mangaCover={comment.manga.cover}
-                mangaTitle={comment.manga.title}
+                mangaCover={comment.manga && comment.manga.cover}
+                mangaTitle={comment.manga && comment.manga.title}
                 content={comment.content}
                 updateTime={comment.timeCreated}
               />
@@ -321,7 +367,7 @@ function UserAdminShow() {
           }
         </div>
         <div className='admin-show-expand-wrapper'>
-          <a href={"/admin/comment?searchfield=user&searchvalue="+item.id}>{'Mở rộng >'}</a>
+          <a href={"/admin/comment?searchfield=user&searchvalue=" + item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
       <div>
@@ -330,8 +376,8 @@ function UserAdminShow() {
           {
             reports && reports.map((report) => (
               <UserReportCard
-                chapterCover={report.chapter.cover}
-                chapterTitle={report.chapter.title}
+                chapterCover={report.chapter && report.chapter.cover}
+                chapterTitle={report.chapter && report.chapter.title}
                 content={report.content}
                 updateTime={report.timeCreated}
                 status={report.status}
@@ -340,7 +386,7 @@ function UserAdminShow() {
           }
         </div>
         <div className='admin-show-expand-wrapper'>
-          <a href={"/admin/report?searchfield=user&searchvalue="+item.id}>{'Mở rộng >'}</a>
+          <a href={"/admin/report?searchfield=user&searchvalue=" + item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
     </ShowAdminWrapper >

@@ -2,110 +2,251 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
 import './ChapterAdminShow.css'
-import { Add, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
-import { IconButton } from "@mui/material";
+import { Add, Check, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
+import { IconButton, TextField, TextareaAutosize } from "@mui/material";
 import OwnedUserCard from "./ownedusercard/OwnedUserCard";
 import ChapterReportCard from "./chapterreportcard/ChapterReportCard";
+import { timeConverter } from "../../../../common/Date";
 
 const iconStyle = {
   'color': '#0099FF',
 }
 
+const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      resolve(reader.result);
+    };
+    reader.onerror = function (error) {
+      reject(error)
+    };
+  })
+}
+
 function ChapterAdminShow() {
+  const MAX_USER_REFERENCE = 20
+  const MAX_REPORT_REFERENCE = 20
   const params = useParams()
 
   const [chapterId] = useState(params.id)
   const [item, setItem] = useState({})
   const [mangaId, setMangaId] = useState("")
   const [manga, setManga] = useState([])
-  const [ownedUserIds, setOwnedUserIds] = useState([])
+  const [ownedUserIds, setOwnedUserIds] = useState(null)
   const [ownedUsers, setOwnedUsers] = useState([])
-  const [reportIds, setReportIds] = useState([])
+  const [reportIds, setReportIds] = useState(null)
   const [reports, setReports] = useState([])
 
+  const [isEditName, setIsEditName] = useState(false)
+  const [isEditCover, setIsEditCover] = useState(false)
+  const [isEditPrice, setIsEditPrice] = useState(false)
+  const [isEditImages, setIsEditImages] = useState(false)
+
+  const [editedNameValue, setEditedNameValue] = useState("")
+  const [editedCoverValue, setEditedCoverValue] = useState("")
+  const [editedPriceValue, setEditedPriceValue] = useState("")
+  const [editedImagesValue, setEditedImagesValue] = useState([])
+
   useEffect(() => {
-    let fetchItem = {
-      'id': params.id,
-      'manga': '1',
-      'title': 'Chapter',
-      'cover': '/chaptericon.jpg',
-      'price': 5000,
-      'updateTime': '16:57 1/02/2023',
-      'images': ['/chaptericon.jpg', '/chaptericon.jpg', '/chaptericon.jpg', '/chaptericon.jpg', '/chaptericon.jpg'],
-      'ownedUsers': ['1'],
-      'reports': ['1']
+    const fetchItem = async () => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/chapters/' + chapterId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+        json.updateTime = timeConverter(json.updateTime)
+        setItem(json)
+        setMangaId(json.manga)
+        setOwnedUserIds(json.ownedUsers)
+        setReportIds(json.reports)
+      } else {
+        window.location.href = '/admin/chapter'
+      }
     }
 
-    setItem(fetchItem)
-    setMangaId(fetchItem.manga)
-    setOwnedUserIds(fetchItem.ownedUsers)
-    setReportIds(fetchItem.reports)
+    fetchItem()
   }, [])
 
   useEffect(() => {
-    if (mangaId !== '') {
-      let fetchManga = {
-        'id': '1',
-        'cover': '/mangaicon.jpg',
-        'title': 'Manga'
+    const fetchMangaReference = async (mangaId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/mangas/reference/' + mangaId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json()
+        console.log(json)
+        setManga(json)
       }
-      setManga(fetchManga)
+    }
+
+    if (mangaId !== '') {
+      fetchMangaReference(mangaId)
     }
   }, [mangaId])
 
   useEffect(() => {
-    if (ownedUserIds.length !== 0) {
-      let fetchOwnedUsers = [
-        {
-          'avatar': '/defaultavatar.jpg',
-          'displayname': 'Tên hiển thị',
-        },
-        {
-          'avatar': '/defaultavatar.jpg',
-          'displayname': 'Tên hiển thị',
-        },
-        {
-          'avatar': '/defaultavatar.jpg',
-          'displayname': 'Tên hiển thị',
-        },
-        {
-          'avatar': '/defaultavatar.jpg',
-          'displayname': 'Tên hiển thị',
-        },
-        {
-          'avatar': '/defaultavatar.jpg',
-          'displayname': 'Tên hiển thị',
-        },
-      ]
-      setOwnedUsers(fetchOwnedUsers)
+    const fetchUserReference = async (userId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/users/reference/' + userId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json()
+        console.log(json)
+        return json
+      }
+    }
+
+    const fetchOwnedUsers = async () => {
+      let fetchedOwnedUsers = []
+      for (var [index, userId] in ownedUserIds.entries()) {
+        if (index >= MAX_USER_REFERENCE) {
+          break
+        }
+        fetchedOwnedUsers[fetchedOwnedUsers.length] = await fetchUserReference(userId)
+      }
+      setOwnedUsers(fetchedOwnedUsers)
+    }
+
+    if (ownedUserIds !== null) {
+      fetchOwnedUsers()
     }
   }, [ownedUserIds])
 
   useEffect(() => {
-    if (reportIds.length !== 0) {
-      let fetchReports = [
-        {
-          'user': {
-            'avatar': '/defaultavatar.jpg',
-            'displayname': 'Tên hiển thị'
-          },
-          'content': 'Ảnh chương truyện bị lỗi',
-          'createdTime': '16:57 1/02/2023',
-          'status': 0,
-        },
-        {
-          'user': {
-            'avatar': '/defaultavatar.jpg',
-            'displayname': 'Tên hiển thị'
-          },
-          'content': 'Chương truyện bị lỗi',
-          'createdTime': '16:57 1/02/2023',
-          'status': 1,
-        },
-      ]
-      setReports(fetchReports)
+    const fetchReportReference = async (reportId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/reports/reference/' + reportId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+        return json
+      }
+    }
+
+    const fetchReports = async () => {
+      let fetchedReports = []
+      for (let [index, reportId] of reportIds.entries()) {
+        if (index >= MAX_REPORT_REFERENCE) {
+          break
+        }
+        fetchedReports[fetchedReports.length] = await fetchReportReference(reportId)
+      }
+      setReports(fetchedReports)
+    }
+    if (reportIds !== null) {
+      fetchReports()
     }
   }, [reportIds])
+
+  const procEditName = (e) => {
+    setIsEditName(!isEditName)
+    setEditedNameValue(item.title)
+  }
+
+  const openEditCover = (e) => {
+    setIsEditCover(true)
+    if (editedCoverValue === '') {
+      setEditedCoverValue(item.cover)
+    }
+  }
+
+  const closeEditCover = (e) => {
+    setIsEditCover(false)
+    setEditedCoverValue('')
+  }
+
+  const procEditPrice = (e) => {
+    setIsEditPrice(!isEditPrice)
+    setEditedPriceValue(item.price)
+  }
+
+  const handleChangeEditName = (e) => {
+    setEditedNameValue(e.target.value)
+  }
+
+  const handleChangeEditPrice = (e) => {
+    setEditedPriceValue(e.target.value)
+  }
+
+  const submitEditedName = (e) => {
+    //POST to backend
+    let newItem = {
+      ...item,
+      'title': editedNameValue,
+    }
+    console.log(newItem)
+    setItem(newItem)
+    procEditName()
+  }
+
+  const submitEditedCover = (e) => {
+    //POST to backend
+    let newItem = {
+      ...item,
+      'cover': editedCoverValue,
+    }
+    console.log(newItem)
+    setItem(newItem)
+    closeEditCover()
+  }
+
+  const submitEditedPrice = (e) => {
+    //POST to backend
+    let newItem = {
+      ...item,
+      'price': editedPriceValue,
+    }
+    console.log(newItem)
+    setItem(newItem)
+    procEditPrice()
+  }
+
+  const cancelEditCover = (e) => {
+    closeEditCover()
+  }
+
+  const onCoverChange = (e) => {
+    const file = e.target?.files?.[0];
+    if (file) {
+      getBase64(file).then((base64) => {
+        setEditedCoverValue(base64)
+      });
+    }
+  }
 
   return (
     <ShowAdminWrapper>
@@ -127,29 +268,69 @@ function ChapterAdminShow() {
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Title</h1>
-          <IconButton >
+          <IconButton onClick={procEditName}>
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>{item.title}</p>
+        {isEditName ?
+          <div className='flex-edit-admin-textfield'>
+            <TextField defaultValue={editedNameValue} onChange={handleChangeEditName} />
+            <IconButton onClick={submitEditedName}>
+              <Check sx={iconStyle} />
+            </IconButton>
+          </div>
+          :
+          <p>{item.title}</p>}
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Cover</h1>
-          <IconButton >
-            <Edit sx={iconStyle} />
-          </IconButton>
+          <input
+            id='cover-file-input'
+            hidden
+            onChange={onCoverChange}
+            type="file"
+            accept="image/png,image/jpeg,image/gif"
+          />
+          <label htmlFor="cover-file-input">
+            <IconButton onClick={openEditCover} component='span'>
+              <Edit sx={iconStyle} />
+            </IconButton>
+          </label>
         </div>
-        <img className='admin-chapter-cover' src={item.cover} alt='chapter-cover' />
+        {isEditCover ?
+          <>
+            <div className='manga-admin-show-editable-wrapper'>
+              <img className='admin-chapter-cover' src={editedCoverValue} alt='manga-cover' />
+            </div>
+            <IconButton onClick={cancelEditCover}>
+              <Clear sx={iconStyle} />
+            </IconButton>
+            <IconButton onClick={submitEditedCover}>
+              <Check sx={iconStyle} />
+            </IconButton>
+          </>
+          :
+          <img className='admin-chapter-cover' src={item.cover} alt='manga-cover' />
+        }
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Price</h1>
-          <IconButton >
+          <IconButton onClick={procEditPrice}>
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>{item.price + ' VND'}</p>
+        {isEditPrice ?
+          <div className='flex-edit-admin-textfield'>
+            <TextField type='number' defaultValue={editedPriceValue} onChange={handleChangeEditPrice} />
+            <p style={{ marginTop: 'auto' }}>VND</p>
+            <IconButton onClick={submitEditedPrice}>
+              <Check sx={iconStyle} />
+            </IconButton>
+          </div>
+          :
+          <p>{item.price + ' VND'}</p>}
       </div>
       <div>
         <h1>UpdateTime</h1>
@@ -180,7 +361,7 @@ function ChapterAdminShow() {
             }
           </div>
           <div className='admin-show-expand-wrapper'>
-            <a href={"/admin/user?searchfield=ownedChapters&searchvalue="+item.id}>{'Mở rộng >'}</a>
+            <a href={"/admin/user?searchfield=ownedChapters&searchvalue=" + item.id}>{'Mở rộng >'}</a>
           </div>
         </div>
         <div>
@@ -199,7 +380,7 @@ function ChapterAdminShow() {
             }
           </div>
           <div className='admin-show-expand-wrapper'>
-            <a href={"/admin/report?searchfield=chapter&searchvalue="+item.id}>{'Mở rộng >'}</a>
+            <a href={"/admin/report?searchfield=chapter&searchvalue=" + item.id}>{'Mở rộng >'}</a>
           </div>
         </div>
       </div>

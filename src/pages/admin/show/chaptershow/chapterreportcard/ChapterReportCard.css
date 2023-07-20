@@ -20,12 +20,20 @@
     min-width: 20vw;
 }
 
-.chapter-report-card-user-wrapper {
+.chapter-unfinished-report-card-user-wrapper {
     display: flex;
     align-items: flex-end;
     flex-direction: row;
     gap: 10px;
-    border-bottom: 1px solid #0099ff;
+    border-bottom: 1px solid #ff0000;
+}
+
+.chapter-finished-report-card-user-wrapper {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    gap: 10px;
+    border-bottom: 1px solid #00ff00;
 }
 
 .chapter-report-card-avatar {

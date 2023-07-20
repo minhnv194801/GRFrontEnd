@@ -30,3 +30,7 @@
 .show-admin-wrapper h1 {
     font-weight: bold;
 }
+
+.show-admin-wrapper p {
+    max-width: 95%;
+}

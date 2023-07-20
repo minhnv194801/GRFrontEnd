@@ -46,6 +46,7 @@
 .report-admin-user-wrapper {
     display: flex;
     flex-direction: row;
+    gap: 10px;
 }
 
 .report-admin-user-wrapper:hover {

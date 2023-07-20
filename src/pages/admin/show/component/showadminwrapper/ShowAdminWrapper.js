@@ -17,10 +17,21 @@ const deleteBtnStyle = {
 
 //TODO: connect to backend
 const ShowAdminWrapper = (props) => {
+    const handleDelete = (e) => {
+        fetch(props.deleteAPIUrl, {
+            method: 'DELETE',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        window.location.reload(false)
+    }
+
     return (
         <div>
             <div className='show-admin-header-wrapper'>
-                <Button startIcon={<Delete sx={deleteIconStyle} />} sx={deleteBtnStyle}>
+                <Button startIcon={<Delete sx={deleteIconStyle} />} sx={deleteBtnStyle} onClick={handleDelete}>
                     DELETE
                 </Button>
             </div>

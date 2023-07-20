@@ -3,3 +3,9 @@
     background-color: #FAFAFB;
     min-height: 95vh;
 }
+
+.flex-edit-admin-textfield {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

@@ -4,6 +4,7 @@ import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
 import './CommentAdminShow.css'
 import { Add, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
 import { IconButton } from "@mui/material";
+import { timeConverter } from "../../../../common/Date";
 
 const iconStyle = {
   'color': '#0099FF',
@@ -20,41 +21,80 @@ function CommentAdminShow() {
   const [user, setUser] = useState({})
 
   useEffect(() => {
-    let fetchItem = {
-      'id': commentId,
-      'content': 'Truyện đáng mua!',
-      'timeCreated': '16:57 1/02/2023',
-      'manga': '1',
-      'user': '1'
+    const fetchItem = async () => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/comments/' + commentId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json();
+        json.timeCreated = timeConverter(json.timeCreated)
+        console.log(json)
+        setItem(json)
+        setMangaId(json.manga)
+        setUserId(json.user)
+      } else {
+        window.location.href = '/admin/comment'
+      }
     }
 
-    setItem(fetchItem)
-
-    setMangaId(fetchItem.chapter)
-    setUserId(fetchItem.user)
+    fetchItem()
   }, [])
 
   useEffect(() => {
-    //fetch backend
-    if (mangaId !== '') {
-      let fetchManga = {
-        'id': '1',
-        'cover': '/mangaicon.jpg',
-        'title': 'Manga'
+    const fetchMangaReference = async (mangaId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/mangas/reference/' + mangaId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json()
+        console.log(json)
+        setManga(json)
       }
-      setManga(fetchManga)
+    }
+
+    if (mangaId !== '') {
+      fetchMangaReference(mangaId)
     }
   }, [mangaId])
 
   useEffect(() => {
-    //fetch backend
-    if (userId !== '') {
-      let fetchUser = {
-        'id': '1',
-        'avatar': '/defaultavatar.jpg',
-        'displayname': 'Tên hiển thị'
+    const fetchUserReference = async (userId) => {
+      let apiUrl = 'http://localhost:8081/api/v1/admin/users/reference/' + userId
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (response.ok) {
+        // convert data to json
+        const json = await response.json()
+        console.log(json)
+        setUser(json)
       }
-      setUser(fetchUser)
+    }
+
+    if (userId !== '') {
+      fetchUserReference(userId)
     }
   }, [userId])
 
