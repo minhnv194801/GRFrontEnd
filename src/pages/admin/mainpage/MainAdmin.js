@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AccountCircle, Comment, Report } from '@mui/icons-material';
 import MainAdminItemCard from './component/MainAdminItemCard';
 import './MainAdmin.css';
+import { useSelector } from 'react-redux';
 
 const iconStyle = {
     'height': '150px',
@@ -15,6 +16,7 @@ const MainAdmin = (props) => {
     const [chapterCount, setChapterCount] = useState("")
     const [reportCount, setReportCount] = useState("")
     const [commentCount, setCommentCount] = useState("")
+    const sessionkey = useSelector((state) => state.app.sessionkey)
 
     useEffect(() => {
         const fetchUserCount = async () => {
@@ -22,6 +24,7 @@ const MainAdmin = (props) => {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
+                    'Authorization': sessionkey,
                     'Content-Type': 'application/json',
                 }
             });
@@ -39,6 +42,7 @@ const MainAdmin = (props) => {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
+                    'Authorization': sessionkey,
                     'Content-Type': 'application/json',
                 }
             });
@@ -56,6 +60,7 @@ const MainAdmin = (props) => {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
+                    'Authorization': sessionkey,
                     'Content-Type': 'application/json',
                 }
             });
@@ -73,6 +78,7 @@ const MainAdmin = (props) => {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
+                    'Authorization': sessionkey,
                     'Content-Type': 'application/json',
                 }
             });
@@ -90,6 +96,7 @@ const MainAdmin = (props) => {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
+                    'Authorization': sessionkey,
                     'Content-Type': 'application/json',
                 }
             });

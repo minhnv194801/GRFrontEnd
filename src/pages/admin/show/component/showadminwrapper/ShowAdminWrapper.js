@@ -3,6 +3,7 @@ import './ShowAdminWrapper.css';
 import { Delete } from '@mui/icons-material';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const deleteIconStyle = {
     'width': '50px',
@@ -19,6 +20,7 @@ const deleteBtnStyle = {
 //TODO: connect to backend
 const ShowAdminWrapper = (props) => {
     const [openAlert, setOpenAlert] = useState(false)
+    const sessionkey = useSelector((state) => state.app.sessionkey)
 
     const handleOpenDialog = () => {
         setOpenAlert(true);
@@ -33,6 +35,7 @@ const ShowAdminWrapper = (props) => {
             method: 'DELETE',
             credentials: 'same-origin',
             headers: {
+                'Authorization': sessionkey,
                 'Content-Type': 'application/json',
             }
         })

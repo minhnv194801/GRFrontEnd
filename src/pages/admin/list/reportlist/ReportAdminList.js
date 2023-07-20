@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import ReportItemCard from './reportitemcard/ReportItemCard';
 import { useSearchParams } from 'react-router-dom';
 import { timeConverter } from '../../../../common/Date';
+import { useSelector } from 'react-redux';
 
 const gridItemStyle = {
     'display': 'flex',
@@ -33,6 +34,7 @@ const ReportAdminList = (props) => {
     const [paginateSelectorList, setPaginateSelectorList] = useState([])
     const [itemList, setItemList] = useState([])
     const [searchParams] = useSearchParams()
+    const sessionkey = useSelector((state) => state.app.sessionkey)
 
     var searchField = searchParams.get('searchfield') ? searchParams.get('searchfield') : ''
     var searchValue = searchParams.get('searchvalue') ? searchParams.get('searchvalue') : ''
@@ -48,6 +50,7 @@ const ReportAdminList = (props) => {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
+                    'Authorization': sessionkey,
                     'Content-Type': 'application/json',
                 }
             });
@@ -66,6 +69,7 @@ const ReportAdminList = (props) => {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
+                    'Authorization': sessionkey,
                     'Content-Type': 'application/json',
                 }
             });
@@ -112,6 +116,7 @@ const ReportAdminList = (props) => {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
+                    'Authorization': sessionkey,
                     'Content-Type': 'application/json',
                 }
             });

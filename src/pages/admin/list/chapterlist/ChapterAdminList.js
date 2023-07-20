@@ -6,6 +6,7 @@ import ListAdminHeader from '../component/listadminheader/ListAdminHeader';
 import { useEffect } from 'react';
 import ChapterItemCard from './chapteritemcard/ChapterItemCard';
 import { useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const gridItemStyle = {
     'display': 'flex',
@@ -34,6 +35,7 @@ const ChapterAdminList = (props) => {
     const [paginateSelectorList, setPaginateSelectorList] = useState([])
     const [itemList, setItemList] = useState([])
     const [searchParams] = useSearchParams()
+    const sessionkey = useSelector((state) => state.app.sessionkey)
 
     var searchField = searchParams.get('searchfield') ? searchParams.get('searchfield') : ''
     var searchValue = searchParams.get('searchvalue') ? searchParams.get('searchvalue') : ''
@@ -77,6 +79,7 @@ const ChapterAdminList = (props) => {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
+                    'Authorization': sessionkey,
                     'Content-Type': 'application/json',
                 }
             });

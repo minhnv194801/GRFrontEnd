@@ -5,6 +5,7 @@ import './CommentAdminShow.css'
 import { Add, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
 import { IconButton } from "@mui/material";
 import { timeConverter } from "../../../../common/Date";
+import { useSelector } from "react-redux";
 
 const iconStyle = {
   'color': '#0099FF',
@@ -12,6 +13,7 @@ const iconStyle = {
 
 function CommentAdminShow() {
   const params = useParams()
+  const sessionkey = useSelector((state) => state.app.sessionkey)
 
   const [commentId] = useState(params.id)
   const [item, setItem] = useState({})
@@ -28,6 +30,7 @@ function CommentAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -56,6 +59,7 @@ function CommentAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -82,6 +86,7 @@ function CommentAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });

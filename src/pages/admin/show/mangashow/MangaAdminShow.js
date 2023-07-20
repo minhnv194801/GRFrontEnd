@@ -9,6 +9,7 @@ import MangaCommentCard from "./mangacommentcard/MangaCommentCard";
 import { IconButton, TextField } from "@mui/material";
 import CONFIG from "../../../../common/Config"
 import { timeConverter } from "../../../../common/Date";
+import { useSelector } from "react-redux";
 
 const iconStyle = {
   'color': '#0099FF',
@@ -32,6 +33,7 @@ function MangaAdminShow() {
   const MAX_CHAPTER_REFERENCE = 20
   const MAX_COMMENT_REFERENCE = 20
   const params = useParams()
+  const sessionkey = useSelector((state) => state.app.sessionkey)
 
   const [mangaId] = useState(params.id)
   const [item, setItem] = useState({})
@@ -68,6 +70,7 @@ function MangaAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -97,6 +100,7 @@ function MangaAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -133,6 +137,7 @@ function MangaAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -168,6 +173,7 @@ function MangaAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });

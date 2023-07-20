@@ -9,6 +9,7 @@ import OwnedChapterCard from "./ownedchaptercard/OwnedChapterCard";
 import FollowMangaCard from "./followmangacard/FollowMangaCard";
 import UserReportCard from "./userreportcard/UserReportCard";
 import { timeConverter } from "../../../../common/Date";
+import { useSelector } from "react-redux";
 
 const iconStyle = {
   'color': '#0099FF',
@@ -20,6 +21,7 @@ function UserAdminShow() {
   const MAX_COMMENT_REFERENCE = 20
   const MAX_REPORT_REFERENCE = 20
   const params = useParams()
+  const sessionkey = useSelector((state) => state.app.sessionkey)
 
   const [userId] = useState(params.id)
 
@@ -62,6 +64,7 @@ function UserAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -91,6 +94,7 @@ function UserAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -126,6 +130,7 @@ function UserAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -164,6 +169,7 @@ function UserAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -201,6 +207,7 @@ function UserAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -334,9 +341,6 @@ function UserAdminShow() {
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>OwnedChapters</h1>
-          <IconButton >
-            <Edit sx={iconStyle} />
-          </IconButton>
         </div>
         <div className="admin-card-list-wrapper">
           {

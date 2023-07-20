@@ -7,6 +7,7 @@ import { IconButton, TextField, TextareaAutosize } from "@mui/material";
 import OwnedUserCard from "./ownedusercard/OwnedUserCard";
 import ChapterReportCard from "./chapterreportcard/ChapterReportCard";
 import { timeConverter } from "../../../../common/Date";
+import { useSelector } from "react-redux";
 
 const iconStyle = {
   'color': '#0099FF',
@@ -29,6 +30,7 @@ function ChapterAdminShow() {
   const MAX_USER_REFERENCE = 20
   const MAX_REPORT_REFERENCE = 20
   const params = useParams()
+  const sessionkey = useSelector((state) => state.app.sessionkey)
 
   const [chapterId] = useState(params.id)
   const [item, setItem] = useState({})
@@ -57,6 +59,7 @@ function ChapterAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -85,6 +88,7 @@ function ChapterAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -111,6 +115,7 @@ function ChapterAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
@@ -147,6 +152,7 @@ function ChapterAdminShow() {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
+          'Authorization': sessionkey,
           'Content-Type': 'application/json',
         }
       });
