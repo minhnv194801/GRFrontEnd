@@ -195,12 +195,23 @@ function ChapterAdminShow() {
     setEditedPriceValue(item.price)
   }
 
+  const procEditImages = (e) => {
+    setIsEditImages(!isEditImages)
+    setEditedImagesValue(item.images?item.images:[])
+  }
+
   const handleChangeEditName = (e) => {
     setEditedNameValue(e.target.value)
   }
 
   const handleChangeEditPrice = (e) => {
     setEditedPriceValue(e.target.value)
+  }
+
+  const handleChangeImages = (value, index) => {
+    let newEditedImages = [...editedImagesValue]
+    newEditedImages[index] = value
+    setEditedImagesValue(newEditedImages)
   }
 
   const submitEditedName = (e) => {
@@ -234,6 +245,34 @@ function ChapterAdminShow() {
     console.log(newItem)
     setItem(newItem)
     procEditPrice()
+  }
+
+  const submitEditedImages = (e) => {
+    //POST to backend
+    let newItem = {
+      ...item,
+      'images': editedImagesValue,
+    }
+    console.log(newItem)
+    setItem(newItem)
+    procEditImages()
+  }
+
+  const removeEditedImage = (index) => {
+    let newEditedImages = [...editedImagesValue]
+    newEditedImages.splice(index, 1)
+    setEditedImagesValue(newEditedImages)
+  }
+
+  const addEditedImage = (e) => {
+    const file = e.target?.files?.[0];
+    if (file) {
+      getBase64(file).then((base64) => {
+        let newEditedImages = [...editedImagesValue]
+        newEditedImages[newEditedImages.length] = base64
+        setEditedImagesValue(newEditedImages)
+      });
+    }
   }
 
   const cancelEditCover = (e) => {
@@ -340,49 +379,95 @@ function ChapterAdminShow() {
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Images</h1>
-          <IconButton >
+          <IconButton onClick={procEditImages}>
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <div className='chapter-admin-pages-wrapper'>
-          {item.images && item.images.map(image => (
-            <img className='chapter-admin-pages' src={image} alt='chapter-page' />
-          ))}
+        {
+          isEditImages ?
+            <div
+              style={{
+                'display': 'flex',
+                'flexDirection': 'column',
+                'gap': '30px',
+                'maxWidth': '200px'
+              }}>
+              {
+                editedImagesValue.map((editedImage, index) => (
+                  <div className="manga-admin-show-editable-wrapper">
+                    <TextField
+                      value={editedImage}
+                      onChange={(e) => handleChangeImages(e.target.value, index)}
+                      sx={{ minWidth: '30vw' }}
+                    />
+                    <img className='chapter-admin-pages' src={editedImage} alt='' onerror="this.src='/imagenotfound.png';"/>
+                    <IconButton onClick={(e) => removeEditedImage(index)}>
+                      <Clear sx={iconStyle} />
+                    </IconButton>
+                  </div>
+                ))
+              }
+              <input
+                id='page-image-file-input'
+                hidden
+                onChange={addEditedImage}
+                type="file"
+                accept="image/png,image/jpeg,image/gif"
+              />
+              <label htmlFor="page-image-file-input">
+                <IconButton component='span'>
+                  <Add sx={iconStyle} />
+                </IconButton>
+              </label>
+              <IconButton onClick={submitEditedImages}>
+                <Check sx={iconStyle} />
+              </IconButton>
+            </div>
+            :
+            <>
+              {
+                <div className='chapter-admin-pages-wrapper'>
+                  {item.images && item.images.map(image => (
+                    <img className='chapter-admin-pages' src={image} alt='chapter-page' />
+                  ))}
+                </div>
+              }
+            </>
+        }
+      </div>
+      <div>
+        <h1>OwnedUsers</h1>
+        <div className='admin-card-list-wrapper'>
+          {
+            ownedUsers && ownedUsers.map(user => (
+              <OwnedUserCard
+                avatar={user.avatar}
+                displayname={user.displayname}
+              />
+            ))
+          }
         </div>
-        <div>
-          <h1>OwnedUsers</h1>
-          <div className='admin-card-list-wrapper'>
-            {
-              ownedUsers && ownedUsers.map(user => (
-                <OwnedUserCard
-                  avatar={user.avatar}
-                  displayname={user.displayname}
-                />
-              ))
-            }
-          </div>
-          <div className='admin-show-expand-wrapper'>
-            <a href={"/admin/user?searchfield=ownedChapters&searchvalue=" + item.id}>{'Mở rộng >'}</a>
-          </div>
+        <div className='admin-show-expand-wrapper'>
+          <a href={"/admin/user?searchfield=ownedChapters&searchvalue=" + item.id}>{'Mở rộng >'}</a>
         </div>
-        <div>
-          <h1>Reports</h1>
-          <div className='admin-card-list-wrapper'>
-            {
-              reports && reports.map(report => (
-                <ChapterReportCard
-                  useravatar={report.user.avatar}
-                  userdisplayname={report.user.displayname}
-                  content={report.content}
-                  createdTime={report.createdTime}
-                  status={report.status}
-                />
-              ))
-            }
-          </div>
-          <div className='admin-show-expand-wrapper'>
-            <a href={"/admin/report?searchfield=chapter&searchvalue=" + item.id}>{'Mở rộng >'}</a>
-          </div>
+      </div>
+      <div>
+        <h1>Reports</h1>
+        <div className='admin-card-list-wrapper'>
+          {
+            reports && reports.map(report => (
+              <ChapterReportCard
+                useravatar={report.user.avatar}
+                userdisplayname={report.user.displayname}
+                content={report.content}
+                createdTime={report.createdTime}
+                status={report.status}
+              />
+            ))
+          }
+        </div>
+        <div className='admin-show-expand-wrapper'>
+          <a href={"/admin/report?searchfield=chapter&searchvalue=" + item.id}>{'Mở rộng >'}</a>
         </div>
       </div>
     </ShowAdminWrapper >
