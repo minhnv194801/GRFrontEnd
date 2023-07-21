@@ -106,7 +106,7 @@ function CommentAdminShow() {
   }, [userId])
 
   return (
-    <ShowAdminWrapper>
+    <ShowAdminWrapper deleteAPIUrl={'http://localhost:8081/api/v1/admin/comments/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>

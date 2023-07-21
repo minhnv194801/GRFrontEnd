@@ -203,7 +203,7 @@ function ChapterAdminShow() {
 
   const procEditImages = (e) => {
     setIsEditImages(!isEditImages)
-    setEditedImagesValue(item.images?item.images:[])
+    setEditedImagesValue(item.images ? item.images : [])
   }
 
   const handleChangeEditName = (e) => {
@@ -221,47 +221,115 @@ function ChapterAdminShow() {
   }
 
   const submitEditedName = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'title': editedNameValue,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/chapters/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'name': editedNameValue,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'title': editedNameValue,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procEditName()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procEditName()
+
+    putBackend()
   }
 
   const submitEditedCover = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'cover': editedCoverValue,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/chapters/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'cover': editedCoverValue,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'cover': editedCoverValue,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        closeEditCover()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    closeEditCover()
+
+    putBackend()
   }
 
   const submitEditedPrice = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'price': editedPriceValue,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/chapters/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'price': parseInt(editedPriceValue),
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'price': editedPriceValue,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procEditPrice()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procEditPrice()
+
+    putBackend()
   }
 
   const submitEditedImages = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'images': editedImagesValue,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/chapters/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'images': editedImagesValue,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'images': editedImagesValue,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procEditImages()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procEditImages()
+
+    putBackend()
   }
 
   const removeEditedImage = (index) => {
@@ -295,7 +363,7 @@ function ChapterAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper>
+    <ShowAdminWrapper deleteAPIUrl={'http://localhost:8081/api/v1/admin/chapters/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{chapterId}</p>
@@ -406,7 +474,7 @@ function ChapterAdminShow() {
                       onChange={(e) => handleChangeImages(e.target.value, index)}
                       sx={{ minWidth: '30vw' }}
                     />
-                    <img className='chapter-admin-pages' src={editedImage} alt='' onerror="this.src='/imagenotfound.png';"/>
+                    <img className='chapter-admin-pages' src={editedImage} alt='' />
                     <IconButton onClick={(e) => removeEditedImage(index)}>
                       <Clear sx={iconStyle} />
                     </IconButton>

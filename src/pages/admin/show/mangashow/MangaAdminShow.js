@@ -307,36 +307,88 @@ function MangaAdminShow() {
   }
 
   const submitEditedName = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'name': editedNameValue,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'name': editedNameValue,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'name': editedNameValue,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procEditName()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procEditName()
+
+    putBackend()
+
   }
 
   const submitEditedAuthor = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'author': editedAuthorValue,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'author': editedAuthorValue,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'author': editedAuthorValue,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procEditAuthor()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procEditAuthor()
+
+    putBackend()
   }
 
   const submitEditedCover = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'cover': editedCoverValue,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'cover': editedCoverValue,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'cover': editedCoverValue,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        closeEditCover()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    closeEditCover()
+
+    putBackend()
   }
 
   const cancelEditCover = (e) => {
@@ -344,58 +396,143 @@ function MangaAdminShow() {
   }
 
   const submitEditedDescription = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'description': editedDescriptionValue,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'description': editedDescriptionValue,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'description': editedDescriptionValue,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procEditDescription()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procEditDescription()
+
+    putBackend()
   }
 
   const submitEditedStatus = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'status': editedStatusValue,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'status': parseInt(editedStatusValue),
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'status': editedStatusValue,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procEditStatus()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procEditStatus()
+
+    putBackend()
   }
 
   const submitEditedRecommend = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'isRecommended': editedRecommendedValue,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'isRecommended': editedRecommendedValue,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'isRecommended': editedRecommendedValue,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procEditRecommend()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procEditRecommend()
+
+    putBackend()
   }
 
   const submitEditedTags = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'tags': editedTagsValue.sort(),
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'tags': editedTagsValue.sort(),
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'tags': editedTagsValue.sort(),
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procEditTags()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procEditTags()
+
+    putBackend()
   }
 
   const submitEditedAltNames = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'alternateNames': editedAlternateNamesValue.filter(item => item.trim() !== ''),
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'alternateName': editedAlternateNamesValue.filter(item => item.trim() !== ''),
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'alternateNames': editedAlternateNamesValue.filter(item => item.trim() !== ''),
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procEditAlternateNames()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procEditAlternateNames()
+
+    putBackend()
   }
 
   const onCoverChange = (e) => {
@@ -408,7 +545,7 @@ function MangaAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper>
+    <ShowAdminWrapper deleteAPIUrl={'http://localhost:8081/api/v1/admin/mangas/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>
@@ -575,7 +712,7 @@ function MangaAdminShow() {
         </div>
         {isEditRecommended ?
           <div className='flex-edit-admin-textfield'>
-            <select id="status" defaultValue={item.isRecommended ? '1' : '0'} onChange={handleChangeEditRecommend}>
+            <select id="isRecommended" defaultValue={item.isRecommended ? '1' : '0'} onChange={handleChangeEditRecommend}>
               <option value={0}>False</option>
               <option value={1}>True</option>
             </select>
@@ -651,7 +788,7 @@ function MangaAdminShow() {
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Chapters</h1>
           <IconButton >
-            <Add sx={iconStyle} />
+            <Add sx={iconStyle} onClick={(e) => window.location.href='/admin/chapter/create?manga='+item.id}/>
           </IconButton>
         </div>
         <div className="admin-card-list-wrapper">

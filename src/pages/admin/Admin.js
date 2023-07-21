@@ -34,7 +34,31 @@ const Admin = (props) => {
             return res.sessionkey
         }
 
-        refresh()
+        const checkAuth = async () => {
+            const response = await fetch('http://localhost:8081/api/v1/admin/auth', {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: {
+                    'Authorization': sessionkey,
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            if (!response.ok) {
+                window.location.href = '/'
+            }
+        }
+
+        const interval = setInterval(() => {
+            refresh() 
+            console.log('fresh')}, 300000);
+
+        checkAuth()
+
+        return () => {
+            clearInterval(interval);
+        };
+
     }, [])
 
     return (

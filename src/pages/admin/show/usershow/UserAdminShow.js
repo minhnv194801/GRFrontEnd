@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
 import './UserAdminShow.css'
-import { Add, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
-import { IconButton } from "@mui/material";
+import { Add, Check, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
+import { IconButton, TextField } from "@mui/material";
 import UserCommentCard from "./usercommentcard/UserCommentCard";
 import OwnedChapterCard from "./ownedchaptercard/OwnedChapterCard";
 import FollowMangaCard from "./followmangacard/FollowMangaCard";
@@ -13,6 +13,19 @@ import { useSelector } from "react-redux";
 
 const iconStyle = {
   'color': '#0099FF',
+}
+
+const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      resolve(reader.result);
+    };
+    reader.onerror = function (error) {
+      reject(error)
+    };
+  })
 }
 
 function UserAdminShow() {
@@ -36,25 +49,19 @@ function UserAdminShow() {
   const [comments, setComments] = useState([])
   const [reports, setReports] = useState([])
 
-  useEffect(() => {
-    let fetchItem = {
-      'id': userId,
-      'email': 'email@email.com',
-      'password': '$2a$14$TS7aakGm9DIBS2iUvWHNSe4xzh57oJfy34Y/nVnrTtF923bpcw09C',
-      'role': 'Người dùng',
-      'displayname': 'Tên hiển thị',
-      'avatar': '/defaultavatar.jpg',
-      'firstName': 'Tên',
-      'lastName': 'Họ',
-      'gender': 0,
-      'followMangas': ['1'],
-      'ownedChapters': ['1'],
-      'comments': ['1'],
-      'reports': ['1']
-    }
+  const [isEditRole, setIsEditRole] = useState(false)
+  const [isEditDisplayName, setIsEditDisplayName] = useState(false)
+  const [isEditAvatar, setIsEditAvatar] = useState(false)
+  const [isEditFirstName, setIsEditFirstName] = useState(false)
+  const [isEditLastName, setIsEditLastName] = useState(false)
+  const [isEditGender, setIsEditGender] = useState(false)
 
-    setItem(fetchItem)
-  }, [])
+  const [editedRoleValue, setEditedRoleValue] = useState("")
+  const [editedDisplayName, setEditedDisplayName] = useState("")
+  const [editedAvatar, setEditedAvatar] = useState("")
+  const [editedFirstName, setEditedFirstName] = useState("")
+  const [editedLastName, setEditedLastName] = useState("")
+  const [editedGender, setEditedGender] = useState()
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -238,8 +245,240 @@ function UserAdminShow() {
     }
   }, [reportIds])
 
-  const renderGender = () => {
-    switch (item.gender) {
+  const procEditRole = (e) => {
+    setIsEditRole(!isEditRole)
+    setEditedRoleValue(item.role)
+  }
+
+  const procEditDisplayName = (e) => {
+    setIsEditDisplayName(!isEditDisplayName)
+    setEditedDisplayName(item.displayname)
+  }
+
+  const procEditFirstName = (e) => {
+    setIsEditFirstName(!isEditFirstName)
+    setEditedFirstName(item.firstname)
+  }
+
+  const procEditLastName = (e) => {
+    setIsEditLastName(!isEditLastName)
+    setEditedLastName(item.lastname)
+  }
+
+  const procEditGender = (e) => {
+    setIsEditGender(!isEditGender)
+    setEditedGender(item.gender)
+  }
+
+  const handleChangeEditRoleValue = (e) => {
+    setEditedRoleValue(e.target.value)
+  }
+
+  const handleChangeEditFirstName = (e) => {
+    setEditedFirstName(e.target.value)
+  }
+
+  const handleChangeEditLastName = (e) => {
+    setEditedLastName(e.target.value)
+  }
+
+  const openEditAvatar = (e) => {
+    setIsEditAvatar(true)
+    if (editedAvatar === '') {
+      setEditedAvatar(item.avatar)
+    }
+  }
+
+  const closeEditAvatar = (e) => {
+    setIsEditAvatar(false)
+    setEditedAvatar('')
+  }
+
+  const cancelEditAvatar = (e) => {
+    closeEditAvatar()
+  }
+
+  const handleChangeEditDisplayName = (e) => {
+    setEditedDisplayName(e.target.value)
+  }
+
+  const handleChangeEditGender = (e) => {
+    setEditedGender(e.target.value)
+  }
+
+  const onAvatarChange = (e) => {
+    const file = e.target?.files?.[0];
+    if (file) {
+      getBase64(file).then((base64) => {
+        setEditedAvatar(base64)
+      });
+    }
+  }
+
+  const submitEditedDisplayName = (e) => {
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'displayName': editedDisplayName,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'displayname': editedDisplayName,
+        }
+        setItem(newItem)
+        procEditDisplayName()
+      }
+    }
+
+    putBackend()
+  }
+
+  const submitEditedFirstName = (e) => {
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'firstName': editedFirstName,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'firstName': editedFirstName,
+        }
+        console.log(newItem)
+        procEditFirstName()
+      }
+    }
+
+    putBackend()
+  }
+
+  const submitEditedLastName = (e) => {
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'lastName': editedLastName,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'lastName': editedLastName,
+        }
+        console.log(newItem)
+        procEditLastName()
+      }
+    }
+
+    putBackend()
+  }
+
+  const submitEditedRole = (e) => {
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'role': editedRoleValue,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'role': editedRoleValue,
+        }
+        setItem(newItem)
+        procEditRole()
+      }
+    }
+
+    putBackend()
+  }
+
+  const submitEditedGender = (e) => {
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'gender': parseInt(editedGender),
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'gender': parseInt(editedGender),
+        }
+        setItem(newItem)
+        procEditGender()
+      }
+    }
+
+    putBackend()
+  }
+
+  const submitEditedAvatar = (e) => {
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'avatar': editedAvatar
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'avatar': editedAvatar,
+        }
+        setItem(newItem)
+        closeEditAvatar()
+      }
+    }
+
+    putBackend()
+  }
+
+  const renderGender = (genderValue) => {
+    switch (parseInt(genderValue)) {
       case 1:
         return (<p>Nữ</p>)
       case 2:
@@ -256,12 +495,7 @@ function UserAdminShow() {
         <p>{item.id}</p>
       </div>
       <div>
-        <div className='manga-admin-show-editable-wrapper'>
-          <h1>Email</h1>
-          <IconButton >
-            <Edit sx={iconStyle} />
-          </IconButton>
-        </div>
+        <h1>Email</h1>
         <p>{item.email}</p>
       </div>
       <div>
@@ -271,56 +505,128 @@ function UserAdminShow() {
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Role</h1>
-          <IconButton >
+          <IconButton onClick={procEditRole}>
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>{item.role}</p>
+        {isEditRole ?
+          <div className='flex-edit-admin-textfield'>
+            <select id="role" defaultValue={item.gender} onChange={handleChangeEditRoleValue}>
+              <option value={'Người dùng'}>Người dùng</option>
+              <option value={'Quản trị viên'}>Quản trị viên</option>
+            </select>
+            <IconButton onClick={submitEditedRole}>
+              <Check sx={iconStyle} />
+            </IconButton>
+          </div>
+          :
+          <p>{item.role}</p>
+        }
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>DisplayName</h1>
-          <IconButton >
+          <IconButton onClick={procEditDisplayName}>
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>{item.displayname}</p>
+        {isEditDisplayName ?
+          <div className='flex-edit-admin-textfield'>
+            <TextField defaultValue={editedDisplayName} onChange={handleChangeEditDisplayName} />
+            <IconButton onClick={submitEditedDisplayName}>
+              <Check sx={iconStyle} />
+            </IconButton>
+          </div>
+          :
+          <p>{item.displayname}</p>}
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Avatar</h1>
-          <IconButton >
-            <Edit sx={iconStyle} />
-          </IconButton>
+          <input
+            id='avatar-file-input'
+            hidden
+            onChange={onAvatarChange}
+            type="file"
+            accept="image/png,image/jpeg,image/gif"
+          />
+          <label htmlFor="avatar-file-input">
+            <IconButton onClick={openEditAvatar} component='span'>
+              <Edit sx={iconStyle} />
+            </IconButton>
+          </label>
         </div>
-        <img className='user-admin-show-avatar' src={item.avatar} alt='user-avatar' />
+        {isEditAvatar ?
+          <>
+            <div className='manga-admin-show-editable-wrapper'>
+              <img className='user-admin-show-avatar' src={editedAvatar} alt='user-avatar' />
+            </div>
+            <IconButton onClick={cancelEditAvatar}>
+              <Clear sx={iconStyle} />
+            </IconButton>
+            <IconButton onClick={submitEditedAvatar}>
+              <Check sx={iconStyle} />
+            </IconButton>
+          </>
+          :
+          <img className='user-admin-show-avatar' src={item.avatar} alt='user-avatar' />
+        }
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>FirstName</h1>
-          <IconButton >
+          <IconButton onClick={procEditFirstName}>
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>{item.firstName}</p>
+        {isEditFirstName ?
+          <div className='flex-edit-admin-textfield'>
+            <TextField defaultValue={editedFirstName} onChange={handleChangeEditFirstName} />
+            <IconButton onClick={submitEditedFirstName}>
+              <Check sx={iconStyle} />
+            </IconButton>
+          </div>
+          :
+          <p>{item.firstname}</p>}
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>LastName</h1>
-          <IconButton >
+          <IconButton onClick={procEditLastName}>
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>{item.lastName}</p>
+        {isEditLastName ?
+          <div className='flex-edit-admin-textfield'>
+            <TextField defaultValue={editedLastName} onChange={handleChangeEditLastName} />
+            <IconButton onClick={submitEditedLastName}>
+              <Check sx={iconStyle} />
+            </IconButton>
+          </div>
+          :
+          <p>{item.lastname}</p>}
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>
           <h1>Gender</h1>
-          <IconButton >
+          <IconButton onClick={procEditGender}>
             <Edit sx={iconStyle} />
           </IconButton>
         </div>
-        <p>{renderGender()}</p>
+        {isEditGender ?
+          <div className='flex-edit-admin-textfield'>
+            <select id="gender" defaultValue={item.gender} onChange={handleChangeEditGender}>
+              <option value={0}>Nam</option>
+              <option value={1}>Nữ</option>
+              <option value={2}>Không xác định</option>
+            </select>
+            <IconButton onClick={submitEditedGender}>
+              <Check sx={iconStyle} />
+            </IconButton>
+          </div>
+          :
+          <p>{renderGender(item.gender)}</p>
+        }
       </div>
       <div>
         <div className='manga-admin-show-editable-wrapper'>

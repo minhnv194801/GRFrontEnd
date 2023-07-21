@@ -1,0 +1,52 @@
+.create-admin-wrapper {
+    width: 95%;
+    display: flex;
+    flex-direction: column !important;
+    flex-flow: wrap;
+    margin-bottom: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #fff;
+    box-shadow: 1px 1px 1px 1px;
+}
+
+.create-admin-wrapper > div {
+    margin-top: 20px;
+    margin-left: 20px;
+    max-width: 100%;
+}
+
+.create-admin-wrapper p {
+    font-weight: bold;
+}
+
+.create-admin-wrapper h1 {
+    font-weight: bold;
+}
+
+.create-admin-wrapper p {
+    max-width: 95%;
+}
+
+.admin-create-header {
+    font-weight: bold;
+    width: 95%;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.flex-create-admin-textfield {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: end;
+}
+
+.flex-create-admin-vertical{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

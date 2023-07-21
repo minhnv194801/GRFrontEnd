@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import logo from '../../logo/magna-logo.png'
 import InputAdornment from '@mui/material/InputAdornment';
@@ -18,9 +18,29 @@ const Navbar = () => {
     const isLogin = useSelector((state) => state.app.isLogin)
     const username = useSelector((state) => state.app.username)
     const avatar = useSelector((state) => state.app.avatar)
+    const sessionkey = useSelector((state) => state.app.sessionkey)
+    const [isAdmin, setIsAdmin] = useState(false)
     const dispatch = useDispatch()
     const isPortrait = useMediaQuery({ orientation: 'portrait' })
     const [isSearching, setIsSearching] = useState(false)
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const response = await fetch('http://localhost:8081/api/v1/admin/auth', {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: {
+                    'Authorization': sessionkey,
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            if (response.ok) {
+                setIsAdmin(true)
+            }
+        }
+        checkAuth()
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -121,6 +141,7 @@ const Navbar = () => {
                                             </Dropdown.ItemText>
                                             <Dropdown.Divider />
                                             <Dropdown.Item href='/user'>Thông tin tài khoản</Dropdown.Item>
+                                            {isAdmin?<Dropdown.Item href='/admin'>Vào trang quản lý</Dropdown.Item>:<></>}
                                             <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
@@ -215,6 +236,7 @@ const Navbar = () => {
                                     </Dropdown.ItemText>
                                     <Dropdown.Divider />
                                     <Dropdown.Item href='/user'>Thông tin tài khoản</Dropdown.Item>
+                                    {isAdmin?<Dropdown.Item href='/admin'>Vào trang quản lý</Dropdown.Item>:<></>}
                                     <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>

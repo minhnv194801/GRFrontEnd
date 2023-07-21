@@ -27,6 +27,9 @@ import ReportAdminShow from './pages/admin/show/reportshow/ReportAdminShow';
 import CommentAdminShow from './pages/admin/show/commentshow/CommentAdminShow';
 import ChapterAdminShow from './pages/admin/show/chaptershow/ChapterAdminShow';
 import UserAdminShow from './pages/admin/show/usershow/UserAdminShow';
+import UserAdminCreate from './pages/admin/create/usercreate/UserAdminCreate';
+import ChapterAdminCreate from './pages/admin/create/chaptercreate/ChapterAdminCreate';
+import MangaAdminCreate from './pages/admin/create/mangacreate/MangaAdminCreate';
 
 const router = createBrowserRouter([
   {
@@ -75,43 +78,55 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin/manga",
-    element: <Admin selected='manga'> <MangaAdminList/> </Admin>,
+    element: <Admin selected='manga'> <MangaAdminList /> </Admin>,
   },
   {
     path: "/admin/chapter",
-    element: <Admin selected='chapter'> <ChapterAdminList/> </Admin>,
+    element: <Admin selected='chapter'> <ChapterAdminList /> </Admin>,
   },
   {
     path: "/admin/user",
-    element: <Admin selected='user'> <UserAdminList/> </Admin>,
+    element: <Admin selected='user'> <UserAdminList /> </Admin>,
   },
   {
     path: "/admin/comment",
-    element: <Admin selected='comment'> <CommentAdminList/> </Admin>,
+    element: <Admin selected='comment'> <CommentAdminList /> </Admin>,
   },
   {
     path: "/admin/report",
-    element: <Admin selected='report'> <ReportAdminList/> </Admin>,
+    element: <Admin selected='report'> <ReportAdminList /> </Admin>,
   },
   {
     path: "/admin/manga/show/:id",
-    element: <Admin selected='manga'> <MangaAdminShow/> </Admin>,
+    element: <Admin selected='manga'> <MangaAdminShow /> </Admin>,
   },
   {
     path: "/admin/chapter/show/:id",
-    element: <Admin selected='chapter'> <ChapterAdminShow/> </Admin>,
+    element: <Admin selected='chapter'> <ChapterAdminShow /> </Admin>,
   },
   {
     path: "/admin/user/show/:id",
-    element: <Admin selected='user'> <UserAdminShow/> </Admin>,
+    element: <Admin selected='user'> <UserAdminShow /> </Admin>,
   },
   {
     path: "/admin/comment/show/:id",
-    element: <Admin selected='comment'> <CommentAdminShow/> </Admin>,
+    element: <Admin selected='comment'> <CommentAdminShow /> </Admin>,
   },
   {
     path: "/admin/report/show/:id",
     element: <Admin selected='report'> <ReportAdminShow /> </Admin>,
+  },
+  {
+    path: "/admin/user/create",
+    element: <Admin selected='user'> <UserAdminCreate /> </Admin>,
+  },
+  {
+    path: "/admin/chapter/create",
+    element: <Admin selected='chapter'> <ChapterAdminCreate /> </Admin>,
+  },
+  {
+    path: "/admin/manga/create",
+    element: <Admin selected='manga'> <MangaAdminCreate /> </Admin>,
   },
   {
     path: "*",

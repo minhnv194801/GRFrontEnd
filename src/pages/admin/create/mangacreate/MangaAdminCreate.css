@@ -1,0 +1,6 @@
+.manga-admin-create-cover-preview {
+    height: 300px;
+    width: 200px;
+    background-image: url(../../../../../public/imagenotfound.png);
+    background-size: 100% 100%;
+}

@@ -115,19 +115,36 @@ function ReportAdminShow() {
   }
 
   const submitResponse = (e) => {
-    //POST to backend
-    let newItem = {
-      ...item,
-      'response': responseEditValue,
-      'status': 1,
+    const putBackend = async () => {
+      const response = await fetch('http://localhost:8081/api/v1/admin/reports/' + item.id, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {
+          'Authorization': sessionkey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'response': responseEditValue,
+        })
+      })
+
+      if (response.ok) {
+        let newItem = {
+          ...item,
+          'response': responseEditValue,
+          'status': 1,
+        }
+        console.log(newItem)
+        setItem(newItem)
+        procResponse()
+      }
     }
-    console.log(newItem)
-    setItem(newItem)
-    procResponse()
+
+    putBackend()
   }
 
   return (
-    <ShowAdminWrapper>
+    <ShowAdminWrapper deleteAPIUrl={'http://localhost:8081/api/v1/admin/reports/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>
