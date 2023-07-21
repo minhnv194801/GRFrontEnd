@@ -121,7 +121,7 @@ const UserAdminList = (props) => {
                 sorttypes={sorttypes} />
             <Grid container spacing={5}>
                 {itemList.map((item) => (
-                    <Grid item xs={4} sx={gridItemStyle}>
+                    <Grid item xs={12} md={4} sx={gridItemStyle}>
                         <UserItemCard
                             avatar={item.avatar}
                             displayName={item.displayname}

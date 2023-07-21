@@ -59,3 +59,14 @@
 .active-admin-btn-wrapper {
     background-color: #66C2FF;
 }
+
+@media only screen and (orientation: portrait) {
+    .admin-logo-wrapper {
+        margin: 0;
+    }
+    .admin-btn-wrapper, .active-admin-btn-wrapper {
+        height: 80%;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}

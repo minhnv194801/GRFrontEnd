@@ -117,7 +117,7 @@ const ChapterAdminList = (props) => {
                 sorttypes={sorttypes} />
             <Grid container spacing={5}>
                 {itemList.map((item) => (
-                    <Grid item xs={3} sx={gridItemStyle}>
+                    <Grid item xs={6} md={3} sx={gridItemStyle}>
                         <ChapterItemCard
                             cover={item.cover}
                             content={item.title}

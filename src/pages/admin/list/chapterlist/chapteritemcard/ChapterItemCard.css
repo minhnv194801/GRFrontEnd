@@ -45,3 +45,9 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+@media only screen and (orientation: portrait) {
+    .admin-chapter-item-card-wrapper {
+        width: 40vw;
+    }
+}

@@ -119,7 +119,7 @@ const MangaAdminList = (props) => {
                 sorttypes={sorttypes} />
             <Grid container spacing={5}>
                 {itemList.map((item) => (
-                    <Grid item xs={3} sx={gridItemStyle}>
+                    <Grid item xs={6} md={3} sx={gridItemStyle}>
                         <MangaItemCard
                             cover={item.cover}
                             content={item.name}

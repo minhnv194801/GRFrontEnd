@@ -70,3 +70,9 @@
 .report-admin-show-finished-status {
     color: #00ff00;
 }
+
+@media only screen and (orientation: portrait) {
+    .admin-report-chapter-card-wrapper {
+        width: 30vw;
+    }
+}

@@ -156,7 +156,7 @@ const ReportAdminList = (props) => {
                 sorttypes={sorttypes} />
             <Grid container spacing={5}>
                 {itemList.map((item) => (
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                         <ReportItemCard
                             chapterCover={item.chapter&&item.chapter.cover}
                             chapterTitle={item.chapter&&item.chapter.title}

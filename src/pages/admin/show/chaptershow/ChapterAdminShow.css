@@ -53,6 +53,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 30px;
+    max-width: 90%;
 }
 
 .chapter-admin-pages {
@@ -60,4 +61,10 @@
     min-width: 200px;
     background-image: url('../../../../../public/imagenotfound.png');
     background-size: 100% 100%;
+}
+
+@media only screen and (orientation: portrait) {
+    .admin-chapter-manga-card-wrapper {
+        width: 30vw;
+    }
 }

@@ -150,7 +150,7 @@ const CommentAdminList = (props) => {
                 sorttypes={sorttypes} />
             <Grid container spacing={5}>
                 {itemList.map((item) => (
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                         <CommentItemCard 
                             mangaCover={item.manga&&item.manga.cover}
                             mangaTitle={item.manga&&item.manga.title}

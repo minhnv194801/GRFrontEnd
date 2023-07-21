@@ -30,7 +30,6 @@ const UserAdminCreate = (props) => {
     }
 
     const submitForm = (e) => {
-        //TODO: sent request to backend
         const putBackend = async () => {
             const response = await fetch('http://localhost:8081/api/v1/admin/users', {
                 method: 'POST',

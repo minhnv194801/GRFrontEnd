@@ -62,3 +62,9 @@
     margin-top: auto;
     font-weight: bold;
 }
+
+@media only screen and (orientation: portrait) {
+    .admin-comment-manga-card-wrapper {
+        width: 30vw;
+    }
+}
