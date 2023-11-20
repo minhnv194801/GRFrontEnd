@@ -1,0 +1,128 @@
+.navbar-searchresult-wrapper {
+    position: absolute;
+    background-color: #e5e5e5;
+    /* border: 1px solid #000; */
+    /* border-top: 0px; */
+    /* box-shadow: 1px 1px 1px; */
+    color: #000;
+    width: 50vw;
+    top: 5vh;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar-single-search-result-wrapper:hover {
+    background-color: #f0f0f0;
+}
+
+.navbar-single-search-result-wrapper {
+    display: flex;
+    height: 200px;
+    background-color: #e5e5e5;
+    border: solid 1px;
+    border-top: 0px;
+    cursor: pointer;
+}
+
+.navbar-searchresult-cover-wrapper {
+    display: flex;
+    width: 200px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-searchresult-cover {
+    height: 150px;
+    width: 100px;
+}
+
+.navbar-searchresult-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 205px);
+    height: 100%;
+    row-gap: 5px;
+}
+
+.navbar-searchresult-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    margin-left: 0px;
+}
+
+.searchresult-info-wrapper {
+    height: 15vh;
+    width: 100%;
+    display: flex;
+    row-gap: 5px;
+    flex-direction: column;
+}
+
+.searchresult-rating-status-wrapper {
+    display: flex;
+    gap: 10px;
+    text-align: center;
+}
+
+.searchresult-rating-wrapper {
+    display: flex;
+    text-align: center;
+    gap: 1px;
+}
+
+.searchresult-status-wrapper {
+    display: flex;
+    text-align: center;
+    gap: 1px;
+}
+
+.searchresult-tag-list-wrapper {
+    display: flex;
+    /* grid-auto-flow: column; */
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.searchresult-tag-wrapper {
+    background-color: #d9d9d9;
+    border-radius: 25px;
+    text-align: center;
+    border: 1px solid black;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    color: #000;
+    font-weight: bold;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
+}
+
+.searchresult-description-wrapper {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+@media only screen and (orientation: portrait) {
+    .navbar-searchresult-wrapper {
+        width: 80vw;
+    }
+
+    .navbar-searchresult-cover-wrapper {
+        width: 120px;
+    }
+
+    .navbar-searchresult-content-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 105px);
+        height: 100%;
+        row-gap: 5px;
+    }
+}

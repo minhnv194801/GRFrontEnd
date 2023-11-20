@@ -227,7 +227,7 @@ function Read() {
         </div>
       </div>
       <div className='reading-box'>
-        {chapterImages.map((image, index) => <img className='page-image' src={image} alt={"page " + index} />)}
+        {chapterImages.map((image, index) => <img className='page-image' src={"https://storage.googleapis.com/datn-minh" + image} alt={"page " + index} />)}
       </div>
       <div className='inner-read'>
         <div className='chapter-selector-wrapper'>

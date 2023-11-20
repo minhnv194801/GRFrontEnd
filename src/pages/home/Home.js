@@ -8,6 +8,7 @@ import { timeDifference } from '../../common/Date'
 import { displayFailure } from '../../components/topalert/TopAlertSlice';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper";
+import RecommendItemList from "./recommenditem/RecommendItemList";
 import "swiper/css/pagination";
 import 'swiper/css';
 import './Home.css'
@@ -270,6 +271,7 @@ function Home() {
             </div>
         }
       </div>
+      <RecommendItemList/>
     </div>
   );
 }

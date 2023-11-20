@@ -6,15 +6,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import './Navbar.css'
-import { InputBase } from '@mui/material';
+import { IconButton, InputBase } from '@mui/material';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { logout } from '../../AppSlice';
 import { displaySuccess } from '../topalert/TopAlertSlice';
 import { useMediaQuery } from 'react-responsive'
-import { AccountCircle } from '@mui/icons-material';
+import { AccountCircle, Clear } from '@mui/icons-material';
+import SearchResult from './searchresults/SearchResult';
 
 const Navbar = () => {
-    const [searchValue, setSearchValue] = useState("")
+    const [searchValue, setSearchValue] = useState(null)
     const isLogin = useSelector((state) => state.app.isLogin)
     const username = useSelector((state) => state.app.username)
     const avatar = useSelector((state) => state.app.avatar)
@@ -23,6 +24,7 @@ const Navbar = () => {
     const dispatch = useDispatch()
     const isPortrait = useMediaQuery({ orientation: 'portrait' })
     const [isSearching, setIsSearching] = useState(false)
+    const [searchResults, setSearchResults] = useState([])
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -42,6 +44,63 @@ const Navbar = () => {
         checkAuth()
     }, [])
 
+    const handleChangeSearchTextField = (e) => {
+        setSearchValue(e.target.value)
+        if (e.target.value.length !== 0) {
+            setIsSearching(true)
+        }
+    }
+
+    const fetchSearchResult = async (searchValue) => {
+        if (searchValue === null) {
+            return
+        }
+        
+        if (searchValue.trim().length === 0) {
+            setSearchResults([])
+            return
+        }
+
+        try {
+            const response = await fetch('http://localhost:8081/api/v1/search', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'query': searchValue,
+                    'tags': [],
+                    'count': 3,
+                    'position': 0,
+                })
+            });
+            if (response.ok) {
+                // convert data to json
+                const json = await response.json();
+                console.log(json.data)
+
+                if (json.data === null || json.data?.length === 0) {
+                    setSearchResults([])
+                } else {
+                    setSearchResults(json.data)
+                }
+            } else {
+                setSearchResults([])
+            }
+        } catch (error) {
+            setSearchResults([])
+        }
+    }
+
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            fetchSearchResult(searchValue)
+        }, 1000)
+    
+        return () => clearTimeout(delayDebounceFn)
+      }, [searchValue])
+
     const handleSubmit = (e) => {
         e.preventDefault()
         window.location.href = "/search?value=" + searchValue;
@@ -53,6 +112,8 @@ const Navbar = () => {
 
     const handleSearchBlur = (e) => {
         setIsSearching(false)
+        setSearchValue("")
+        setSearchResults([])
     }
 
     const handleLogout = (e) => {
@@ -84,13 +145,20 @@ const Navbar = () => {
                                         type='text'
                                         placeholder="Tìm kiếm"
                                         fullWidth
-                                        onChange={(e) => { setSearchValue(e.target.value) }}
+                                        value={searchValue}
+                                        onChange={handleChangeSearchTextField}
                                         onFocus={handleSearchFocus}
                                         onBlur={handleSearchBlur}
                                         startAdornment={
                                             <InputAdornment position="start">
                                                 <SearchIcon />
                                             </InputAdornment>
+                                        }
+                                        endAdornment={
+                                            <IconButton
+                                                sx={{ visibility: isSearching ? "visible" : "hidden" }} >
+                                                <Clear />
+                                            </IconButton>
                                         }
                                     />
                                 </form>
@@ -141,7 +209,7 @@ const Navbar = () => {
                                             </Dropdown.ItemText>
                                             <Dropdown.Divider />
                                             <Dropdown.Item href='/user'>Thông tin tài khoản</Dropdown.Item>
-                                            {isAdmin?<Dropdown.Item href='/admin'>Vào trang quản lý</Dropdown.Item>:<></>}
+                                            {isAdmin ? <Dropdown.Item href='/admin'>Vào trang quản lý</Dropdown.Item> : <></>}
                                             <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
@@ -163,11 +231,20 @@ const Navbar = () => {
                                 sx={{ background: "#D9D9D9", borderRadius: '25px' }}
                                 placeholder="Tìm kiếm"
                                 fullWidth
-                                onChange={(e) => { setSearchValue(e.target.value) }}
+                                value={searchValue}
+                                onChange={handleChangeSearchTextField}
+                                onFocus={handleSearchFocus}
+                                onBlur={handleSearchBlur}
                                 startAdornment={
                                     <InputAdornment position="start">
                                         <SearchIcon />
                                     </InputAdornment>
+                                }
+                                endAdornment={
+                                    <IconButton
+                                        sx={{ visibility: isSearching ? "visible" : "hidden" }} >
+                                        <Clear />
+                                    </IconButton>
                                 }
                             />
                         </form>
@@ -236,7 +313,7 @@ const Navbar = () => {
                                     </Dropdown.ItemText>
                                     <Dropdown.Divider />
                                     <Dropdown.Item href='/user'>Thông tin tài khoản</Dropdown.Item>
-                                    {isAdmin?<Dropdown.Item href='/admin'>Vào trang quản lý</Dropdown.Item>:<></>}
+                                    {isAdmin ? <Dropdown.Item href='/admin'>Vào trang quản lý</Dropdown.Item> : <></>}
                                     <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
@@ -244,6 +321,7 @@ const Navbar = () => {
                     </Grid>
                 </Grid>
             }
+            <SearchResult items={searchResults} />
         </div>
     );
 };

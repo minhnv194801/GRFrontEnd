@@ -281,14 +281,14 @@ function Manga() {
               return ({
                 ...prevManga,
                 userRating: e.target.value,
-                avgRating: ((prevManga.avgRating * prevManga.ratingCount) + e.target.value) / (prevManga.ratingCount + 1),
+                avgRating: ((Number(prevManga.avgRating) * Number(prevManga.ratingCount)) + Number(e.target.value)) / (Number(prevManga.ratingCount) + 1),
                 ratingCount: prevManga.ratingCount + 1,
               })
             }
 
             return ({
               ...prevManga,
-              avgRating: ((prevManga.avgRating * prevManga.ratingCount) - prevManga.userRating + e.target.value) / (prevManga.ratingCount),
+              avgRating: ((Number(prevManga.avgRating) * Number(prevManga.ratingCount)) - Number(prevManga.userRating) + Number(e.target.value)) / (Number(prevManga.ratingCount)),
               userRating: e.target.value,
             })
           })

@@ -155,8 +155,6 @@ a.registerBtn:hover {
     cursor: pointer;
 }
 
-
-
 .dropdown-avatar-wrapper {
     width: 100%;
     text-align: center;
@@ -201,5 +199,9 @@ a.registerBtn:hover {
     .avatar-dropdown {
         text-align: end !important;
         justify-content: end !important;
+    }
+
+    .navbar-searchresult-wrapper {
+        width: 80vw;
     }
 }
