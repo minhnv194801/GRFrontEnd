@@ -4,18 +4,18 @@ FROM node:latest as build
 # set working directory
 WORKDIR /app
 
-copy . .
+COPY . .
 
-from nginx:1.20.1
+FROM nginx:stable
 #copies react to the container directory
 # set working directory to nginx resources directory
-workdir /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
 # remove default nginx static resources
-run rm /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/default.conf
 # copies static resources from builder stage
-copy --from=build /app/build /usr/share/nginx/html
-copy ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/build /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-expose 3000
+EXPOSE 3000
 # containers run nginx with global directives and daemon off
-entrypoint ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
