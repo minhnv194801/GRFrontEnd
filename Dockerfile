@@ -1,24 +1,9 @@
-FROM node:18-alpine as dependencies
-WORKDIR /home/app
-
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm ci
-
-FROM node:18-alpine AS builder
-WORKDIR /home/app
-
-COPY --from=dependencies /home/app/node_modules ./node_modules
-COPY . .
-
+FROM node:latest
 ENV NODE_ENV="production"
 
-RUN npm run build
-
-FROM node:18-alpine AS runner
-WORKDIR /home/app
-
-COPY --from=builder /home/app/build ./build
+RUN mkdir /root/app
+WORKDIR /root/app
+COPY . /root/app/
 
 RUN npm install -g serve
 
