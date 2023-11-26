@@ -10,9 +10,10 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    {/* <Provider store={store}>
       <App/>
-    </Provider>
+    </Provider> */}
+    <p>Hello World!</p>
   </React.StrictMode>
 );
 

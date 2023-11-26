@@ -1,10 +1,11 @@
-FROM nginx:stable-alpine
+FROM node:latest
 
-COPY . /usr/share/nginx/html
+RUN mkdir /root/app
+WORKDIR /root/app
+COPY . /root/app/
 
-# Copy the default nginx.conf provided by the docker image
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+RUN npm install -g serve
 
 EXPOSE 3000
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD [ "serve" "-s" "buid" "-l" "3000"]
