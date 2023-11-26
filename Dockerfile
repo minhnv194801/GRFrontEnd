@@ -4,7 +4,7 @@ FROM node:latest as build
 # set working directory
 WORKDIR /app
 
-COPY . .
+COPY /build /build
 
 FROM nginx:stable-alpine
 
