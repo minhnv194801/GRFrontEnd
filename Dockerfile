@@ -1,6 +1,6 @@
 FROM node:latest
-WORKDIR /app
-COPY /build .
+WORKDIR /
+COPY . .
 RUN npm install -g serve
 EXPOSE 3000
 CMD ["serve", "-s", "build", "-l", "3000"]
