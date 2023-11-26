@@ -4,7 +4,8 @@
 /node_modules
 /.next/
 /out/
-/build
 
 .env*.local
 .vercel
+
+public/Manga/
