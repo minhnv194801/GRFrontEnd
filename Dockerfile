@@ -1,7 +1,6 @@
 FROM node:latest
 WORKDIR /app
-COPY . .
+COPY build .
 RUN npm install -g serve
-WORKDIR /app/build
-EXPOSE 443
-CMD ["serve", "-s", "build", "-l", "443"]
+EXPOSE 3000
+CMD ["serve", "-s", "build", "-l", "3000"]
