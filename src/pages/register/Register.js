@@ -46,7 +46,7 @@ function Register() {
 
         const postRegister = async () => {
             try {
-                const response = await fetch('http://localhost:8081/api/v1/auth/register', {
+                const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/auth/register', {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {

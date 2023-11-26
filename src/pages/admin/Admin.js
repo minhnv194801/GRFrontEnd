@@ -35,7 +35,7 @@ const Admin = (props) => {
         }
 
         const checkAuth = async () => {
-            const response = await fetch('http://localhost:8081/api/v1/admin/auth', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/auth', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
@@ -50,25 +50,19 @@ const Admin = (props) => {
         }
 
         const interval = setInterval(() => {
-            refresh() 
-            console.log('fresh')}, 300000);
+            refresh()
+            console.log('fresh')
+        }, 300000);
 
         checkAuth()
 
         return () => {
             clearInterval(interval);
         };
-
+        // eslint-disable-next-line
     }, [])
 
     return (
-        // <Admin basename='/admin' dataProvider={dataProvider}>
-        //     <Resource name="users" list={UserList} create={UserCreate} show={UserShow} edit={UserEdit} />
-        //     <Resource name="mangas" list={MangaList} create={MangaCreate} show={MangaShow} edit={EditGuesser} />
-        //     <Resource name="chapters" list={ChapterList} create={ChapterCreate} show={ChapterShow} edit={EditGuesser} />
-        //     <Resource name="comments" list={CommentList} show={CommentShow} edit={EditGuesser} />
-        //     <Resource name="reports" list={ReportList} show={ReportShow} edit={EditGuesser} />
-        // </Admin>
         <div>
             <AdminNavbar selected={props.selected} />
             <div className='admin-outer'>

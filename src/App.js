@@ -155,6 +155,7 @@ function App() {
       }
     }
     refresh()
+    // eslint-disable-next-line
   }, [])
 
   return (

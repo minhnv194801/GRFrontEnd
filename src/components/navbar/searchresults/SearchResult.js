@@ -12,7 +12,7 @@ const SearchResult = (props) => {
             {props.items.map((item) =>
                 <div className='navbar-single-search-result-wrapper'  onMouseDown={(e) => navigateToMangaPage(item.id)}>
                     <div className='navbar-searchresult-cover-wrapper'>
-                        <img className='navbar-searchresult-cover' src={item.cover} />
+                        <img className='navbar-searchresult-cover' src={item.cover} alt='NavbarSearchResultCover'/>
                     </div>
                     <div className='navbar-searchresult-content-wrapper'>
                         <h2 className='navbar-searchresult-title'>{item.title}</h2>

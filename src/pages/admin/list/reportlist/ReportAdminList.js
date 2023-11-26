@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Button, FormControl, Grid, InputAdornment, InputBase } from '@mui/material';
+import { Grid } from '@mui/material';
 import ListAdminWrapper from '../component/listadminwrapper/ListAdminWrapper';
 import ListAdminHeader from '../component/listadminheader/ListAdminHeader';
 import { useEffect } from 'react';
@@ -9,13 +9,6 @@ import { useSearchParams } from 'react-router-dom';
 import { timeConverter } from '../../../../common/Date';
 import { useSelector } from 'react-redux';
 
-const gridItemStyle = {
-    'display': 'flex',
-    'textAlign': 'center',
-    'justifyContent': 'center',
-}
-
-//TODO: connect to backend
 const ReportAdminList = (props) => {
     const itemPerPage = 6
     const searchFieldList = [
@@ -44,7 +37,7 @@ const ReportAdminList = (props) => {
 
     useEffect(() => {
         const fetchUserReference = async (userId) => {
-            let apiUrl = 'http://localhost:8081/api/v1/admin/users/reference/' + userId
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -63,7 +56,7 @@ const ReportAdminList = (props) => {
         }
 
         const fetchChapterReference = async (chapterId) => {
-            let apiUrl = 'http://localhost:8081/api/v1/admin/chapters/reference/' + chapterId
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/reference/' + chapterId
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -82,7 +75,7 @@ const ReportAdminList = (props) => {
         }
 
         const fetchItem = async () => {
-            let apiUrl = 'http://localhost:8081/api/v1/admin/reports?'
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/reports?'
             let sortUrl = 'sort=['
             let apiSortField = sortFieldList[0].key
             let apiSortType = sorttypes[0].key
@@ -140,6 +133,7 @@ const ReportAdminList = (props) => {
         }
 
         fetchItem()
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {

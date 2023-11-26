@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
-import './ChapterAdminCreate.css'
-import '../AdminCreate.css'
 import { Button, IconButton, TextField } from "@mui/material"
-import { Add, Clear, Preview, Save } from "@mui/icons-material"
+import { Add, Clear, Save } from "@mui/icons-material"
 import { useSearchParams } from "react-router-dom"
 import { useSelector } from "react-redux"
+import './ChapterAdminCreate.css'
+import '../AdminCreate.css'
 
 const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -38,7 +38,7 @@ const ChapterAdminCreate = (props) => {
 
     useEffect(() => {
         const fetchMangaReference = async (mangaId) => {
-            let apiUrl = 'http://localhost:8081/api/v1/admin/mangas/reference/' + mangaId
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/reference/' + mangaId
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -63,6 +63,7 @@ const ChapterAdminCreate = (props) => {
         if (mangaTextFieldValue.trim() !== '') {
             fetchMangaReference(mangaTextFieldValue)
         }
+    // eslint-disable-next-line
     }, [mangaTextFieldValue])
 
     const handleMangaTextFieldChange = (e) => {
@@ -109,7 +110,7 @@ const ChapterAdminCreate = (props) => {
 
     const submitForm = (e) => {
         const putBackend = async () => {
-            const response = await fetch('http://localhost:8081/api/v1/admin/chapters', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {

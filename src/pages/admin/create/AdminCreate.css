@@ -42,7 +42,7 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .flex-create-admin-vertical{

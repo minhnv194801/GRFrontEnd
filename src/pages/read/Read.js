@@ -73,7 +73,7 @@ function Read() {
     const postReport = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhost:8081/api/v1/report/' + chapterId, {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/report/' + chapterId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -123,7 +123,7 @@ function Read() {
     const fetchData = async () => {
       try {
         let newSessionkey = await refresh()
-        const response = await fetch('http://localhost:8081/api/v1/read/' + chapterId, {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/read/' + chapterId, {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -164,7 +164,7 @@ function Read() {
     const fetchChapterData = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch('http://localhost:8081/api/v1/read/' + chapterId + '/chapterlist', {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/read/' + chapterId + '/chapterlist', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {

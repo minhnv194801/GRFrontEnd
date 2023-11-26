@@ -1,15 +1,15 @@
-import { useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
-import './MangaAdminShow.css'
 import { Add, Check, CircleOutlined, Clear, Edit, } from "@mui/icons-material";
 import FollowUserCard from "./followusercard/FollowUserCard";
 import MangaChapterCard from "./mangachaptercard/MangaChapterCard";
 import MangaCommentCard from "./mangacommentcard/MangaCommentCard";
 import { IconButton, TextField } from "@mui/material";
-import CONFIG from "../../../../common/Config"
 import { timeConverter } from "../../../../common/Date";
 import { useSelector } from "react-redux";
+import CONFIG from "../../../../common/Config"
+import './MangaAdminShow.css'
 
 const iconStyle = {
   'color': '#0099FF',
@@ -64,7 +64,7 @@ function MangaAdminShow() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/mangas/' + mangaId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + mangaId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -90,11 +90,12 @@ function MangaAdminShow() {
     }
 
     fetchItem()
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     const fetchUserReference = async (userId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/users/reference/' + userId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -127,11 +128,12 @@ function MangaAdminShow() {
     if (followedUserIds !== null) {
       fetchFollowedUsers()
     }
+    // eslint-disable-next-line
   }, [followedUserIds])
 
   useEffect(() => {
     const fetchChapterReference = async (chapterId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/chapters/reference/' + chapterId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/reference/' + chapterId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -163,11 +165,12 @@ function MangaAdminShow() {
     if (chapterIds !== null) {
       fetchChapters()
     }
+    // eslint-disable-next-line
   }, [chapterIds])
 
   useEffect(() => {
     const fetchCommentReference = async (commentId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/comments/reference/' + commentId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/comments/reference/' + commentId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -198,6 +201,7 @@ function MangaAdminShow() {
     if (commentIds !== null) {
       fetchComments()
     }
+    // eslint-disable-next-line
   }, [commentIds])
 
   const procEditName = (e) => {
@@ -308,7 +312,7 @@ function MangaAdminShow() {
 
   const submitEditedName = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -337,7 +341,7 @@ function MangaAdminShow() {
 
   const submitEditedAuthor = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -365,7 +369,7 @@ function MangaAdminShow() {
 
   const submitEditedCover = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -397,7 +401,7 @@ function MangaAdminShow() {
 
   const submitEditedDescription = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -425,7 +429,7 @@ function MangaAdminShow() {
 
   const submitEditedStatus = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -453,7 +457,7 @@ function MangaAdminShow() {
 
   const submitEditedRecommend = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -481,7 +485,7 @@ function MangaAdminShow() {
 
   const submitEditedTags = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -509,7 +513,7 @@ function MangaAdminShow() {
 
   const submitEditedAltNames = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -545,7 +549,7 @@ function MangaAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper deleteAPIUrl={'http://localhost:8081/api/v1/admin/mangas/' + item.id}>
+    <ShowAdminWrapper deleteAPIUrl={process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>

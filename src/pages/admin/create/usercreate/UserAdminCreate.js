@@ -13,9 +13,9 @@ const UserAdminCreate = (props) => {
     const [roleValue, setRoleValue] = useState("Người dùng")
 
     const [isEmailTextFieldError, setIsEmailTextFieldError] = useState(false)
-    const [isPasswordTextFieldError, setIsPasswordTextFieldError] = useState(false)
+    const [isPasswordTextFieldError] = useState(false)
     const [emailTextFieldErrorMsg, setEmailTextFieldErrorMsg] = useState(false)
-    const [passwordTextFieldErrorMsg, setPasswordTextFieldErrorMsg] = useState(false)
+    const [passwordTextFieldErrorMsg] = useState(false)
 
     const handleEmailTextFieldChange = (e) => {
         setEmailTextFieldValue(e.target.value)
@@ -31,7 +31,7 @@ const UserAdminCreate = (props) => {
 
     const submitForm = (e) => {
         const putBackend = async () => {
-            const response = await fetch('http://localhost:8081/api/v1/admin/users', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {

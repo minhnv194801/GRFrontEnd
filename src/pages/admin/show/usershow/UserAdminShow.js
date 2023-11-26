@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
 import './UserAdminShow.css'
-import { Add, Check, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
+import { Check, Clear, Edit, } from "@mui/icons-material"
 import { IconButton, TextField } from "@mui/material";
 import UserCommentCard from "./usercommentcard/UserCommentCard";
 import OwnedChapterCard from "./ownedchaptercard/OwnedChapterCard";
@@ -65,7 +65,7 @@ function UserAdminShow() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/users/' + userId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + userId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -91,11 +91,12 @@ function UserAdminShow() {
     }
 
     fetchItem()
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     const fetchMangaReference = async (mangaId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/mangas/reference/' + mangaId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/reference/' + mangaId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -127,11 +128,12 @@ function UserAdminShow() {
     if (followMangaIds !== null) {
       fetchMangas()
     }
+    // eslint-disable-next-line
   }, [followMangaIds])
 
   useEffect(() => {
     const fetchChapterReference = async (chapterId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/chapters/reference/' + chapterId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/reference/' + chapterId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -166,11 +168,12 @@ function UserAdminShow() {
       console.log()
       fetchChapters()
     }
+    // eslint-disable-next-line
   }, [ownedChapterIds])
 
   useEffect(() => {
     const fetchCommentReference = async (commentId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/comments/reference/' + commentId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/comments/reference/' + commentId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -204,11 +207,12 @@ function UserAdminShow() {
     if (commentIds !== null) {
       fetchComments()
     }
+    // eslint-disable-next-line
   }, [commentIds])
 
   useEffect(() => {
     const fetchReportReference = async (reportId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/reports/reference/' + reportId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/reports/reference/' + reportId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -243,6 +247,7 @@ function UserAdminShow() {
     if (reportIds !== null) {
       fetchReports()
     }
+    // eslint-disable-next-line
   }, [reportIds])
 
   const procEditRole = (e) => {
@@ -317,7 +322,7 @@ function UserAdminShow() {
 
   const submitEditedDisplayName = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -344,7 +349,7 @@ function UserAdminShow() {
 
   const submitEditedFirstName = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -371,7 +376,7 @@ function UserAdminShow() {
 
   const submitEditedLastName = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -398,7 +403,7 @@ function UserAdminShow() {
 
   const submitEditedRole = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -425,7 +430,7 @@ function UserAdminShow() {
 
   const submitEditedGender = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -452,7 +457,7 @@ function UserAdminShow() {
 
   const submitEditedAvatar = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/users/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -489,7 +494,7 @@ function UserAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper deleteAPIUrl={'http://localhost:8081/api/v1/admin/users/' + item.id}>
+    <ShowAdminWrapper deleteAPIUrl={process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>

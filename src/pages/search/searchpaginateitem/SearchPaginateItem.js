@@ -1,12 +1,13 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import './SearchPaginateItem.css'
 import { Circle, Star } from '@mui/icons-material';
+import './SearchPaginateItem.css'
 
 const SearchPaginateItem = (props) => {
+    // eslint-disable-next-line
     return (
         <div className='search-paginate-item-wrapper'>
-            <a href={props.item.href} className='search-item-href' />
+            <a href={props.item.href} className='search-item-href' ><p/></a>
             <Grid container spacing={1} sx={{ width: '100%', height: '100%' }}>
                 <Grid item xs={5} sx={{ width: '100%', height: '100%' }} >
                     <div className='search-cover-wrapper'>

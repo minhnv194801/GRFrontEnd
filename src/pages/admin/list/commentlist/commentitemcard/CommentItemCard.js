@@ -33,12 +33,12 @@ const CommentItemCard = (props) => {
         <div className='admin-comment-item-card-wrapper' onClick={handleClick}>
             <Grid container sx={{ height: '100%', width: '100%', alignItems: 'stretch' }}>
                 <Grid item xs={4} sx={coverGridStyle}>
-                    <img className='admin-comment-manga-cover' src={props.mangaCover} />
+                    <img className='admin-comment-manga-cover' src={props.mangaCover} alt='AdminCommentMangaCover'/>
                     <h1 className='admin-comment-manga-title'>{props.mangaTitle}</h1>
                 </Grid>
                 <Grid item xs={8} sx={{display: 'flex', flexDirection: 'column'}}>
                     <div className='admin-comment-user-wrapper'>
-                        <img className='admin-comment-user-avatar' src={props.userAvatar} />
+                        <img className='admin-comment-user-avatar' src={props.userAvatar} alt='AdminCommentUserAvatar'/>
                         <p className='admin-comment-user-displayname'>{props.userDisplayname}</p>
                     </div>
                     <div className='admin-comment-content-wrapper'>

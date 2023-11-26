@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
 import './ReportAdminShow.css'
-import { Add, Check, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
+import { Check, Edit, } from "@mui/icons-material"
 import { IconButton, TextField } from "@mui/material";
 import { timeConverter } from "../../../../common/Date";
 import { useSelector } from "react-redux";
@@ -26,7 +26,7 @@ function ReportAdminShow() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/reports/' + reportId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/reports/' + reportId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -51,11 +51,12 @@ function ReportAdminShow() {
     }
 
     fetchItem()
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     const fetchChapterReference = async (chapterId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/chapters/reference/' + chapterId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/reference/' + chapterId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -78,11 +79,12 @@ function ReportAdminShow() {
     if (chapterId !== '') {
       fetchChapterReference(chapterId)
     }
+    // eslint-disable-next-line
   }, [chapterId])
 
   useEffect(() => {
     const fetchUserReference = async (userId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/users/reference/' + userId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -104,6 +106,7 @@ function ReportAdminShow() {
     if (userId !== '') {
       fetchUserReference(userId)
     }
+    // eslint-disable-next-line
   }, [userId])
 
   const procResponse = (e) => {
@@ -116,7 +119,7 @@ function ReportAdminShow() {
 
   const submitResponse = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/reports/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/reports/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -144,7 +147,7 @@ function ReportAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper deleteAPIUrl={'http://localhost:8081/api/v1/admin/reports/' + item.id}>
+    <ShowAdminWrapper deleteAPIUrl={process.env.REACT_APP_API_ENDPOINT+'/admin/reports/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>

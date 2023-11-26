@@ -1,13 +1,13 @@
-import { useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
-import './ChapterAdminShow.css'
-import { Add, Check, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
-import { IconButton, TextField, TextareaAutosize } from "@mui/material";
+import { Add, Check, Clear, Edit } from "@mui/icons-material"
+import { IconButton, TextField } from "@mui/material";
 import OwnedUserCard from "./ownedusercard/OwnedUserCard";
 import ChapterReportCard from "./chapterreportcard/ChapterReportCard";
 import { timeConverter } from "../../../../common/Date";
 import { useSelector } from "react-redux";
+import './ChapterAdminShow.css'
 
 const iconStyle = {
   'color': '#0099FF',
@@ -53,7 +53,7 @@ function ChapterAdminShow() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/chapters/' + chapterId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + chapterId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -78,11 +78,12 @@ function ChapterAdminShow() {
     }
 
     fetchItem()
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     const fetchMangaReference = async (mangaId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/mangas/reference/' + mangaId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/reference/' + mangaId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -105,11 +106,12 @@ function ChapterAdminShow() {
     if (mangaId !== '') {
       fetchMangaReference(mangaId)
     }
+    // eslint-disable-next-line
   }, [mangaId])
 
   useEffect(() => {
     const fetchUserReference = async (userId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/users/reference/' + userId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -142,11 +144,12 @@ function ChapterAdminShow() {
     if (ownedUserIds !== null) {
       fetchOwnedUsers()
     }
+    // eslint-disable-next-line
   }, [ownedUserIds])
 
   useEffect(() => {
     const fetchReportReference = async (reportId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/reports/reference/' + reportId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/reports/reference/' + reportId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -177,6 +180,7 @@ function ChapterAdminShow() {
     if (reportIds !== null) {
       fetchReports()
     }
+    // eslint-disable-next-line
   }, [reportIds])
 
   const procEditName = (e) => {
@@ -222,7 +226,7 @@ function ChapterAdminShow() {
 
   const submitEditedName = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/chapters/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -250,7 +254,7 @@ function ChapterAdminShow() {
 
   const submitEditedCover = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/chapters/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -278,7 +282,7 @@ function ChapterAdminShow() {
 
   const submitEditedPrice = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/chapters/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -306,7 +310,7 @@ function ChapterAdminShow() {
 
   const submitEditedImages = (e) => {
     const putBackend = async () => {
-      const response = await fetch('http://localhost:8081/api/v1/admin/chapters/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -363,7 +367,7 @@ function ChapterAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper deleteAPIUrl={'http://localhost:8081/api/v1/admin/chapters/' + item.id}>
+    <ShowAdminWrapper deleteAPIUrl={process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{chapterId}</p>

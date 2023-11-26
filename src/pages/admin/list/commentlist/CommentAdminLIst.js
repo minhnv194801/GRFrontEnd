@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Button, FormControl, Grid, InputAdornment, InputBase } from '@mui/material';
+import { Grid } from '@mui/material';
 import ListAdminWrapper from '../component/listadminwrapper/ListAdminWrapper';
 import ListAdminHeader from '../component/listadminheader/ListAdminHeader';
 import { useEffect } from 'react';
@@ -9,7 +9,6 @@ import { useSearchParams } from 'react-router-dom';
 import { timeConverter } from '../../../../common/Date';
 import { useSelector } from 'react-redux';
 
-//TODO: connect to backend
 const CommentAdminList = (props) => {
     const itemPerPage = 6
     const searchFieldList = [
@@ -38,7 +37,7 @@ const CommentAdminList = (props) => {
 
     useEffect(() => {
         const fetchUserReference = async (userId) => {
-            let apiUrl = 'http://localhost:8081/api/v1/admin/users/reference/' + userId
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -57,7 +56,7 @@ const CommentAdminList = (props) => {
         }
 
         const fetchMangaReference = async (mangaId) => {
-            let apiUrl = 'http://localhost:8081/api/v1/admin/mangas/reference/' + mangaId
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/reference/' + mangaId
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -76,7 +75,7 @@ const CommentAdminList = (props) => {
         }
 
         const fetchItem = async () => {
-            let apiUrl = 'http://localhost:8081/api/v1/admin/comments?'
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/comments?'
             let sortUrl = 'sort=['
             let apiSortField = sortFieldList[0].key
             let apiSortType = sorttypes[0].key
@@ -134,6 +133,7 @@ const CommentAdminList = (props) => {
         }
 
         fetchItem()
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {

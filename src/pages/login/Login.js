@@ -43,7 +43,7 @@ function Login() {
         e.preventDefault()
         const postLogin = async () => {
             try {
-                const response = await fetch('http://localhost:8081/api/v1/auth/login', {
+                const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/auth/login', {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {

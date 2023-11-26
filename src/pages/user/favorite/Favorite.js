@@ -37,7 +37,7 @@ function Favorite() {
     const fetchData = async () => {
       try {
         let newSessionkey = await refresh()
-        const response = await fetch('http://localhost:8081/api/v1/user/favorite', {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/user/favorite', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {

@@ -1,10 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-import { Button, FormControl, Grid, InputAdornment, InputBase } from '@mui/material';
+import { Grid } from '@mui/material';
 import ListAdminWrapper from '../component/listadminwrapper/ListAdminWrapper';
 import ListAdminHeader from '../component/listadminheader/ListAdminHeader';
 import { useEffect } from 'react';
-import { AccountCircle } from '@mui/icons-material';
 import UserItemCard from './useritemcard/UserItemCard';
 import { useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -49,7 +48,7 @@ const UserAdminList = (props) => {
 
     useEffect(() => {
         const fetchItem = async () => {
-            let apiUrl = 'http://localhost:8081/api/v1/admin/users?'
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users?'
             let sortUrl = 'sort=['
             let apiSortField = sortFieldList[0].key
             let apiSortType = sorttypes[0].key
@@ -104,6 +103,7 @@ const UserAdminList = (props) => {
         }
 
         fetchItem()
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {

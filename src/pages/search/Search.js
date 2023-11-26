@@ -44,7 +44,6 @@ function Search() {
 
   const pageRef = useRef(null)
   const itemsPerPage = 12
-  // const searchTags = ["Action", "Adult", "Adventure", "Chuyển Sinh", "Comedy", "Comic", "Cooking", "Cổ Đại", "Doujinshi", "Drama", "Ecchi", "Fantasy", "Gender Bender", "Harem", "Historical", "Horror", "Josei", "Live action", "Manga", "Manhua", "Manhwa", "Martial Arts", "Mature", "Mystery", "Ngôn Tình", "Psychological", "Romance", "School Life", "Sci-fi", "Seinen", "Shoujo", "Shounen", "Slice of Life", "Smut", "Soft Yaoi", "Sports", "Supernatural", "Thiếu Nhi", "Tragedy", "Trinh Thám", "Truyện Màu", "Truyện scan", "Tạp chí truyện tranh", "Webtoon", "Xuyên Không", "Đam Mỹ"]
 
   const [searchValue, setSearchValue] = useState("")
   const [searchResultOffset, setSearchResultOffset] = useState(0)
@@ -58,7 +57,7 @@ function Search() {
 
   const fetchSearchResult = async (searchValue, selectedTags) => {
     try {
-      const response = await fetch('http://localhost:8081/api/v1/search', {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/search', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {

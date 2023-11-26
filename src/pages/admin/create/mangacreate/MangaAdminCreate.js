@@ -100,7 +100,7 @@ const MangaAdminCreate = (props) => {
 
     const submitForm = (e) => {
         const putBackend = async () => {
-            const response = await fetch('http://localhost:8081/api/v1/admin/mangas', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {

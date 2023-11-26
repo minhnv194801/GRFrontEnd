@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { Star, Circle } from '@mui/icons-material';
 import { displayFailure } from '../../../components/topalert/TopAlertSlice';
@@ -13,7 +13,7 @@ function RecommendItemList() {
     useEffect(() => {
         const fetchRecommendItems = async () => {
             try {
-                const response = await fetch('http://localhost:8081/api/v1/home/user/recommend/5/', {
+                const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/home/user/recommend/5/', {
                     method: 'GET',
                     credentials: 'same-origin',
                     headers: {
@@ -24,7 +24,7 @@ function RecommendItemList() {
                 if (response.ok) {
                     // convert data to json
                     const json = await response.json();
-                    
+
                     setItemList(json)
                     setVisibility(true)
                 } else {
@@ -42,6 +42,7 @@ function RecommendItemList() {
         }
 
         fetchRecommendItems()
+        // eslint-disable-next-line
     }, [])
 
     const handleCloseList = (e) => {
@@ -63,7 +64,7 @@ function RecommendItemList() {
                 {itemList.map((item) =>
                     <div className='recommendation-item-wrapper' onMouseDown={(e) => navigateToMangaPage(item.id)}>
                         <div className='recommendation-item-cover-wrapper'>
-                            <img className='recommendation-item-cover' src={item.cover} />
+                            <img className='recommendation-item-cover' src={item.cover} alt='RecommendationItemCover'/>
                         </div>
                         <div className='recommendation-item-content-wrapper'>
                             <h2 className='recommendation-item-title'>{item.title}</h2>

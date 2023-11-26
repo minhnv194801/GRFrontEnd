@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Button, FormControl, Grid, InputAdornment, InputBase } from '@mui/material';
-import { Add, Search } from '@mui/icons-material';
+import { Grid } from '@mui/material';
 import ListAdminWrapper from '../component/listadminwrapper/ListAdminWrapper';
 import ListAdminHeader from '../component/listadminheader/ListAdminHeader';
 import './MangaAdminList.css';
@@ -47,7 +46,7 @@ const MangaAdminList = (props) => {
 
     useEffect(() => {
         const fetchItem = async () => {
-            let apiUrl = 'http://localhost:8081/api/v1/admin/mangas?'
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas?'
             let sortUrl = 'sort=['
             let apiSortField = sortFieldList[0].key
             let apiSortType = sorttypes[0].key
@@ -102,6 +101,7 @@ const MangaAdminList = (props) => {
         }
 
         fetchItem()
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {

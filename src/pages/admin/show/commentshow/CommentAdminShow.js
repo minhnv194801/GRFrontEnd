@@ -1,15 +1,9 @@
-import { useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import ShowAdminWrapper from "../component/showadminwrapper/ShowAdminWrapper";
 import './CommentAdminShow.css'
-import { Add, CircleOutlined, Clear, Edit, } from "@mui/icons-material"
-import { IconButton } from "@mui/material";
 import { timeConverter } from "../../../../common/Date";
 import { useSelector } from "react-redux";
-
-const iconStyle = {
-  'color': '#0099FF',
-}
 
 function CommentAdminShow() {
   const params = useParams()
@@ -24,7 +18,7 @@ function CommentAdminShow() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/comments/' + commentId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/comments/' + commentId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -49,11 +43,12 @@ function CommentAdminShow() {
     }
 
     fetchItem()
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     const fetchMangaReference = async (mangaId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/mangas/reference/' + mangaId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/reference/' + mangaId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -76,11 +71,12 @@ function CommentAdminShow() {
     if (mangaId !== '') {
       fetchMangaReference(mangaId)
     }
+    // eslint-disable-next-line
   }, [mangaId])
 
   useEffect(() => {
     const fetchUserReference = async (userId) => {
-      let apiUrl = 'http://localhost:8081/api/v1/admin/users/reference/' + userId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -103,10 +99,11 @@ function CommentAdminShow() {
     if (userId !== '') {
       fetchUserReference(userId)
     }
+    // eslint-disable-next-line
   }, [userId])
 
   return (
-    <ShowAdminWrapper deleteAPIUrl={'http://localhost:8081/api/v1/admin/comments/' + item.id}>
+    <ShowAdminWrapper deleteAPIUrl={process.env.REACT_APP_API_ENDPOINT+'/admin/comments/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>

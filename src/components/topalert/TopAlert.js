@@ -1,10 +1,10 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Fade from "@mui/material/Fade";
 import { setCloseTime, closeTopAlert } from './TopAlertSlice';
 import './TopAlert.css'
-import { useEffect } from 'react';
 
 function TopAlert() {
     const alertVisibility = useSelector((state) => state.topAlert.alertVisibility)

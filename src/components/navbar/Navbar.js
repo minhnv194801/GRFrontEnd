@@ -28,7 +28,7 @@ const Navbar = () => {
 
     useEffect(() => {
         const checkAuth = async () => {
-            const response = await fetch('http://localhost:8081/api/v1/admin/auth', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/auth', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
@@ -42,6 +42,7 @@ const Navbar = () => {
             }
         }
         checkAuth()
+        // eslint-disable-next-line
     }, [])
 
     const handleChangeSearchTextField = (e) => {
@@ -55,14 +56,14 @@ const Navbar = () => {
         if (searchValue === null) {
             return
         }
-        
+
         if (searchValue.trim().length === 0) {
             setSearchResults([])
             return
         }
 
         try {
-            const response = await fetch('http://localhost:8081/api/v1/search', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/search', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {
@@ -97,9 +98,9 @@ const Navbar = () => {
         const delayDebounceFn = setTimeout(() => {
             fetchSearchResult(searchValue)
         }, 1000)
-    
+
         return () => clearTimeout(delayDebounceFn)
-      }, [searchValue])
+    }, [searchValue])
 
     const handleSubmit = (e) => {
         e.preventDefault()

@@ -1,6 +1,5 @@
 import React from "react";
 import "./FadeOut.css"
-import { useEffect } from "react";
 
 const FadeOut = ({open, close}) => {
     // useEffect(() => {
