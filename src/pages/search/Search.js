@@ -57,7 +57,7 @@ function Search() {
 
   const fetchSearchResult = async (searchValue, selectedTags) => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/search', {
+      const response = await fetch(process.env.API_ENDPOINT+'/search', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {

@@ -13,7 +13,7 @@ function RecommendItemList() {
     useEffect(() => {
         const fetchRecommendItems = async () => {
             try {
-                const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/home/user/recommend/5/', {
+                const response = await fetch(process.env.API_ENDPOINT+'/home/user/recommend/5/', {
                     method: 'GET',
                     credentials: 'same-origin',
                     headers: {

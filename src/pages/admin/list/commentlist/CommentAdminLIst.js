@@ -37,7 +37,7 @@ const CommentAdminList = (props) => {
 
     useEffect(() => {
         const fetchUserReference = async (userId) => {
-            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
+            let apiUrl = process.env.API_ENDPOINT+'/admin/users/reference/' + userId
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -56,7 +56,7 @@ const CommentAdminList = (props) => {
         }
 
         const fetchMangaReference = async (mangaId) => {
-            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/reference/' + mangaId
+            let apiUrl = process.env.API_ENDPOINT+'/admin/mangas/reference/' + mangaId
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -75,7 +75,7 @@ const CommentAdminList = (props) => {
         }
 
         const fetchItem = async () => {
-            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/comments?'
+            let apiUrl = process.env.API_ENDPOINT+'/admin/comments?'
             let sortUrl = 'sort=['
             let apiSortField = sortFieldList[0].key
             let apiSortType = sorttypes[0].key

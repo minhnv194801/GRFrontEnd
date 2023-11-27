@@ -65,7 +65,7 @@ function UserAdminShow() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + userId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/users/' + userId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -96,7 +96,7 @@ function UserAdminShow() {
 
   useEffect(() => {
     const fetchMangaReference = async (mangaId) => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/reference/' + mangaId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/mangas/reference/' + mangaId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -133,7 +133,7 @@ function UserAdminShow() {
 
   useEffect(() => {
     const fetchChapterReference = async (chapterId) => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/reference/' + chapterId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/chapters/reference/' + chapterId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -173,7 +173,7 @@ function UserAdminShow() {
 
   useEffect(() => {
     const fetchCommentReference = async (commentId) => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/comments/reference/' + commentId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/comments/reference/' + commentId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -212,7 +212,7 @@ function UserAdminShow() {
 
   useEffect(() => {
     const fetchReportReference = async (reportId) => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/reports/reference/' + reportId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/reports/reference/' + reportId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -322,7 +322,7 @@ function UserAdminShow() {
 
   const submitEditedDisplayName = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -349,7 +349,7 @@ function UserAdminShow() {
 
   const submitEditedFirstName = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -376,7 +376,7 @@ function UserAdminShow() {
 
   const submitEditedLastName = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -403,7 +403,7 @@ function UserAdminShow() {
 
   const submitEditedRole = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -430,7 +430,7 @@ function UserAdminShow() {
 
   const submitEditedGender = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -457,7 +457,7 @@ function UserAdminShow() {
 
   const submitEditedAvatar = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/users/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -494,7 +494,7 @@ function UserAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper deleteAPIUrl={process.env.REACT_APP_API_ENDPOINT+'/admin/users/' + item.id}>
+    <ShowAdminWrapper deleteAPIUrl={process.env.API_ENDPOINT+'/admin/users/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>

@@ -46,7 +46,7 @@ function Report() {
     const fetchData = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/user/report', {
+        const response = await fetch(process.env.API_ENDPOINT+'/user/report', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {

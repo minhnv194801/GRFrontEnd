@@ -48,7 +48,7 @@ function Home() {
   useEffect(() => {
     const fetchRecommendData = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/home/recommend/' + recommendItemCount + '/', {
+        const response = await fetch(process.env.API_ENDPOINT+'/home/recommend/' + recommendItemCount + '/', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -83,7 +83,7 @@ function Home() {
 
     const fetchHotItemsData = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/home/hot/' + hotItemCount + '/', {
+        const response = await fetch(process.env.API_ENDPOINT+'/home/hot/' + hotItemCount + '/', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -125,7 +125,7 @@ function Home() {
   useEffect(() => {
     const fetchNewestData = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/home/new/' + newItemOffset + '/' + itemsPerPage + '/', {
+        const response = await fetch(process.env.API_ENDPOINT+'/home/new/' + newItemOffset + '/' + itemsPerPage + '/', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {

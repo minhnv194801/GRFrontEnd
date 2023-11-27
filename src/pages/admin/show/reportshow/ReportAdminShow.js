@@ -26,7 +26,7 @@ function ReportAdminShow() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/reports/' + reportId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/reports/' + reportId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -56,7 +56,7 @@ function ReportAdminShow() {
 
   useEffect(() => {
     const fetchChapterReference = async (chapterId) => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/reference/' + chapterId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/chapters/reference/' + chapterId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -84,7 +84,7 @@ function ReportAdminShow() {
 
   useEffect(() => {
     const fetchUserReference = async (userId) => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/users/reference/' + userId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -119,7 +119,7 @@ function ReportAdminShow() {
 
   const submitResponse = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/reports/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/reports/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -147,7 +147,7 @@ function ReportAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper deleteAPIUrl={process.env.REACT_APP_API_ENDPOINT+'/admin/reports/' + item.id}>
+    <ShowAdminWrapper deleteAPIUrl={process.env.API_ENDPOINT+'/admin/reports/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>

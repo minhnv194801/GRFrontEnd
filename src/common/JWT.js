@@ -46,7 +46,7 @@ async function refreshTokenIfNeeded(sessionkey, refreshkey) {
         }
 
         try {
-            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/auth/refresh', {
+            const response = await fetch(process.env.API_ENDPOINT+'/auth/refresh', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {

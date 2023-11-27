@@ -46,7 +46,7 @@ const MangaAdminList = (props) => {
 
     useEffect(() => {
         const fetchItem = async () => {
-            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas?'
+            let apiUrl = process.env.API_ENDPOINT+'/admin/mangas?'
             let sortUrl = 'sort=['
             let apiSortField = sortFieldList[0].key
             let apiSortType = sorttypes[0].key

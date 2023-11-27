@@ -45,7 +45,7 @@ const ChapterAdminList = (props) => {
 
     useEffect(() => {
         const fetchItem = async () => {
-            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters?'
+            let apiUrl = process.env.API_ENDPOINT+'/admin/chapters?'
             let sortUrl = 'sort=['
             let apiSortField = sortFieldList[0].key
             let apiSortType = sorttypes[0].key

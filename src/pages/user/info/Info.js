@@ -83,7 +83,7 @@ function Info() {
         const postUserInfo = async () => {
             let newSessionkey = await refresh()
             try {
-                const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/user/info', {
+                const response = await fetch(process.env.API_ENDPOINT+'/user/info', {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {
@@ -133,7 +133,7 @@ function Info() {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/user/info', {
+                const response = await fetch(process.env.API_ENDPOINT+'/user/info', {
                     method: 'GET',
                     credentials: 'same-origin',
                     headers: {

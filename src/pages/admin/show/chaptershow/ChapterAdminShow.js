@@ -53,7 +53,7 @@ function ChapterAdminShow() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + chapterId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/chapters/' + chapterId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -83,7 +83,7 @@ function ChapterAdminShow() {
 
   useEffect(() => {
     const fetchMangaReference = async (mangaId) => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/reference/' + mangaId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/mangas/reference/' + mangaId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -111,7 +111,7 @@ function ChapterAdminShow() {
 
   useEffect(() => {
     const fetchUserReference = async (userId) => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/users/reference/' + userId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -149,7 +149,7 @@ function ChapterAdminShow() {
 
   useEffect(() => {
     const fetchReportReference = async (reportId) => {
-      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/reports/reference/' + reportId
+      let apiUrl = process.env.API_ENDPOINT+'/admin/reports/reference/' + reportId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -226,7 +226,7 @@ function ChapterAdminShow() {
 
   const submitEditedName = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/chapters/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -254,7 +254,7 @@ function ChapterAdminShow() {
 
   const submitEditedCover = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/chapters/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -282,7 +282,7 @@ function ChapterAdminShow() {
 
   const submitEditedPrice = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/chapters/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -310,7 +310,7 @@ function ChapterAdminShow() {
 
   const submitEditedImages = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + item.id, {
+      const response = await fetch(process.env.API_ENDPOINT+'/admin/chapters/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -367,7 +367,7 @@ function ChapterAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper deleteAPIUrl={process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/' + item.id}>
+    <ShowAdminWrapper deleteAPIUrl={process.env.API_ENDPOINT+'/admin/chapters/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{chapterId}</p>
