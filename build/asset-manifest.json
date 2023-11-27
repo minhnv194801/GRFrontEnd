@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.67d62200.css",
-    "main.js": "/static/js/main.099762c2.js",
+    "main.js": "/static/js/main.d3794d9b.js",
     "service-worker.js": "/service-worker.js",
     "static/media/logo.png": "/static/media/logo.cebe8db8d7052ae09a92.png",
     "static/media/magna-logo.png": "/static/media/magna-logo.cebe8db8d7052ae09a92.png",
@@ -10,10 +10,10 @@
     "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/index.html",
     "main.67d62200.css.map": "/static/css/main.67d62200.css.map",
-    "main.099762c2.js.map": "/static/js/main.099762c2.js.map"
+    "main.d3794d9b.js.map": "/static/js/main.d3794d9b.js.map"
   },
   "entrypoints": [
     "static/css/main.67d62200.css",
-    "static/js/main.099762c2.js"
+    "static/js/main.d3794d9b.js"
   ]
 }

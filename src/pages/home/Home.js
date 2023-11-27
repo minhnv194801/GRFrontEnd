@@ -20,6 +20,7 @@ function Home() {
   const loadingItem = [{
     "id": "",
     "cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
+    "image": "https://i.pinimg.com/originals/7f/cf/a2/7fcfa218d3d6ae87f4ec08387f7b7330.gif",
     "name": "Loading...",
     "href": "",
     "chapters": []
@@ -30,7 +31,7 @@ function Home() {
 
   const [newItemOffset, setNewItemOffset] = useState(0)
 
-  const [recommendedItems, setRecommendedItems] = useState([loadingItem])
+  const [recommendedItems, setRecommendedItems] = useState(loadingItem)
 
   const [hotItems, setHotItems] = useState(loadingItem)
 
