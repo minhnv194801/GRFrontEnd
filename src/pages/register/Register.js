@@ -38,15 +38,17 @@ function Register() {
     const [emailContent, setEmailContent] = useState("")
     const [passwordContent, setPasswordContent] = useState("")
     const [rePasswordContent, setRePasswordContent] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
     const isLogin = useSelector((state) => state.app.isLogin)
 
     const handleSignup = (e) => {
         e.preventDefault()
+        setIsLoading(true)
 
         const postRegister = async () => {
             try {
-                const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/auth/register', {
+                const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/auth/register', {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {
@@ -69,6 +71,7 @@ function Register() {
                         "content": "Chúc mừng bạn đã đăng ký thành công",
                     }))
                 } else {
+                    setIsLoading(false)
                     setErrorMessage(json.message)
                 }
             } catch (error) {
@@ -76,6 +79,7 @@ function Register() {
                     "title": "Lỗi kết nối",
                     "content": "Kết nối với server thất bại",
                 }))
+                setIsLoading(false)
             }
         }
 
@@ -145,6 +149,7 @@ function Register() {
                     </form>
                 </div>
             </div>
+            {isLoading ? <div className='login-loading-fade'></div> : <></>}
         </div>
     );
 }

@@ -20,7 +20,7 @@ const SearchResult = (props) => {
                             <div className='searchresult-rating-status-wrapper'>
                                 <div className='searchresult-rating-wrapper'>
                                     <Star sx={{ color: 'yellow' }} fontSize='small' />
-                                    {item.rating === 0 ? 'N/a' : item.rating}
+                                    {item.rating === 0 ? 'N/a' : Number(item.rating).toFixed(2)}
                                 </div>
                                 <div className='searchresult-status-wrapper'>
                                     <Circle sx={{ color: item.status === 0 ? '#00FF00' : '#87CEEB' }} fontSize='small' />

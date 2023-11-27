@@ -72,7 +72,7 @@ function RecommendItemList() {
                                 <div className='recommendation-item-rating-status-wrapper'>
                                     <div className='recommendation-item-rating-wrapper'>
                                         <Star sx={{ color: 'yellow' }} fontSize='small' />
-                                        {item.rating === 0 ? 'N/a' : item.rating}
+                                        {item.rating === 0 ? 'N/a' : Number(item.rating).toFixed(2)}
                                     </div>
                                     <div className='recommendation-item-status-wrapper'>
                                         <Circle sx={{ color: item.status === 0 ? '#00FF00' : '#87CEEB' }} fontSize='small' />

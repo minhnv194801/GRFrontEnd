@@ -97,6 +97,7 @@ function Manga() {
                   sx={{
                     background: "#ffff"
                   }}
+                  value={currentComment}
                   onChange={handleCommentBoxChange}
                   fullWidth
                   hiddenLabel
@@ -201,7 +202,7 @@ function Manga() {
     const postFavorite = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/favorite/' + mangaId, {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/favorite/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -263,7 +264,7 @@ function Manga() {
     const postRating = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/manga/' + mangaId + '/rate', {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/manga/' + mangaId + '/rate', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -335,7 +336,7 @@ function Manga() {
     const postComment = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/comment/' + mangaId, {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/comment/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -357,6 +358,8 @@ function Manga() {
             },
             ...commentList
           ])
+
+          setCurrentComment("")
 
           dispatch(displaySuccess({
             "title": "Thành công",
@@ -397,7 +400,7 @@ function Manga() {
   useEffect(() => {
     const fetchMangaInfo = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/manga/' + mangaId, {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/manga/' + mangaId, {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -432,7 +435,7 @@ function Manga() {
   useEffect(() => {
     const fetchChapterListInfo = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/manga/' + mangaId + '/chapterlist/' + chapterOffset + '/' + chaptersPerPage + '/', {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/manga/' + mangaId + '/chapterlist/' + chapterOffset + '/' + chaptersPerPage + '/', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -470,7 +473,7 @@ function Manga() {
   useEffect(() => {
     const fetchCommentListData = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/manga/' + mangaId + '/commentlist/' + commentOffset + '/' + commentsPerPage + '/', {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/manga/' + mangaId + '/commentlist/' + commentOffset + '/' + commentsPerPage + '/', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -532,7 +535,7 @@ function Manga() {
                   onChange={handleRating}
                   value={manga.userRating}
                 />
-                <p className='avg-rating-text'>(Trung bình: {manga.avgRating}/5 - {manga.ratingCount} lượt đánh giá)</p>
+                <p className='avg-rating-text'>(Trung bình: {Number(manga.avgRating).toFixed(2)}/5 - {manga.ratingCount} lượt đánh giá)</p>
               </div>
               <div className="tag-list-wrapper">
                 {manga.tags === undefined ? null : manga.tags.map((tag) => <div className="tag-wrapper">{tag}</div>)}

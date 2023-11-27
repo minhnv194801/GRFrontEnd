@@ -36,14 +36,16 @@ function Login() {
     const [errorMessage, setErrorMessage] = useState("")
     const [emailContent, setEmailContent] = useState("")
     const [passwordContent, setPasswordContent] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
     const isLogin = useSelector((state) => state.app.isLogin)
 
     const handleLogin = (e) => {
         e.preventDefault()
+        setIsLoading(true)
         const postLogin = async () => {
             try {
-                const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/auth/login', {
+                const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/auth/login', {
                     method: 'POST',
                     credentials: 'same-origin',
                     headers: {
@@ -64,6 +66,7 @@ function Login() {
                         "content": "Chúc mừng bạn đã đăng nhập thành công",
                     }))
                 } else {
+                    setIsLoading(false)
                     setErrorMessage(json.message)
                 }
             } catch (error) {
@@ -71,6 +74,7 @@ function Login() {
                     "title": "Lỗi kết nối",
                     "content": "Kết nối với server thất bại",
                 }))
+                setIsLoading(false)
             }
         }
 
@@ -130,6 +134,7 @@ function Login() {
                     </form>
                 </div>
             </div>
+        {isLoading?<div className='login-loading-fade'></div>:<></>}
         </div>
     );
 }

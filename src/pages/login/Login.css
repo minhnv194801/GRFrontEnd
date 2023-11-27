@@ -109,3 +109,16 @@ a.register-href:hover {
         width: 100vw;
     }
 }
+
+.login-loading-fade {
+    z-index: 1;
+    background-color: rgba(34, 34, 34, 0.46);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 120vh;
+    width: 100vw;
+}
