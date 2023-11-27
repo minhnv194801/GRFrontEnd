@@ -20,7 +20,7 @@ const MainAdmin = (props) => {
 
     useEffect(() => {
         const fetchUserCount = async () => {
-            const response = await fetch(process.env.API_ENDPOINT+'/admin/users/count', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users/count', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
@@ -38,7 +38,7 @@ const MainAdmin = (props) => {
         }
 
         const fetchMangaCount = async () => {
-            const response = await fetch(process.env.API_ENDPOINT+'/admin/mangas/count', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/count', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
@@ -56,7 +56,7 @@ const MainAdmin = (props) => {
         }
 
         const fetchChapterCount = async () => {
-            const response = await fetch(process.env.API_ENDPOINT+'/admin/chapters/count', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/count', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
@@ -74,7 +74,7 @@ const MainAdmin = (props) => {
         }
 
         const fetchReportCount = async () => {
-            const response = await fetch(process.env.API_ENDPOINT+'/admin/reports/count', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/reports/count', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
@@ -92,7 +92,7 @@ const MainAdmin = (props) => {
         }
 
         const fetchCommentCount = async () => {
-            const response = await fetch(process.env.API_ENDPOINT+'/admin/comments/count', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/comments/count', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {

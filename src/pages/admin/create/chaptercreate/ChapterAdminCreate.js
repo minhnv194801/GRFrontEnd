@@ -38,7 +38,7 @@ const ChapterAdminCreate = (props) => {
 
     useEffect(() => {
         const fetchMangaReference = async (mangaId) => {
-            let apiUrl = process.env.API_ENDPOINT+'/admin/mangas/reference/' + mangaId
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/reference/' + mangaId
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -110,7 +110,7 @@ const ChapterAdminCreate = (props) => {
 
     const submitForm = (e) => {
         const putBackend = async () => {
-            const response = await fetch(process.env.API_ENDPOINT+'/admin/chapters', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/chapters', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {

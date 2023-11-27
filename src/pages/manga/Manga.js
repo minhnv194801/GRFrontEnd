@@ -201,7 +201,7 @@ function Manga() {
     const postFavorite = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch(process.env.API_ENDPOINT+'/favorite/' + mangaId, {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/favorite/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -263,7 +263,7 @@ function Manga() {
     const postRating = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch(process.env.API_ENDPOINT+'/manga/' + mangaId + '/rate', {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/manga/' + mangaId + '/rate', {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -335,7 +335,7 @@ function Manga() {
     const postComment = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch(process.env.API_ENDPOINT+'/comment/' + mangaId, {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/comment/' + mangaId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -397,7 +397,7 @@ function Manga() {
   useEffect(() => {
     const fetchMangaInfo = async () => {
       try {
-        const response = await fetch(process.env.API_ENDPOINT+'/manga/' + mangaId, {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/manga/' + mangaId, {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -432,7 +432,7 @@ function Manga() {
   useEffect(() => {
     const fetchChapterListInfo = async () => {
       try {
-        const response = await fetch(process.env.API_ENDPOINT+'/manga/' + mangaId + '/chapterlist/' + chapterOffset + '/' + chaptersPerPage + '/', {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/manga/' + mangaId + '/chapterlist/' + chapterOffset + '/' + chaptersPerPage + '/', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -470,7 +470,7 @@ function Manga() {
   useEffect(() => {
     const fetchCommentListData = async () => {
       try {
-        const response = await fetch(process.env.API_ENDPOINT+'/manga/' + mangaId + '/commentlist/' + commentOffset + '/' + commentsPerPage + '/', {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/manga/' + mangaId + '/commentlist/' + commentOffset + '/' + commentsPerPage + '/', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {

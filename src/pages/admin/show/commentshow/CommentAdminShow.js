@@ -18,7 +18,7 @@ function CommentAdminShow() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      let apiUrl = process.env.API_ENDPOINT+'/admin/comments/' + commentId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/comments/' + commentId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -48,7 +48,7 @@ function CommentAdminShow() {
 
   useEffect(() => {
     const fetchMangaReference = async (mangaId) => {
-      let apiUrl = process.env.API_ENDPOINT+'/admin/mangas/reference/' + mangaId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/reference/' + mangaId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -76,7 +76,7 @@ function CommentAdminShow() {
 
   useEffect(() => {
     const fetchUserReference = async (userId) => {
-      let apiUrl = process.env.API_ENDPOINT+'/admin/users/reference/' + userId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -103,7 +103,7 @@ function CommentAdminShow() {
   }, [userId])
 
   return (
-    <ShowAdminWrapper deleteAPIUrl={process.env.API_ENDPOINT+'/admin/comments/' + item.id}>
+    <ShowAdminWrapper deleteAPIUrl={process.env.REACT_APP_API_ENDPOINT+'/admin/comments/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>

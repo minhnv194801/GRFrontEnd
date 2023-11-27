@@ -28,7 +28,7 @@ const Navbar = () => {
 
     useEffect(() => {
         const checkAuth = async () => {
-            const response = await fetch(process.env.API_ENDPOINT+'/admin/auth', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/auth', {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
@@ -63,7 +63,7 @@ const Navbar = () => {
         }
 
         try {
-            const response = await fetch(process.env.API_ENDPOINT+'/search', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/search', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {

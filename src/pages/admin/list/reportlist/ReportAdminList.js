@@ -37,7 +37,7 @@ const ReportAdminList = (props) => {
 
     useEffect(() => {
         const fetchUserReference = async (userId) => {
-            let apiUrl = process.env.API_ENDPOINT+'/admin/users/reference/' + userId
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -56,7 +56,7 @@ const ReportAdminList = (props) => {
         }
 
         const fetchChapterReference = async (chapterId) => {
-            let apiUrl = process.env.API_ENDPOINT+'/admin/chapters/reference/' + chapterId
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/reference/' + chapterId
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -75,7 +75,7 @@ const ReportAdminList = (props) => {
         }
 
         const fetchItem = async () => {
-            let apiUrl = process.env.API_ENDPOINT+'/admin/reports?'
+            let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/reports?'
             let sortUrl = 'sort=['
             let apiSortField = sortFieldList[0].key
             let apiSortType = sorttypes[0].key

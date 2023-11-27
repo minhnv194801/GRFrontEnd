@@ -64,7 +64,7 @@ function MangaAdminShow() {
 
   useEffect(() => {
     const fetchItem = async () => {
-      let apiUrl = process.env.API_ENDPOINT+'/admin/mangas/' + mangaId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + mangaId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -95,7 +95,7 @@ function MangaAdminShow() {
 
   useEffect(() => {
     const fetchUserReference = async (userId) => {
-      let apiUrl = process.env.API_ENDPOINT+'/admin/users/reference/' + userId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/users/reference/' + userId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -133,7 +133,7 @@ function MangaAdminShow() {
 
   useEffect(() => {
     const fetchChapterReference = async (chapterId) => {
-      let apiUrl = process.env.API_ENDPOINT+'/admin/chapters/reference/' + chapterId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/chapters/reference/' + chapterId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -170,7 +170,7 @@ function MangaAdminShow() {
 
   useEffect(() => {
     const fetchCommentReference = async (commentId) => {
-      let apiUrl = process.env.API_ENDPOINT+'/admin/comments/reference/' + commentId
+      let apiUrl = process.env.REACT_APP_API_ENDPOINT+'/admin/comments/reference/' + commentId
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -312,7 +312,7 @@ function MangaAdminShow() {
 
   const submitEditedName = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.API_ENDPOINT+'/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -341,7 +341,7 @@ function MangaAdminShow() {
 
   const submitEditedAuthor = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.API_ENDPOINT+'/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -369,7 +369,7 @@ function MangaAdminShow() {
 
   const submitEditedCover = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.API_ENDPOINT+'/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -401,7 +401,7 @@ function MangaAdminShow() {
 
   const submitEditedDescription = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.API_ENDPOINT+'/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -429,7 +429,7 @@ function MangaAdminShow() {
 
   const submitEditedStatus = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.API_ENDPOINT+'/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -457,7 +457,7 @@ function MangaAdminShow() {
 
   const submitEditedRecommend = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.API_ENDPOINT+'/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -485,7 +485,7 @@ function MangaAdminShow() {
 
   const submitEditedTags = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.API_ENDPOINT+'/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -513,7 +513,7 @@ function MangaAdminShow() {
 
   const submitEditedAltNames = (e) => {
     const putBackend = async () => {
-      const response = await fetch(process.env.API_ENDPOINT+'/admin/mangas/' + item.id, {
+      const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id, {
         method: 'PUT',
         credentials: 'same-origin',
         headers: {
@@ -549,7 +549,7 @@ function MangaAdminShow() {
   }
 
   return (
-    <ShowAdminWrapper deleteAPIUrl={process.env.API_ENDPOINT+'/admin/mangas/' + item.id}>
+    <ShowAdminWrapper deleteAPIUrl={process.env.REACT_APP_API_ENDPOINT+'/admin/mangas/' + item.id}>
       <div>
         <h1>Id</h1>
         <p>{item.id}</p>

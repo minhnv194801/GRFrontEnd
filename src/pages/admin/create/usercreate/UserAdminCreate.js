@@ -31,7 +31,7 @@ const UserAdminCreate = (props) => {
 
     const submitForm = (e) => {
         const putBackend = async () => {
-            const response = await fetch(process.env.API_ENDPOINT+'/admin/users', {
+            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/users', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: {
