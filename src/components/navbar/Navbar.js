@@ -130,7 +130,7 @@ const Navbar = () => {
         <div className='navbar'>
             {isPortrait ?
                 <div className='navbar-wrapper'>
-                    <Grid className='navbar-item-container' container>
+                    <Grid className='navbar-item-container' container gap={'10px'}>
                         {isSearching ? <div></div> :
                             <Grid sx={{ textAlign: 'center' }} item xs={3}>
                                 <a href='/'>
@@ -138,7 +138,7 @@ const Navbar = () => {
                                 </a>
                             </Grid>
                         }
-                        <Grid sx={{ textAlign: 'center' }} item xs={12}>
+                        <Grid sx={{ textAlign: 'center' }} item xs={isSearching?12:7}>
                             <div className='text-input-wrapper'>
                                 <form className='text-input' onSubmit={handleSubmit}>
                                     <InputBase
@@ -168,7 +168,7 @@ const Navbar = () => {
                         {isSearching ?
                             <div></div>
                             :
-                            <Grid sx={{ textAlign: 'right', maxHeight: '100%', marginRight: '10px', marginTop: 'auto', marginBottom: 'auto' }} item xs={2}>
+                            <Grid sx={{ textAlign: 'right', maxHeight: '100%', marginRight: '10px', marginTop: 'auto', marginBottom: 'auto' }} item xs={1}>
                                 {!isLogin ?
                                     <Dropdown align='end'>
                                         <Dropdown.Toggle className='avatar-dropdown'>
