@@ -137,7 +137,7 @@ function Read() {
 
         if (response.ok) {
           var json = await response.json()
-          window.location.href = json.payUrl
+          // window.location.href = json.payUrl
         } else {
           var json = await response.json()
           dispatch(displayFailure({
