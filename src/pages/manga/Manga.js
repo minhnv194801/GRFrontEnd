@@ -42,7 +42,7 @@ function Manga() {
   const [isDescExpand, setIsDescExpand] = useState(false)
   const [numberOfChapterPages, setNumberOfChapterPages] = useState(1)
   const [chapterOffset, setChapterOffset] = useState(0)
-  const [chapterList, setChapterList] = useState([{}])
+  const [chapterList, setChapterList] = useState([{"cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif"}])
   const [numberOfCommentPages, setNumberOfCommentPages] = useState(1)
   const [commentOffset, setCommentOffset] = useState(0)
   const [commentList, setCommentList] = useState([{}])
@@ -63,7 +63,7 @@ function Manga() {
       case 'chapterlist':
         return (
           <div className="chapter-list-wrapper">
-            <MangaChapterList chapterList={chapterList} />
+            <MangaChapterList chapterList={chapterList} manga={manga} mangaId={mangaId}/>
             <div className="page-paginate">
               <ReactPaginate
                 nextLabel=">"
@@ -188,11 +188,13 @@ function Manga() {
   }
 
   const handleChapterPageClick = (event) => {
+    setChapterList([{"cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif"}])
     setChapterOffset(event.selected * chaptersPerPage);
     pageRef.current.scrollIntoView()
   }
 
   const handleCommentPageClick = (event) => {
+    setCommentList([{}])
     setCommentOffset(event.selected * commentsPerPage);
     pageRef.current.scrollIntoView()
   }
@@ -439,7 +441,8 @@ function Manga() {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': sessionkey,
           }
         });
         if (response.ok) {

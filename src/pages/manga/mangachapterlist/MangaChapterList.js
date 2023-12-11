@@ -8,7 +8,7 @@ const MangaChapterList = (props) => {
             <Grid container spacing={3}>
                 {props.chapterList.map((chapter) =>
                     <Grid item xs={12} md={6}>
-                        <MangaChapter chapter={chapter} />
+                        <MangaChapter chapter={chapter} manga={props.manga} mangaId={props.mangaId}/>
                     </Grid>
                 )}
             </Grid>

@@ -73,7 +73,7 @@ function Read() {
     const postReport = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/report/' + chapterId, {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/report/' + chapterId, {
           method: 'POST',
           credentials: 'same-origin',
           headers: {
@@ -119,11 +119,49 @@ function Read() {
     // eslint-disable-next-line
   }, [])
 
+  const handlePurchaseChapter = (e) => {
+    const postPaymentRequest = async () => {
+      let newSessionkey = await refresh()
+      try {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/pay/momo/payurl/' + chapterId, {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': newSessionkey ? newSessionkey : sessionkey,
+          },
+          body: JSON.stringify({
+            'redirectUrl': window.location.protocol + '//' + window.location.hostname + '/read/' + chapterId,
+          })
+        });
+
+        if (response.ok) {
+          var json = await response.json()
+          window.location.href = json.payUrl
+        } else {
+          var json = await response.json()
+          dispatch(displayFailure({
+            "title": "Thất bại",
+            "content": json.message,
+          }))
+          navigate("/")
+        }
+      } catch (error) {
+        dispatch(displayFailure({
+          "title": "Lỗi kết nối",
+          "content": "Kết nối với server thất bại",
+        }))
+      }
+    }
+
+    postPaymentRequest()
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         let newSessionkey = await refresh()
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/read/' + chapterId, {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/read/' + chapterId, {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
@@ -141,11 +179,11 @@ function Read() {
           setChapterImages(json.pages)
         } else {
           if (response.status === 401) {
-            navigate("/")
             dispatch(displayFailure({
               "title": "Không có quyền sở hữu",
               "content": "Vui lòng mua truyện để bắt đầu đọc",
             }))
+            handlePurchaseChapter()
           } else {
             dispatch(displayFailure({
               "title": "Lỗi hệ thống",
@@ -164,7 +202,7 @@ function Read() {
     const fetchChapterData = async () => {
       let newSessionkey = await refresh()
       try {
-        const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/read/' + chapterId + '/chapterlist', {
+        const response = await fetch(process.env.REACT_APP_API_ENDPOINT + '/read/' + chapterId + '/chapterlist', {
           method: 'GET',
           credentials: 'same-origin',
           headers: {
