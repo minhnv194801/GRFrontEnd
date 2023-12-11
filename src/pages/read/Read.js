@@ -137,7 +137,7 @@ function Read() {
 
         if (response.ok) {
           var json = await response.json()
-          // window.location.href = json.payUrl
+          window.location.href = json.payUrl
         } else {
           var json = await response.json()
           dispatch(displayFailure({
@@ -147,6 +147,7 @@ function Read() {
           navigate("/")
         }
       } catch (error) {
+        console.log("hello")
         dispatch(displayFailure({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",

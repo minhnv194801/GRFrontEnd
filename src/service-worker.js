@@ -86,11 +86,7 @@ self.addEventListener('fetch', (event) => {
 
           return fetchedResponse;
         } else {
-          if (fetchedResponse.status === 401) {
-            return fetchedResponse;
-          }
-          
-          return cache.match(event.request.url);
+          return fetchedResponse;
         }
       }).catch(() => {
         // If the network is unavailable, get
