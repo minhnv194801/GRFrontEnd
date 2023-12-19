@@ -71,3 +71,12 @@ a.owned-title-href:hover {
 .emptyHeader {
     margin: 10px;
 }
+
+@media only screen and (orientation: portrait) {
+    .owned-chapter-title-wrapper {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+}
