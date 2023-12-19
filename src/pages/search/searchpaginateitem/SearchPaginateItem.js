@@ -20,7 +20,7 @@ const SearchPaginateItem = (props) => {
                         <div className='rating-status-wrapper'>
                             <div className='rating-wrapper'>
                                 <Star sx={{ color: 'yellow' }} fontSize='small' />
-                                {props.item.rating === 0 ? 'N/a' : props.item.rating}
+                                {props.item.rating === 0 ? 'N/a' : Number(props.item.rating).toFixed(2)}
                             </div>
                             <div className='status-wrapper'>
                                 <Circle sx={{ color: props.item.status === 0 ? '#00FF00' : '#87CEEB' }} fontSize='small' />

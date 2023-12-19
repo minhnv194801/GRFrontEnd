@@ -108,6 +108,11 @@ const Navbar = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (searchValue === null || searchValue.trim().length === 0) {
+            window.location.href = "/search?value=";
+            return
+        }
+
         window.location.href = "/search?value=" + searchValue;
     }
 
