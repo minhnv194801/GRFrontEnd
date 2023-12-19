@@ -147,7 +147,6 @@ function Read() {
           navigate("/")
         }
       } catch (error) {
-        console.log("hello")
         dispatch(displayFailure({
           "title": "Lỗi kết nối",
           "content": "Kết nối với server thất bại",

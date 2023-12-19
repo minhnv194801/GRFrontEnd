@@ -19,8 +19,8 @@ function Home() {
   const recommendItemCount = 10
   const loadingItem = [{
     "id": "",
-    "cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
-    "image": "https://i.pinimg.com/originals/7f/cf/a2/7fcfa218d3d6ae87f4ec08387f7b7330.gif",
+    "cover": '/circleload.webm',
+    "image": '/flippingbook.webm',
     "name": "Loading...",
     "href": "",
     "chapters": []

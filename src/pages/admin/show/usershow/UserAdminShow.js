@@ -79,7 +79,6 @@ function UserAdminShow() {
       if (response.ok) {
         // convert data to json
         const json = await response.json();
-        console.log(json)
         setItem(json)
         setFollowMangaIds(json.followMangas)
         setOwnedChapterIds(json.ownedChapters)
@@ -157,15 +156,12 @@ function UserAdminShow() {
         if (index >= MAX_CHAPTER_REFERENCE) {
           break
         }
-        console.log(index)
-        console.log(chapterId)
         fetchedChapters[fetchedChapters.length] = await fetchChapterReference(chapterId)
       }
       setOwnedChapters(fetchedChapters)
     }
 
     if (ownedChapterIds !== null) {
-      console.log()
       fetchChapters()
     }
     // eslint-disable-next-line
@@ -240,7 +236,6 @@ function UserAdminShow() {
         report.timeCreated = timeConverter(report.timeCreated)
         fetchedReports[fetchedReports.length] = report
       }
-      console.log(fetchedReports)
       setReports(fetchedReports)
     }
 
@@ -366,7 +361,6 @@ function UserAdminShow() {
           ...item,
           'firstName': editedFirstName,
         }
-        console.log(newItem)
         procEditFirstName()
       }
     }
@@ -393,7 +387,6 @@ function UserAdminShow() {
           ...item,
           'lastName': editedLastName,
         }
-        console.log(newItem)
         procEditLastName()
       }
     }

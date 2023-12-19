@@ -52,7 +52,6 @@ const ChapterAdminCreate = (props) => {
             if (response.ok) {
                 // convert data to json
                 const json = await response.json()
-                console.log(json)
                 json.id = mangaId
                 setManga(json)
             } else {

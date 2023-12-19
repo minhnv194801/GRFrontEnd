@@ -73,7 +73,6 @@ function Search() {
       if (response.ok) {
         // convert data to json
         const json = await response.json();
-        console.log(json.data)
 
         if (json.data === null || json.data?.length === 0) {
           setSearchResults([])
@@ -153,7 +152,6 @@ function Search() {
   function handleSearchClicked(e) {
     let url = "/search?value=" + searchValue + "&tags="
     selectedTags.forEach((tag) => {
-      console.log(tag)
       url += tag + ","
     })
     url = url.slice(0, -1);

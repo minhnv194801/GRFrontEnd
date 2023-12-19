@@ -33,7 +33,6 @@ function CommentAdminShow() {
         // convert data to json
         const json = await response.json();
         json.timeCreated = timeConverter(json.timeCreated)
-        console.log(json)
         setItem(json)
         setMangaId(json.manga)
         setUserId(json.user)
@@ -62,7 +61,6 @@ function CommentAdminShow() {
       if (response.ok) {
         // convert data to json
         const json = await response.json()
-        console.log(json)
         json.id = mangaId
         setManga(json)
       }
@@ -90,7 +88,6 @@ function CommentAdminShow() {
       if (response.ok) {
         // convert data to json
         const json = await response.json()
-        console.log(json)
         json.id = userId
         setUser(json)
       }

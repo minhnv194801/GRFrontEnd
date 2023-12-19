@@ -51,7 +51,6 @@ const Admin = (props) => {
 
         const interval = setInterval(() => {
             refresh()
-            console.log('fresh')
         }, 300000);
 
         checkAuth()

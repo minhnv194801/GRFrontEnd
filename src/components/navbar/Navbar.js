@@ -28,17 +28,21 @@ const Navbar = () => {
 
     useEffect(() => {
         const checkAuth = async () => {
-            const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/auth', {
-                method: 'GET',
-                credentials: 'same-origin',
-                headers: {
-                    'Authorization': sessionkey,
-                    'Content-Type': 'application/json',
-                }
-            })
+            try {
+                const response = await fetch(process.env.REACT_APP_API_ENDPOINT+'/admin/auth', {
+                    method: 'GET',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Authorization': sessionkey,
+                        'Content-Type': 'application/json',
+                    }
+                })
 
-            if (response.ok) {
-                setIsAdmin(true)
+                if (response.ok) {
+                    setIsAdmin(true)
+                }
+            } catch (error) {
+                
             }
         }
         checkAuth()
@@ -79,7 +83,7 @@ const Navbar = () => {
             if (response.ok) {
                 // convert data to json
                 const json = await response.json();
-                console.log(json.data)
+                // console.log(json.data)
 
                 if (json.data === null || json.data?.length === 0) {
                     setSearchResults([])
@@ -178,7 +182,7 @@ const Navbar = () => {
                                         <Dropdown.Menu>
                                             <Dropdown.ItemText>
                                                 <div className='dropdown-avatar-wrapper'>
-                                                    <img className='navbar-avatar' src='https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' alt='navbar-avatar' />
+                                                    <img className='navbar-avatar' src='/defaultavatar.jpg' alt='navbar-avatar' />
                                                 </div>
                                             </Dropdown.ItemText>
                                             <Dropdown.ItemText>
@@ -273,14 +277,14 @@ const Navbar = () => {
                             <Dropdown align='end'>
                                 <Dropdown.Toggle className='avatar-dropdown'>
                                     <div className='navbar-avatar-wrapper'>
-                                        <img className='navbar-avatar' src='https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' alt='navbar-avatar' />
+                                        <img className='navbar-avatar' src='/defaultavatar.jpg' alt='navbar-avatar' />
                                     </div>
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
                                     <Dropdown.ItemText>
                                         <div className='dropdown-avatar-wrapper'>
-                                            <img className='big-navbar-avatar' src='https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' alt='navbar-avatar' />
+                                            <img className='big-navbar-avatar' src='/defaultavatar.jpg' alt='navbar-avatar' />
                                         </div>
                                     </Dropdown.ItemText>
                                     <Dropdown.ItemText>

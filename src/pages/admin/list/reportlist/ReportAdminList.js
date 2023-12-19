@@ -103,8 +103,6 @@ const ReportAdminList = (props) => {
                 apiUrl += '&' + filterUrl
             }
 
-            console.log(apiUrl)
-
             const response = await fetch(apiUrl, {
                 method: 'GET',
                 credentials: 'same-origin',
@@ -127,7 +125,6 @@ const ReportAdminList = (props) => {
                 setItemCount(fetchItemCount)
                 let totalItemCount = fetchItemCount.split('/')[1]
                 setPageCount(Math.ceil(parseInt(totalItemCount) / itemPerPage))
-                console.log(json)
                 setItemList(json)
             }
         }

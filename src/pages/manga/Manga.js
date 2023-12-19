@@ -413,7 +413,6 @@ function Manga() {
         if (response.ok) {
           // convert data to json
           const json = await response.json();
-          console.log(json)
           setManga(json)
           setNumberOfChapterPages(Math.ceil(json.chapterCount / chaptersPerPage))
         } else {
@@ -448,7 +447,6 @@ function Manga() {
         if (response.ok) {
           const json = await response.json();
 
-          console.log(json)
           if (json) {
             json.forEach((chapter) => {
               var currentTime = Date.now()
@@ -488,7 +486,6 @@ function Manga() {
           const json = await response.json();
 
           if (json.data === null || json.data?.length === 0) {
-            console.log("Hello")
             setCommentList([])
           } else {
             json.data.forEach((chapter) => {

@@ -97,7 +97,6 @@ function ChapterAdminShow() {
       if (response.ok) {
         // convert data to json
         const json = await response.json()
-        console.log(json)
         json.id = mangaId
         setManga(json)
       }
@@ -125,7 +124,6 @@ function ChapterAdminShow() {
       if (response.ok) {
         // convert data to json
         const json = await response.json()
-        console.log(json)
         return json
       }
     }
@@ -243,7 +241,6 @@ function ChapterAdminShow() {
           ...item,
           'title': editedNameValue,
         }
-        console.log(newItem)
         setItem(newItem)
         procEditName()
       }
@@ -271,7 +268,6 @@ function ChapterAdminShow() {
           ...item,
           'cover': editedCoverValue,
         }
-        console.log(newItem)
         setItem(newItem)
         closeEditCover()
       }
@@ -299,7 +295,6 @@ function ChapterAdminShow() {
           ...item,
           'price': editedPriceValue,
         }
-        console.log(newItem)
         setItem(newItem)
         procEditPrice()
       }
@@ -327,7 +322,6 @@ function ChapterAdminShow() {
           ...item,
           'images': editedImagesValue,
         }
-        console.log(newItem)
         setItem(newItem)
         procEditImages()
       }

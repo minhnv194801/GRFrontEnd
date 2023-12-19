@@ -18,8 +18,8 @@ function TopAlert() {
         if (alertVisibility === true) {
             dispatch(setCloseTime(Date.now() + 2000))
             setTimeout(() => {
-                console.log(Date.now())
-                console.log(alertCloseTime)
+                // console.log(Date.now())
+                // console.log(alertCloseTime)
                 if (Date.now() >= alertCloseTime) {
                     dispatch(closeTopAlert())
                 }

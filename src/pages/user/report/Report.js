@@ -20,7 +20,6 @@ function Report() {
     var res = await refreshTokenIfNeeded(sessionkey, refreshkey)
     if (res.isRefresh) {
       if (res.sessionkey) {
-        console.log('refreshed')
         dispatch(login(res))
       } else {
         dispatch(logout())

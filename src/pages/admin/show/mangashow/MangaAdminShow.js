@@ -79,7 +79,6 @@ function MangaAdminShow() {
         // convert data to json
         const json = await response.json();
         json.updateTime = timeConverter(json.updateTime)
-        console.log(json)
         setItem(json)
         setFollowedUserIds(json.followedUsers)
         setChapterIds(json.chapters)
@@ -109,7 +108,6 @@ function MangaAdminShow() {
       if (response.ok) {
         // convert data to json
         const json = await response.json()
-        console.log(json)
         return json
       }
     }
@@ -329,7 +327,6 @@ function MangaAdminShow() {
           ...item,
           'name': editedNameValue,
         }
-        console.log(newItem)
         setItem(newItem)
         procEditName()
       }
@@ -358,7 +355,6 @@ function MangaAdminShow() {
           ...item,
           'author': editedAuthorValue,
         }
-        console.log(newItem)
         setItem(newItem)
         procEditAuthor()
       }
@@ -386,7 +382,6 @@ function MangaAdminShow() {
           ...item,
           'cover': editedCoverValue,
         }
-        console.log(newItem)
         setItem(newItem)
         closeEditCover()
       }
@@ -418,7 +413,6 @@ function MangaAdminShow() {
           ...item,
           'description': editedDescriptionValue,
         }
-        console.log(newItem)
         setItem(newItem)
         procEditDescription()
       }
@@ -446,7 +440,6 @@ function MangaAdminShow() {
           ...item,
           'status': editedStatusValue,
         }
-        console.log(newItem)
         setItem(newItem)
         procEditStatus()
       }
@@ -474,7 +467,6 @@ function MangaAdminShow() {
           ...item,
           'isRecommended': editedRecommendedValue,
         }
-        console.log(newItem)
         setItem(newItem)
         procEditRecommend()
       }
@@ -502,7 +494,6 @@ function MangaAdminShow() {
           ...item,
           'tags': editedTagsValue.sort(),
         }
-        console.log(newItem)
         setItem(newItem)
         procEditTags()
       }
@@ -530,7 +521,6 @@ function MangaAdminShow() {
           ...item,
           'alternateNames': editedAlternateNamesValue.filter(item => item.trim() !== ''),
         }
-        console.log(newItem)
         setItem(newItem)
         procEditAlternateNames()
       }

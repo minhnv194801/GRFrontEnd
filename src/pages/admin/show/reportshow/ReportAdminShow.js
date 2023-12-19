@@ -41,7 +41,6 @@ function ReportAdminShow() {
         // convert data to json
         const json = await response.json();
         json.timeCreated = timeConverter(json.timeCreated)
-        console.log(json)
         setItem(json)
         setChapterId(json.chapter)
         setUserId(json.user)
@@ -70,7 +69,6 @@ function ReportAdminShow() {
       if (response.ok) {
         // convert data to json
         const json = await response.json()
-        console.log(json)
         json.id = chapterId
         setChapter(json)
       }
@@ -98,7 +96,6 @@ function ReportAdminShow() {
       if (response.ok) {
         // convert data to json
         const json = await response.json()
-        console.log(json)
         setUser(json)
       }
     }
@@ -137,7 +134,6 @@ function ReportAdminShow() {
           'response': responseEditValue,
           'status': 1,
         }
-        console.log(newItem)
         setItem(newItem)
         procResponse()
       }
