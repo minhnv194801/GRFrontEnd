@@ -42,7 +42,7 @@ function Manga() {
   const [isDescExpand, setIsDescExpand] = useState(false)
   const [numberOfChapterPages, setNumberOfChapterPages] = useState(1)
   const [chapterOffset, setChapterOffset] = useState(0)
-  const [chapterList, setChapterList] = useState([{"cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif"}])
+  const [chapterList, setChapterList] = useState([{"cover": "/circleload.gif"}])
   const [numberOfCommentPages, setNumberOfCommentPages] = useState(1)
   const [commentOffset, setCommentOffset] = useState(0)
   const [commentList, setCommentList] = useState([{}])
@@ -188,7 +188,7 @@ function Manga() {
   }
 
   const handleChapterPageClick = (event) => {
-    setChapterList([{"cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif"}])
+    setChapterList([{"cover": "/circleload.gif"}])
     setChapterOffset(event.selected * chaptersPerPage);
     pageRef.current.scrollIntoView()
   }

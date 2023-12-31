@@ -33,7 +33,7 @@ const tagsExpandIconStyle = {
 function Search() {
   const loadingItem = [{
     "id": "",
-    "cover": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif",
+    "cover": "/circleload.gif",
     "name": "Loading...",
     "href": "",
     "chapters": []

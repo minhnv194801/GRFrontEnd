@@ -19,8 +19,8 @@ function Home() {
   const recommendItemCount = 10
   const loadingItem = [{
     "id": "",
-    "cover":'/circleload.webm',
-    "image": '/flippingbook.webm',
+    "cover":'/circleload.gif',
+    "image": '/flippingbook.gif',
     "name": "Loading...",
     "href": "",
     "chapters": []
